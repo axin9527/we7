@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="hahnzhu" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>唐盛庄园-中秋活动</title>
+    <link rel="stylesheet" href="../addons/manor_shop/template/mobile/tangsheng/static/css/parallax.css">
+    <link rel="stylesheet" href="../addons/manor_shop/template/mobile/tangsheng/static/css/parallax-animation.css">
+    <style>
+        /* custom */
+        section[data-id="1"] {
+            background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/page1.jpg") no-repeat #3498db;
+            background-size: 100% 100%;
+        }
+        section[data-id="2"] {
+            background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/page2.jpg") no-repeat #40d47e;
+            background-size: 100% 100%;
+        }
+        section[data-id="3"] {
+            background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/page3.png") no-repeat #ff8c81;
+            background-size: 100% 100%;
+        }
+        section[data-id="4"] {
+            background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/page3.png") no-repeat #3498db;
+            background-size: 100% 100%;
+        }
+        .cloud{position: absolute;z-index: 10;}
+        .cloud1{top: 10px;width: 85px;
+            -webkit-animation:moveclouds 15s linear infinite;
+            -moz-animation:moveclouds 15s linear infinite;
+            -o-animation:moveclouds 15s linear infinite;
+        }
+        .cloud2{top: 80px;width: 100px;
+            -webkit-animation:moveclouds 20s linear infinite;
+            -moz-animation:moveclouds 20s linear infinite;
+            -o-animation:moveclouds 20s linear infinite;
+        }
+        .cloud3{top: 220px;width: 41px;
+            -webkit-animation:moveclouds 25s linear infinite;
+            -moz-animation:moveclouds 25s linear infinite;
+            -o-animation:moveclouds 25s linear infinite;
+        }
+        @-webkit-keyframes moveclouds{
+            0%{left:100%;}
+            100%{left: -50px;}
+        }
+        @-moz-keyframes moveclouds{
+            0%{left:100%;}
+            100%{left: -50px;}
+        }
+        @-o-keyframes moveclouds{
+            0%{left:100%;}
+            100%{left: -50px;}
+        }
+        .page1 .hometown{width: 250px;position: absolute;left: 50%;margin-left: -125px;bottom:70px;}
+        .page1 .hometown p{text-align: center;color: #fff;padding-bottom: 16px;font-size: 16px;}
+        .page1 .hometown .homechoose select{height: 30px;background: #f3ec95;color: #909090;text-align: center;margin-bottom: 12px;border-radius: 5px;-webkit-box-shadow:0 0 6px #feef31;border:none;}
+        .page1 .hometown .homechoose select,.page .hometown .homechoose input{width: 100%;height: 30px;background: #f3ec95;color: #909090;text-align: center;margin-bottom: 12px;border-radius: 5px;-webkit-box-shadow:0 0 6px #feef31;border:none;}
+        .page1 .hometown .homechoose select{padding: 0 34%;-webkit-appearance:none; /*去除系统默认的样式*/
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);   /* 点击高亮的颜色*/}
+        .page1 .hometown .homechoose input{outline: none;}
+        .page1 option { text-align: center;}
+        .page2 h3{text-align: center;font-size: 30px;color: #fff;padding: 44px 0 10px;}
+        .page2 fieldset{width: 90%;border-color:#feef31;border-radius: 8px;margin: 0 auto;background: rgba(255, 255, 255, 0.2);padding-bottom: 25px;}
+        .page2 fieldset legend{    width: auto;
+            padding: 4px 10px;background: #feef31;line-height: 40px;text-align: center;font-size: 30px;color: #333333;}
+        .page2 fieldset img{width: 245px;display: block;margin: 10px auto 5px;}
+        .page2 fieldset p{text-align: center;font-size: 18px;color: #ffffff;}
+        .page2 fieldset p span{color: #fff100;}
+        .page2 fieldset p strong{color: #fff100;font-size: 28px;}
+        .page2 .share{font-size: 16px;color: #fff100;width: 80%;margin: 0 auto;border-bottom: 1px solid #fff100;text-align: center;padding: 20px 0 5px;}
+        .page2 .share span{font-size: 12px;}
+        .page3 {
+            background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/page3.jpg") no-repeat;
+            background-size: 100% 100%;
+        }
+        .page3 h3{font-size: 30px; color: #fffefe;text-align: center;line-height: 40px;padding-top: 20%;}
+        .page3 h3 span{font-size: 30px;color: #fff100;}
+        .page3 fieldset{width: 90%;padding: 15px 0 10px;position: absolute;left: 50%;margin-left: -45%;top: 30%;;background: rgba(255,255,255,0.2);border: 1px solid #feef31;border-radius: 8px;}
+        .page3 fieldset legend{width: 100px;height: 34px;text-align: center;line-height: 34px;background: #feef31;font-size: 20px;color: #333;}
+        .page3 fieldset .ruleLeft{float: left;height: 100%;padding-left: 15px;width: 95%;}
+        .page3 fieldset .ruleLeft p{font-size: 16px;color: #fff100;line-height: 26px;}
+        .page3 fieldset .ruleRight{width: 40%;float: right;height: 100%;}
+        .page3 fieldset .ruleRight img{width: 111px;margin-top: 20px;}
+        .page4 {
+            background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/page4.jpg") no-repeat;
+            background-size: 100% 100%;
+        }
+        .page4 a{display: block;width: 50%;height:30px;border-radius: 5px;
+            background: #feef31;
+            text-align: center;
+            line-height: 30px;
+            font-size: 16px;
+            color: #333333;
+            text-decoration: none;
+            position: absolute;
+            left: 50%;
+            margin-left: -25%;
+            bottom:50px;
+            font-weight:bold;
+            box-shadow: 0 0 6px #feef31;}
+        .xiangxiatishi {
+            position: absolute;;
+            width: 43px;
+            bottom: 20px;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            -webkit-animation: dong 1s linear 0s infinite alternate;
+        }
+
+        @-webkit-keyframes dong {
+            from {
+                bottom: 20px;
+            }
+            to {
+                bottom: 40px;
+            }
+        }
+        .mask{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: black;
+            top: 0;
+            opacity: 0.7;
+            z-index:1;
+            display: none;
+        }
+        .tan{
+            position: fixed;
+            background: #fff;
+            width: 270px;
+            display: none;
+            top: 40%;
+            left: 17%;
+            text-align: center;
+            font-size: 15px;
+            z-index: 2;
+            border-radius: 10px;
+        }
+        .tan .msg{
+            padding: 28px;
+        }
+        .tan .btn-group {
+            height: 33px;
+            border-top: 1px solid #ccc;
+        }
+        .tan .cancel {
+
+            float: left;
+            padding: 11px 50px;
+        }
+        .tan .ok{
+            width: 50%;
+            background: #FFF100;
+            float: right;
+            height: 100%;
+            padding-top: 15px;
+            border-radius: 0 0 10px 0;
+
+        }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            position: fixed;
+            margin: 100px auto;
+            top: 30%;
+            left: 40%;
+            display: none;
+            z-index:2;
+        }
+
+        .double-bounce1, .double-bounce2 {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #67CF22;
+            opacity: 0.6;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            -webkit-animation: bounce 2.0s infinite ease-in-out;
+            animation: bounce 2.0s infinite ease-in-out;
+        }
+
+        .double-bounce2 {
+            -webkit-animation-delay: -1.0s;
+            animation-delay: -1.0s;
+        }
+
+        @-webkit-keyframes bounce {
+            0%, 100% { -webkit-transform: scale(0.0) }
+            50% { -webkit-transform: scale(1.0) }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(0.0);
+                -webkit-transform: scale(0.0);
+            } 50% {
+                  transform: scale(1.0);
+                  -webkit-transform: scale(1.0);
+              }
+        }
+        .message-box {
+            position: absolute;
+            width: auto;
+            height: 22px;
+            line-height: 22px;
+            font-size: 12px;
+            background: #fff;
+            border: 1px solid #C9E9C0;
+            border-radius: 4px;
+            text-align: center;
+            color: #333;
+            top: 3px;
+            padding: 2px;
+        }
+        .triangle-border {
+            position:absolute;
+            left:30px;
+            overflow:hidden;
+            width:0;
+            height:0;
+            border-width:10px;
+            border-style:solid dashed dashed dashed;
+        }
+        .tb-border {
+            bottom:-20px;
+            border-color:#C9E9C0 transparent transparent transparent;
+        }
+        .tb-background {
+            bottom:-19px;
+            border-color:#E9FBE4 transparent transparent transparent;
+        }
+        .audio-controls {
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: url("../addons/lucky_wheel/template/images/icons.png") no-repeat scroll 0 0;
+            z-index: 45;
+        }
+        .on {
+            -webkit-backface-visibility:visible;
+            -webkit-transform-origin:center center;
+            -webkit-animation:audio 2s 0s infinite linear normal none ;}
+        @-webkit-keyframes audio{
+            0%{-webkit-transform:rotate(0deg);}
+            100%{-webkit-transform:rotate(360deg);}
+        }
+    </style>
+</head>
+<body>
+<!--音乐控制-->
+<div class="audio-controls on"></div>
+<!-- 背景音乐 -->
+<audio id="audio">
+     <source src="{php echo tomedia('addons/manor_shop/template/mobile/tangsheng/static/audio/danyuanrenchangjiu.mp3');}" type="audio/mpeg" />
+    <!--<source src="http://ws.stream.qqmusic.qq.com/C200002Hn2QM1xcdc6.m4a?vkey=7E23814017DDE46B1D994019F8D088C8F00F42B2EB589918A1693FD0E2872A33D2CED02FF4571232A0533ED8C35B798521B1802184ABAC2D&guid=7027815716&fromtag=30" type="audio/mpeg" />-->
+</audio>
+<!-- 背景音乐 -->
+<!--音乐控制-->
+<div class="wrapper">
+    <div class="pages">
+
+        <!-- 第一屏 -->
+        <section class="page page1">
+            <img class="cloud cloud1" src="../addons/manor_shop/template/mobile/tangsheng/static/images/cloud1.png" />
+            <img class="cloud cloud2" src="../addons/manor_shop/template/mobile/tangsheng/static/images/cloud2.png" />
+            <img class="cloud cloud3" src="../addons/manor_shop/template/mobile/tangsheng/static/images/cloud3.png" />
+            <div class="hometown" >
+                <p data-animation="slideToTop" >测一测，心与家乡的距离有多远</p>
+                <div class="message-box" data-animation="slideToLeft" data-duration="2000">
+                    <span>填写家乡信息，测测心与家乡的距离有多远?</span>
+                    <div class="triangle-border tb-border"></div>
+                    <div class="triangle-border tb-background"></div>
+                </div>
+                <div class="homechoose" data-animation="slideToTop" data-timing-function="ease-out"><select id="sel-provance" onchange="selectCity();" class="select"><option value="" selected="true">请选择省</option></select></div>
+                <div class="homechoose" data-animation="slideToTop" data-timing-function="ease-out"><select id="sel-city" class="select" onchange="selectcounty()"><option value="" selected="true">请选择市</option></select></div>
+                <div style="display: none"><select id="sel-area" class="select" ><option value="" selected="true">所在地区</option></select></div>
+
+                <div class="homechoose" data-animation="slideToTop" data-timing-function="ease-out"><input type="text" id="address" placeholder="请输入家乡名称（例如莲花村）"/></div>
+            </div>
+        </section>
+
+        <!-- 第二屏 -->
+        <section class="page page2">
+            <h3>此时距家乡</h3>
+            <fieldset data-animation="followSlide" data-duration="300">
+                <legend id="juli" data-animation="slideToRight" data-duration="500" data-timing-function="ease-out">300公里</legend>
+                <img data-animation="slideToRight" data-duration="1000" src="../addons/manor_shop/template/mobile/tangsheng/static/images/page2_img1.png" />
+                <p>乘坐<span>飞机</span>回家需要<strong id="feiji">5</strong>小时</p>
+                <img data-animation="slideToRight" data-duration="2000" src="../addons/manor_shop/template/mobile/tangsheng/static/images/page2_img2.png" />
+                <p>乘坐<span>火车</span>回家需要<strong id="huoche">15</strong>小时</p>
+                <img data-animation="slideToRight" data-duration="3000" src="../addons/manor_shop/template/mobile/tangsheng/static/images/page2_img3.png" />
+                <p>乘坐<span>汽车</span>回家需要<strong id="qiche">20</strong>小时</p>
+                <img data-animation="slideToRight" data-duration="4000" src="../addons/manor_shop/template/mobile/tangsheng/static/images/page2_img4.png" />
+                <p><span>步行</span>回家需要约 <strong id="buxing"></strong><font id="walk_px"></font></p>
+            </fieldset>
+            <p class="share" data-animation="slideToTop" data-duration="1000">点击右上角，分享到朋友圈<br/><span>翻到下一页，看看你有多少位老乡也参与本次活动<br>分享后参加抽奖活动，多重大奖等你来拿</span></p>
+        </section>
+
+        <!-- 第三屏 -->
+        <section class="page page3">
+            <h3  data-animation="slideToBottom" data-duration="1000">您有<span id="laoxiang">38</span>位老乡<br/>也参与了此次活动</h3>
+            <fieldset  data-animation="slideToTop" data-duration="1500">
+                <legend>活动规则</legend>
+                <div class="ruleLeft">
+                    <p style="text-align: center;font-size: 18px;">
+                        <span style="color: #fff">田园好鲜 中秋大抽奖</span><br>
+                        <span style="color: yellow">空气净化器 小米手环 充电宝</span><br>
+                        <span style="color: #fff">多重大奖 等你来拿</span><br>
+                        <span style="color: #fff">长按下方二维码</span><br>
+                        <span style="color: #fff">关注“田园好鲜”</span><br>
+                        <span style="color: #fff">回复“我要抽奖”参与抽奖</span><br>
+                        <span>
+                            <img style="width: 160px;margin-top: 4%;" src="../addons/manor_shop/template/mobile/tangsheng/static/images/page3_img2.jpg"/>
+                        </span>
+                    </p>
+                </div>
+            </fieldset>
+            <img data-animation="slideToLeft" data-duration="1500" style="position: fixed;width: 86px;right: 8px;bottom: 8px;" src="../addons/manor_shop/template/mobile/tangsheng/static/images/tuzi.png" alt="">
+        </section>
+
+    </div>
+</div>
+<!--弹框-->
+<div class="mask"></div>
+<div class="tan">
+    <div class="msg">请填写您的家乡信息<br>翻到下一页参与抽奖活动</div>
+    <div class="btn-group">
+        <div class="cancel" onclick="cancel()">取消</div>
+        <div class="ok" onclick="ok()">去填写</div>
+    </div>
+</div>
+<div class="spinner">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+</div>
+<script src="../addons/manor_shop/template/mobile/tangsheng/static/js/zepto.min.js"></script>
+<script src="../addons/manor_shop/template/mobile/tangsheng/static/js/parallax.js"></script>
+<script type="text/javascript" src="../addons/manor_shop/static/js/dist/area/cascade.js"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    window.shareData = {title:'此刻，你与家的距离是', link:"{php echo $this->createMibleUrl('activity/mid_autumn')}", imgUrl:"{php echo tomedia('/addons/manor_shop/template/mobile/tangsheng/static/images/mid_share.png')}"};
+    var province = '';
+    var city = '';
+    var address = '';
+    var step=0;
+    var is_show1 = 0;
+    var discount = 0;
+    var fn = {};
+    var is_share = "{$js_share}";
+    $('.pages').parallax({
+        direction: 'vertical', 	// horizontal (水平翻页)
+        swipeAnim: 'cover', 	// cover (切换效果)
+        drag:      true,		// 是否允许拖拽 (若 false 则只有在 touchend 之后才会翻页)
+        loading:   true,		// 有无加载页
+        indicator: false,		// 有无指示点
+        arrow:     true,		// 有无指示箭头
+        /*
+         * 翻页后立即执行
+         * {int} 		index: 第几页
+         * {DOMElement} element: 当前页节点
+         * {String}		directation: forward(前翻)、backward(后翻)、stay(保持原页)
+         */
+        onchange: function(index, element, direction) {
+            // code here...
+            if(index > 0) {
+                ajax_log(index+1, 'pv');
+            }
+        },
+        /*
+         * 横竖屏检测
+         * {String}		orientation: landscape、protrait
+         */
+        orientationchange: function(orientation) {
+            // console.log(orientation);
+        }
+    });
+    $('#sel-provance,#sel-city,#address').on('change', function () {
+        province = $('#sel-provance').val();
+        city = $('#sel-city').val();
+        address = $('#address').val();
+        if(province == '请选择省份' || city == '请选择城市') {
+            $('.msg').html('请填写您的家乡信息<br>翻到下一页参与抽奖活动');
+            $('.ok').html('去填写');
+            $('.mask').show();
+            $('.tan').show();
+            return;
+        } else {
+
+            ajax_submit_info();
+        }
+    });
+    $('#go_mall').on('click', function () {
+        var url = $(this).attr('data-url');
+        ajax_log(step, 'tv');
+        location.href = url;
+    });
+    cascdeInit();
+    var post_url = "{php echo $this->createMobileUrl('activity/mid_autumn')}";
+    function ajax_log(step, type) {
+        var post_data = {};
+        post_data.step = step;
+        post_data.type = type;
+        $.ajax({
+            url:post_url,
+            data:post_data,
+            dataType:'json' ,
+            success:function (res) {
+                //console.log(res);
+            }
+        });
+    }
+    function ajax_submit_info() {
+        var post_data = {};
+        post_data.step = 1;
+        post_data.type = 'pv';
+        post_data.op = 'get_distance';
+        post_data.province = province;
+        post_data.city = city;
+        post_data.address = address;
+        $.ajax({
+            url:post_url,
+            data:post_data,
+            dataType:'json' ,
+            beforeSend:function(XMLHttpRequest){
+                $('.mask').show();
+                $('.spinner').show();
+            },
+            success:function (res) {
+                var data = res.result;
+                var discount = '此刻，我与家的距离是'+parseInt(data.distance)+'公里';
+                window.shareData.title = discount;
+                window.shareData.desc = "我有"+data.friend_num+"位老乡参加本活动来参与活动抽奖，大奖等你拿测一测此处你有多少位老乡";
+                fn['分享']();
+                $('#juli').html(data.distance_format);
+                $('#feiji').html(data.items.air);
+                $('#huoche').html(data.items.train);
+                $('#qiche').html(data.items.car);
+                $('#buxing').html(data.items.walk);
+                $('#walk_px').html(data.items.walk_px);
+                $('#laoxiang').html(data.friend_num);
+            },
+            complete:function(XMLHttpRequest,textStatus){
+                $('.mask').hide();
+                $('.spinner').hide();
+            },
+            async:true
+        });
+    }
+    function cancel() {
+        $('.mask').hide();
+        $('.tan').hide();
+    }
+    function ok() {
+        $('.mask').hide();
+        $('.tan').hide();
+    }
+    setTimeout(function () {
+        $('.message-box').animate({
+                    opacity:0,
+                    color:'#abcdef',
+                    rotateZ:'45deg',
+                    translate3d:'0,10px,0'
+                },
+                500,
+                'ease-out');
+    }, 5000);
+    //分享
+fn['分享'] = function () {
+    jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+    jssdkconfig.debug = false;
+    jssdkconfig.jsApiList = ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','showOptionMenu'];
+    wx.config(jssdkconfig);
+    wx.ready(function () {
+        wx.showOptionMenu();
+        wx.onMenuShareAppMessage({
+            title:window.shareData.title,
+            link:window.shareData.link,
+            imgUrl:window.shareData.imgUrl,
+            desc:window.shareData.desc,
+            success:function () {
+                ajax_log(step, 'sv');
+                ajax_log(step, 'sav');
+                is_share = is_show1 = 1;
+            },
+        });
+        wx.onMenuShareTimeline({
+            title:window.shareData.title,
+            link:window.shareData.link,
+            imgUrl:window.shareData.imgUrl,
+            success:function () {
+                ajax_log(step, 'sv');
+                ajax_log(step, 'sav');
+                is_share = is_show1 = 1;
+            },
+        });
+        wx.onMenuShareQQ({
+            title:window.shareData.title,
+            link:window.shareData.link,
+            imgUrl:window.shareData.imgUrl,
+            success:function () {
+                ajax_log(step, 'sv');
+                ajax_log(step, 'sav');
+                is_share = is_show1 = 1;
+            },
+        });
+
+        wx.onMenuShareWeibo({
+            title:window.shareData.title,
+            link:window.shareData.link,
+            imgUrl:window.shareData.imgUrl,
+            success:function () {
+                ajax_log(step, 'sv');
+                ajax_log(step, 'sav');
+                is_share = is_show1 = 1;
+            },
+        });
+    });
+    wx.error(function(res){
+        console.log(res);
+    });
+};
+
+    <!-- 音频暂停播放 -->
+    var audioAuto = document.getElementById('audio');
+    audioAuto.play();
+    $(".audio-controls").addClass("on");
+    $(".audio-controls").click(function (){
+        if (audioAuto.paused) {
+            audioAuto.play();
+            $(".audio-controls").addClass("on");
+        }else{
+            audioAuto.pause();
+            $(".audio-controls").removeClass("on");
+        }
+    });
+    <!-- 音频暂停播放 -->
+    $("#shareimg").click(function(){
+        $("#pop_share").show();
+    });
+    $("#pop_share").click(function(){
+        $("#pop_share").hide();
+    });
+</script>
+</body>
+</html>

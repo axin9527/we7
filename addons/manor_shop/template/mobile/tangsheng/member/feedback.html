@@ -1,0 +1,44 @@
+﻿{template 'common/header'}
+<title>用户反馈</title>
+<link rel="stylesheet" href="../addons/manor_shop/static/css/bootstrap.min.css">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12" style="text-align: center"><h1>意见反馈</h1></div>
+        <form role="form">
+            <div class="form-group">
+                <label for="exampleInputEmail1">手机号</label>
+                <input type="tel" class="form-control" id="exampleInputEmail1" placeholder="请输入您的手机号">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">意见</label>
+                <textarea id="exampleInputPassword1" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="col-sm-12" style="text-align: center">
+                <button type="button" id="submit" class="btn btn-default">提交意见</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- <div class="info_sub">确认修改</div>-->
+<script language='javascript'>
+    require(['core'], function (core, tpl) {
+        $('#submit').on('click', function () {
+            var mobile = $("input[type='tel']").val();
+            var content = $('#exampleInputPassword1').val();
+            console.log(content);
+            if(!mobile) {
+                core.tip.show('请输入手机号');return;
+            }
+            if(!content) {
+                core.tip.show('请输入意见内容');return;
+            }
+            core.json('member/feedback', {mobile:mobile, content:content}, function (json) {
+                if(json.status == -1) {
+                    core.tip.show(json.result);
+                }
+                core.message('提交成功');
+            }, true);
+        });
+    });
+</script>
+{template 'common/footer'}

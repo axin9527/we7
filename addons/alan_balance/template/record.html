@@ -1,0 +1,112 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo $this->createWebUrl('times')}">管理二维码批次</a></li>
+    <li class="active"><a href="{php echo $this->createWebUrl('record')}">二维码余额使用记录</a></li>
+
+</ul>
+<div class="panel panel-info">
+    <div class="panel-heading">筛选</div>
+    <div class="panel-body">
+        <form action="./index.php" method="get" class="form-horizontal" id="form" role="form" id="form1">
+            <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="alan_balance" />
+            <input type="hidden" name="do" value="record" />
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">所属批次</label>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <select name="time_id" class="form-control">
+                        <option value="" {if empty($_GPC['time_id'])}selected="selected"{/if}>所有</option>
+                        {loop $times $row}
+                        <option value="{$row['id']}" {if $_GPC['time_id']==$row['id']}selected="selected"{/if}>{$row['name']}</option>
+                        {/loop}
+                    </select>
+                </div>
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">状态</label>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <select name="status" class="form-control">
+                        <option value="" {if empty($_GPC['status'])}selected="selected"{/if}>所有</option>
+                        <option value="1" {if $_GPC['status']==1}selected="selected"{/if}>有效</option>
+                        <option value="2" {if $_GPC['status']==2}selected="selected"{/if}>过期</option>
+                        <option value="3" {if $_GPC['status']==3}selected="selected"{/if}>已使用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">批次名称</label>
+                <div class="col-sm-6 col-lg-8 col-xs-12">
+                    <input type="text" name="keyword" value="{$_GPC['keyword']}" class="form-control" placeholder="请输入名称">
+                </div>
+                <div class="pull-right col-xs-12 col-sm-3 col-lg-2">
+                    <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="table-responsive panel-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>二维码</th>
+                <th>所属批次</th>
+                <th style="width: 80px">状态</th>
+                <th style="width: 150px">使用人</th>
+                <th style="width: 180px">过期时间</th>
+                <th  style="width: 180px">使用时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {if !empty($list)}
+            {loop $list $row}
+            <tr>
+                <td><a href="javascript:void(0);" title="<img src='{$row['path']}'>"><img style="width: 60px;" src="{php echo $row['path']}" alt=""></a></td>
+                <td>{$row['time_name']}</td>
+                <td>
+                    {if $row['status'] == 1}
+                    未使用
+                    {else if $row['status'] == 2}
+                    过期
+                    {else}
+                    已使用
+                    {/if}
+                </td>
+                <td>{$row['nickname']}</td>
+                <td style="font-size:12px; color:#666;">
+                    {php echo date('Y-m-d <br /> h:i:s', $row[expire]);}
+                </td>
+                <td style="font-size:12px; color:#666;">
+                    {if $row['used_time']}
+                    {php echo date('Y-m-d <br /> h:i:s', $row[used_time]);}
+                    {/if}
+                </td>
+                <td>
+                    {if $row['status'] != 3}
+                    <a href="{php echo $this->createWebUrl('record', array('op'=>'del','id'=> $row['id']))}" class="btn btn-default"
+                       data-toggle="tooltip" title="强制删除" onclick="return confirm('您确定要删除该二维码吗？')">
+                        <i class="fa fa-times"></i>
+                    </a>
+                    {/if}
+                </td>
+            </tr>
+            {/loop}
+            {else}
+            <tr><td colspan="8" style="text-align: center;color:#ccc;font-size: 12px;">暂无数据</td></tr>
+            {/if}
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+</div>
+<script type="text/javascript">
+    require(['bootstrap', 'util'],function($, u){
+        $('.btn').hover(function(){
+            $(this).tooltip('show');
+        },function(){
+            $(this).tooltip('hide');
+        });
+    });
+</script>
+{template 'common/footer'}

@@ -1,0 +1,515 @@
+
+<!-- 关闭原因 -->
+<div id="modal-close" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+	<form class="form-horizontal form" action="{php echo $this->createWebUrl('order')}" method="post" enctype="multipart/form-data">
+		<input type='hidden' name='id' value='' />
+		<input type='hidden' name='op' value='deal' />
+		<input type='hidden' name='to' value='close' />
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+					<h3>关闭订单</h3>
+				</div>
+				<div class="modal-body">
+					<label>关闭订单原因</label>
+					<textarea style="height:150px;" class="form-control" name="reson" autocomplete="off"></textarea>
+					<div id="module-menus"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary" name="close" value="yes">关闭订单</button>
+					<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- 确认发货 -->
+<div id="modal-confirmsend" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+	<form class="form-horizontal form" action="{php echo $this->createWebUrl('order')}" method="post" enctype="multipart/form-data">
+		<input type='hidden' name='id' value='' />
+		<input type='hidden' name='op' value='deal' />
+		<input type='hidden' name='to' value='confirmsend' />
+		<input type='hidden' name='og_id' value='' />
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+					<h3>快递信息</h3>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="col-xs-10 col-sm-3 col-md-3 control-label">收件人信息</label>
+						<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+							<div class="form-control-static">
+								收  件 人: <span class="realname"></span> / <span class="mobile"></span><br>
+								收货地址: <span class="address"></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-10 col-sm-3 col-md-3 control-label">快递公司</label>
+						<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+							<select class="form-control" name="express" id="express">
+								{template 'web/order/kuaidi'}
+							</select>
+							<input type='hidden' name='expresscom' id='expresscom' />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-10 col-sm-3 col-md-3 control-label">快递单号</label>
+						<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+							<input type="text" name="expresssn" class="form-control" />
+						</div>
+					</div>
+					<div id="module-menus"></div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary span2" name="confirmsend" value="yes">确认发货</button>
+					<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 修改物流-->
+<div id="modal-update-express" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+	<form class="form-horizontal form" action="{php echo $this->createWebUrl('order')}" method="post" enctype="multipart/form-data">
+		<input type='hidden' name='id' value='' />
+		<input type='hidden' name='op' value='deal' />
+		<input type='hidden' name='to' value='updateexpress' />
+		<input type='hidden' name='og_id' value='' />
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+					<h3>快递信息</h3>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="col-xs-10 col-sm-3 col-md-3 control-label">收件人信息</label>
+						<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+							<div class="form-control-static">
+								收  件 人: <span class="realname"></span> / <span class="mobile"></span><br>
+								收货地址: <span class="address"></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-10 col-sm-3 col-md-3 control-label">快递公司</label>
+						<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+							<select class="form-control" name="express" id="express">
+								{template 'web/order/kuaidi'}
+							</select>
+							<input type='hidden' name='expresscom' id='expresscom' />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-10 col-sm-3 col-md-3 control-label">快递单号</label>
+						<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+							<input type="text" name="expresssn" class="form-control" />
+						</div>
+					</div>
+					<div id="module-menus"></div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary span2" name="confirmsend" value="yes">确认修改</button>
+					<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- 取消发货 -->
+<div id="modal-cancelsend" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:600px;margin:0px auto;">
+	<form class="form-horizontal form" action="{php echo $this->createWebUrl('order')}" method="post" enctype="multipart/form-data">
+		<input type='hidden' name='id' value='' />
+		<input type='hidden' name='op' value='deal' />
+		<input type='hidden' name='to' value='cancelsend' />
+		<input type='hidden' name='og_id' value='' />
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+					<h3>取消发货</h3>
+				</div>
+				<div class="modal-body">
+					<label>取消发货原因</label>
+					<textarea style="height:150px;" class="form-control" name="cancelreson" autocomplete="off"></textarea>
+					<div id="module-menus"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary span2" name="cancelsend" value="yes">取消发货</button>
+					<a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- 驳回退款 -->
+<div id="modal-refund" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:620px;margin:0px auto;">
+	<form class="form-horizontal form" action="{php echo $this->createWebUrl('order')}" method="post" enctype="multipart/form-data">
+		<input type='hidden' name='id' value='' />
+		<input type='hidden' name='op' value='deal' />
+		<input type='hidden' name='to' value='refund' />
+		<div class="modal-dialog">
+			<div class="modal-content"  >
+				<div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>处理{$r_type[$refund['rtype']]}申请</h3></div>
+				<div class="modal-body">
+
+
+                    <div class="form-group">
+                        <label class="col-xs-10 col-sm-3 col-md-3 control-label">处理方式</label>
+                        <div class="col-sm-9 col-xs-12">
+                            <p class="form-control-static">
+								{$r_type[$refund['rtype']]}
+							</p>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-xs-10 col-sm-3 col-md-3 control-label">处理结果</label>
+                        <div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+                            <!--<label class='radio-inline'>-->
+                                <!--<input type='radio' value='0' name='refundstatus' {if $refund['status']==0}checked{/if}>暂不处理-->
+                            <!--</label>-->
+
+                            {if ($refund['status'] < 4)}
+                            <label class='radio-inline'>
+                                <input type='radio' value='-1' name='refundstatus'>驳回申请
+                            </label>
+                            {/if}
+
+                        {if ($refund['rtype'] == 1 || $refund['rtype'] == 2)}
+                            {if $refund['status'] < 3}
+                            <label class='radio-inline'>
+                                <input type='radio' value='3' name='refundstatus' {if $refund['status']==3 || $refund['status']==4}checked{/if}>通过申请(需客户寄回商品)
+                            </label>
+                            {/if}
+                        {/if}
+
+                        {if ($refund['rtype'] == 0 || $refund['rtype'] == 1)}
+
+                            <label class='radio-inline'>
+                                <input type='radio' value='1' name='refundstatus'>
+                                同意退款{if $refund['rtype'] == 1 }({if $refund['status'] <3}无需客户发货直接退款{else}您已经收到客户寄出的快递{/if}){/if}
+                            </label>
+
+                            <label class='radio-inline'>
+                                <input type='radio' value='2' name='refundstatus'>手动退款
+                            </label>
+
+                            <div class="help-group" style="display: none;">
+                            <span class="help-block">微信支付方式： 会返回到相应的的支付渠道(如零钱或银行卡）</span>
+                            <span class="help-block">其他支付方式： 会返回到微信钱包(需商户平台余额充足)</span>
+                            <span class="help-block">如有余额抵扣： 会返回金额到商城用户余额</span>
+                            <span class="help-block">如有积分抵扣： 会返回积分到商城用户积分</span>
+                            <span class="help-block">手动退款： 订单会完成退款处理，您用其他方式进行退款</span>
+                            </div>
+                        {/if}
+
+                        {if $refund['rtype'] == 2}
+                            <label class='radio-inline'>
+                                <input type='radio' value='5' name='refundstatus' {if $refund['status']==5}checked{/if}>确认发货{if $refund['status']<3}(无需客户寄回商品，商家直接发换货商品){/if}
+                            </label>
+
+                            {if ($refund['status'] == 5)}
+                            <label class='radio-inline'>
+                                <input type='radio' value='10' name='refundstatus'>关闭申请(换货完成)
+                            </label>
+                            {/if}
+                        {/if}
+
+
+                        </div>
+                    </div>
+
+                    {if $refund['rtype'] > 0}
+                    <div class="form-group refund-group" style="display: none;">
+                        <label class="col-xs-10 col-sm-3 col-md-3 control-label">退货地址</label>
+                        <div class="col-sm-9 col-xs-12">
+                            <select class="form-control tpl-category-parent" id="raid" name="raid" style="width: 200px;">
+                                <option value="0">默认地址</option>
+                                {loop $refund_address $refund_address_item}
+                                <option value="{$refund_address_item['id']}" {if $refund['refundaddressid'] == $refund_address_item['id']}selected="true"{/if}>{$refund_address_item['title']}</option>
+                                {/loop}
+                            </select>
+                        </div>
+                    </div>
+                    {/if}
+
+                    <div class="form-group refund-group" style="display: none;">
+                        <label class="col-xs-10 col-sm-3 col-md-3 control-label">留言</label>
+                        <div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+                            <textarea class="form-control" name="message" >{$refund['message']}</textarea>
+                        </div>
+                    </div>
+
+					<div class="form-group refuse-group" style="display: none;">
+						<label class="col-xs-10 col-sm-3 col-md-3 control-label">驳回原因</label>
+						<div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+							<textarea class="form-control" name="refundcontent" ></textarea>
+						</div>
+					</div>
+
+                    <div class="form-group express-group" {if $refund['status']!=5}style="display: none;"{/if}>
+                        <label class="col-xs-10 col-sm-3 col-md-3 control-label">快递公司</label>
+                        <div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+                            <select class="form-control" name="rexpress" id="rexpress">
+								{template 'web/order/kuaidi'}
+                            </select>
+                            <input type='hidden' name='rexpresscom' id='rexpresscom' value="{$refund['rexpresscom']}"/>
+                        </div>
+                    </div>
+                    <div class="form-group express-group" {if $refund['status']!=5}style="display: none;"{/if}>
+                        <label class="col-xs-10 col-sm-3 col-md-3 control-label">快递单号</label>
+                        <div class="col-xs-12 col-sm-9 col-md-8 col-lg-8">
+                            <input type="text" name="rexpresssn" class="form-control" value="{$refund['rexpresssn']}"/>
+                        </div>
+                    </div>
+
+
+					<div id="module-menus"></div>
+				</div>
+				<div class="modal-footer"><button type="submit" class="btn btn-primary span2" name="refund" value="yes">确认</button><a href="#" class="btn" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+			</div>
+		</div>
+	</form>
+</div>
+<div id='changeprice_container'>
+
+</div>
+
+<script language='javascript'>
+	$(function () {
+        $(":radio[name=refundstatus]").change(function () {
+            var refundstatus = $(this).val();
+
+            if (refundstatus == -1) {
+                $(".refuse-group").show();
+                $(".refund-group").hide();
+                $(".express-group").hide();
+                $(".help-group").hide();
+            } else if (refundstatus == 1) {
+                $(".refuse-group").hide();
+                $(".refund-group").hide();
+                $(".express-group").hide();
+                $(".help-group").show();
+            } else if (refundstatus == 3) {
+                $(".refuse-group").hide();
+                $(".refund-group").show();
+                $(".express-group").hide();
+                $(".help-group").hide();
+            } else if (refundstatus == 5) {
+                $(".refuse-group").hide();
+                $(".refund-group").hide();
+                $(".express-group").show();
+                $(".help-group").hide();
+            } else {
+                $(".refuse-group").hide();
+                $(".refund-group").hide();
+                $(".express-group").hide();
+                $(".help-group").hide();
+            }
+
+
+        });
+
+        $("select[name=rexpress]").val("{$refund['rexpress']}");
+
+		$("#express").change(function () {
+			var obj = $(this);
+			var sel = obj.find("option:selected").attr("data-name");
+			$("#expresscom").val(sel);
+		});
+
+        $("#rexpress").change(function () {
+            var obj = $(this);
+            var sel = obj.find("option:selected").attr("data-name");
+            $("#rexpresscom").val(sel);
+        });
+	});
+	function changePrice(orderid) {
+
+		$.ajax({
+			url: "{php echo $this->createWebUrl('order/list',array('op'=>'deal','to'=>'changepricemodal'))}&id=" + orderid,
+			success: function (html) {
+				if (html == -1) {
+					alert('订单不能改价!');
+					return;
+				}
+				$('#changeprice_container').html(html);
+				$('#modal-changeprice').modal().on('shown.bs.modal', function () {
+					mc_init();
+				})
+
+			}
+		})
+	}
+	var order_price = 0;
+	var dispatch_price = 0;
+	function mc_init() {
+		order_price = parseFloat($('#changeprice-orderprice').val());
+		dispatch_price = parseFloat($('#changeprice-dispatchprice').val());
+		$('input', $('#modal-changeprice')).blur(function () {
+			if($.isNumber($(this).val())){
+				mc_calc();
+			}
+		});
+
+	}
+
+	function mc_calc() {
+		 
+		var change_dispatchprice = parseFloat($('#changeprice_dispatchprice').val());
+		if(!$.isNumber($('#changeprice_dispatchprice').val())){
+			 change_dispatchprice = dispatch_price;
+		}
+		var dprice = change_dispatchprice;
+		if (dprice <= 0) {
+			dprice = 0;
+		} 
+		$('#dispatchprice').html(dprice.toFixed(2));
+ 
+		var oprice = 0;
+		$('.changeprice_orderprice').each(function () { 
+			var p = 0;
+			if ($.trim($(this).val()) != '') {
+				p = parseFloat($.trim($(this).val()));
+			}
+			oprice += p;
+		});
+		if(Math.abs(oprice)>0){
+			if (oprice < 0) {
+				$('#changeprice').css('color', 'red');
+				$('#changeprice').html( " - " + Math.abs(oprice));
+			} else {
+				$('#changeprice').css('color', 'green');
+				$('#changeprice').html( " + " + Math.abs(oprice));
+			}
+		}
+		var lastprice =  order_price + dprice + oprice;
+		
+		$('#lastprice').html( lastprice.toFixed(2) );
+
+	}
+	function mc_check(){
+		var can = true;
+		var lastprice = 0;
+		 $('.changeprice_orderprice').each(function () { 
+			 if( $.trim( $(this).val())==''){
+				 return true;
+			 }
+			var p = 0;
+			if ( !$.isNumber($(this).val())) {
+				$(this).select();
+				alert('请输入数字!');
+				can =false;
+				return false;
+			}
+			var val  = parseFloat( $(this).val() );
+			if(val<=0 && Math.abs(val) > parseFloat( $(this).parent().prev().html())) {
+				$(this).select();
+				alert('单个商品价格不能优惠到负数!');
+				can =false;
+				return false;
+			}
+			lastprice+=val;
+		});
+		var op = order_price + dispatch_price+ lastprice;
+		if( op <0){
+			alert('订单价格不能小于0元!');
+			return false;
+		}
+		if(!can){
+			return false;
+		}
+		return true;
+	}
+
+</script>
+                                                              
+<script language="javascript">
+	function send(btn){
+		var modal =$('#modal-confirmsend');
+		var item = $(btn).data('item');
+		var itemid = $(btn).data('itemid');
+		modal.find(':input[name=id]').val( itemid );
+		modal.find(':input[name=og_id]').val( item.og_id );
+		var addressdata  = $(btn).data('address');
+		modal.find('.realname').html(addressdata.realname);
+		modal.find('.mobile').html(addressdata.mobile);
+		modal.find('.address').html(addressdata.address);
+	}
+	function updateexpress(btn){
+		var modal =$('#modal-update-express');
+		var item = $(btn).data('item');
+		console.log(item);
+		var itemid = $(btn).data('itemid');
+		var expresssn = $(btn).data('expresssn');
+		var expresscom = $(btn).data('expresscom');
+		var express = $(btn).data('express');
+		if(expresssn) {
+			modal.find(':input[name=expresssn]').val(expresssn);
+		}
+		if(express) {
+			modal.find('#express').val(express);
+		}
+		modal.find(':input[name=id]').val( itemid );
+		modal.find(':input[name=og_id]').val( item.og_id );
+		var addressdata  = $(btn).data('address');
+		modal.find('.realname').html(addressdata.realname);
+		modal.find('.mobile').html(addressdata.mobile);
+		modal.find('.address').html(addressdata.address);
+	}
+</script> 
+
+<!-- 查看物流 -->
+<div id="modal-express" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="width:620px;margin:0px auto;">
+	 
+		<div class="modal-dialog">
+			<div class="modal-content" >
+				<div class="modal-header"><button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button><h3>查看物流</h3></div>
+				<div class="modal-body" style='max-height:500px;overflow: auto;' >
+					<div class="form-group">
+						<p class='form-control-static' id="module-menus-express"></p>
+					</div>
+				</div>
+				<div class="modal-footer"><a href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</a></div>
+			</div>
+		</div>
+ 
+</div>
+<script language='javascript'>
+	function express_find(btn,orderid, og_id){
+		$(btn).button('loading');
+		$.ajax({
+			url: "{php echo $this->createWebUrl('order/list',array('op'=>'deal','to'=>'express'))}&id=" + orderid+"&og_id="+og_id,
+			cache:false,
+			success:function(html){
+				$('#module-menus-express').html(html);
+				$('#modal-express').modal();
+				$(btn).button('reset');
+			}
+		})
+	}
+
+    function refundexpress_find(btn,orderid,flag){
+        $(btn).button('loading');
+        $.ajax({
+            url: "{php echo $this->createWebUrl('order/list',array('op'=>'deal','to'=>'refundexpress'))}&id=" + orderid + "&flag=" + flag,
+            cache:false,
+            success:function(html){
+                $('#module-menus-express').html(html);
+                $('#modal-express').modal();
+                $(btn).button('reset');
+            }
+        })
+    }
+</script>

@@ -1,0 +1,118 @@
+{template 'common/header'}
+<title>0元换购 平和蜜柚1个</title>
+<style>
+    body {padding: 0;margin: 0;}
+    .mask{display: none;position: fixed;background: black;width: 100%;height: 100%;top: 0;opacity: 0.8; z-index: 0; }
+    .show_message{position: fixed;z-index: 1000;top: 40%;left: 50%;height: 30%;width: 60%; margin: -15% 0 0 -30%; }
+    .message_text{position: fixed;z-index: 1001; top: 51%;left: 50%;height: 30%;width: 60%; margin: -15% 0 0 -30%;text-align: center;color: yellow}
+    .tan{display: none}
+    .container {height: 1124px;background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/ayibang/background.jpg");filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";-moz-background-size:100% 100%; background-size:100% 100%;}
+    .container .body {width: 100%;height: 100px;top: 400px;  position: absolute;text-align: center;color: #fff;}
+    .js_number{background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/ayibang/num.jpg");-moz-background-size:100% 100%; background-size:100% 100%;width: 32px;height: 32px;color: #fff;text-align: center;float: left;display:inline;  font-size:28px;}
+    .num_tips{-moz-background-size:100% 100%; background-size:100% 100%;width: 70px;height: 32px;color: #fff;text-align: center;float: left;display:inline;}
+    .num_tips h2{position: absolute;top: -15px;margin-left: 10px;}
+    .coupon {clear: both;margin-top: 10px}
+    .daojishi{list-style-type: none;height: 38px;position: relative;left: 17%;width: 82%}
+    .show_qrcode{z-index: 2;display: none;background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/ayibang/show_qrcode.jpg");filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";-moz-background-size:100% 100%; background-size:100% 100%;width: 100%;height: 400px;position: fixed; top: 22%;}
+    .show_qrcode img{width: 188px}
+    .hander {position: absolute;right: 24%; width: 30px;top: 227px;}
+
+    /*5*/
+    @media (min-width:300px) and (max-width:320px)
+    {
+        .daojishi{list-style-type: none;height: 38px;position: relative;left: 12%;width: 87%}
+    }
+    /*6*/
+    @media (min-width:370px) and (max-width:400px)
+    {
+        .daojishi{list-style-type: none;height: 38px;position: relative;left: 18%;width: 81%}
+    }
+    @media (min-width:414px) and (max-width:500px)
+    {
+        .daojishi{list-style-type: none;height: 38px;position: relative;left: 20%;width: 79%}
+        .hander {position: absolute;right: 28%; width: 30px;top: 227px;}
+    }
+    @media (min-width:768px) and (max-width:1024px)
+    {
+        .daojishi{list-style-type: none;height: 38px;position: relative;left: 34%;width: 65%}
+    }
+    .close {position: absolute;right: 13px;top: 10px;color: #666; font-size: 20px;}
+</style>
+<body>
+<div class="mask"></div>
+<div class="container">
+    <div class="body">
+        <div class="show_qrcode">
+            <div class="close" onclick="hide_qrcode()">
+                <img style="width:30px" src="../addons/manor_shop/template/mobile/tangsheng/static/images/ayibang/close.png" alt="">
+            </div>
+            <img src="{$qr_path}" alt="">
+        </div>
+        <div class="show_coupon">
+            <h2>优惠劵</h2>
+            <div style="text-align:center;">
+                <ul class="daojishi">
+                    <li class="num_tips"><h2>剩余：</h2></li>
+                    {loop $num $v}
+                    <li class="js_number">{$v}</li>
+                    {/loop}
+                    <li class="num_tips"><h2>张</h2></li>
+                </ul>
+            </div>
+            <div class="coupon">
+                <img onclick="show_qrcode()" width="280px" src="../addons/manor_shop/template/mobile/tangsheng/static/images/ayibang/coupon.png" alt="">
+                <img class="hander" src="../addons/manor_shop/template/mobile/tangsheng/static/images/ayibang/hander.gif" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tan" onclick="hidden_message()">
+    <div class="mask"></div>
+    <div class="show_message">
+        <p class="message_text"></p>
+        <img class="show_message"  src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/alertt.png" alt="">
+    </div>
+</div>
+<script>
+    var _num = "{$js_data['total']}";
+    var time = "{$time}";
+    var re = "{$re}";
+    function show_qrcode() {
+        $('.mask').show();
+        $('.show_qrcode').show();
+        $('.show_coupon').hide();
+    }
+    function hide_qrcode() {
+        $('.mask').hide();
+        $('.show_qrcode').hide();
+        $('.show_coupon').show();
+    }
+    function hidden_message() {
+        $('.tan').hide();
+
+    }
+    function randNum(minnum , maxnum){
+        return Math.floor(minnum + Math.random() * (maxnum - minnum));
+    }
+    function reduce_num() {
+        var num = randNum(1, 4);
+        if(parseInt(_num) - num < 0 ) {
+
+        } else {
+            _num = parseInt(_num) - num;
+        }
+        var view = _num.toString().split("");
+        if(view.length > 0) {
+            var _html = '<li class="num_tips"><h2>剩余：</h2></li>';
+            for (var i =0;i<view.length;i++) {
+                _html += '<li class="js_number">'+view[i]+'</li>';
+            }
+            _html += '<li class="num_tips"><h2>张</h2></li>';
+            $('.daojishi').html(_html);
+        }
+    }
+    setInterval("reduce_num()", 10000);
+</script>
+</body>
+{template 'common/footer'}

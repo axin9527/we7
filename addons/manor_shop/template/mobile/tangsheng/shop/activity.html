@@ -1,0 +1,23 @@
+﻿{template 'common/header'}
+<title>{$set['name']}</title>
+<style type="text/css">
+    body {margin:0px; background:#eee; font-family:'微软雅黑'; -moz-appearance:none;}
+    .activity{width: 100%;height: auto;background: #fff;display: block;word-break: break-all;}
+    img{display: block;width: 100%;!important;}
+    .activity *{width: 100% !important;}
+    .activity p{margin: 0;padding:0}
+    .activity img {display: block;}
+</style>
+<div class="activity">
+
+</div>
+<script language='javascript'>
+    require(['core', 'tpl'], function (core, tpl) {
+        core.json('shop/activity', {id:"{$_GPC['id']}", op:"{$_GPC['op']}"}, function (json) {
+            var result = json.result;
+            $('.activity').html(result.content);
+
+        }, true);
+    });
+</script>
+{template 'common/footer'}

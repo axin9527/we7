@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="hahnzhu" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>2017,说出你的愿望 - 我的支持者</title>
+  <style>
+  body,div,p,h1,h2,h3,h4,h5,ul,li,ol,span,form,input,strong{margin: 0;padding: 0;}
+    /*.supporterContainer{min-height: 750px;}*/
+    .supporterNum{
+      width: 100%;
+      height: 54px;
+      background: #020202;
+      color: #f5d22e;
+      text-align: center;
+      font-size: 16px;
+      line-height: 54px;
+    }
+    .supporterNum .guide{
+      position: absolute;
+      width: 22px;
+      height: 18px;
+      top: 18px;
+      left: 12px;
+      background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/dream/goback.png") no-repeat;
+      background-size: 100%;
+    }
+    .lemon{
+      width: 35%;
+      position: fixed;
+      left: 0;
+      bottom: 8px;
+    }
+    .supporterAll{
+      padding-bottom: 20px;
+    }
+    .supproter-list{
+      padding: 15px 10px 8px 30px;
+    }
+    .list-left,.list-right{
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .list-left{
+      padding-right: 22px;
+    }
+    .list-left img{
+      width: 60px;
+      border-radius: 50%;
+    }
+    .list-right p{
+      font-size: 14px;
+      line-height: 22px;
+      color: #020202;
+    }
+    #index_loading{
+      text-align: center;
+      font-size: 12px;
+      line-height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="supporterContainer">
+    <div class="supporterNum">
+      <div class="guide" onclick="history.back();">
+      </div>
+      我的支持者：
+    </div>
+    <div class="supporterAll">
+      <!-- <div class="supproter-list">
+        <div class="list-left">
+          <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/dream/avatar.png" />
+        </div>
+        <div class="list-right">
+          <p>【微信用户名】</p>
+          <p>支持时间：2016-12-20 15:33</p>
+        </div>
+      </div>
+      <div class="supproter-list">
+        <div class="list-left">
+          <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/dream/avatar.png" />
+        </div>
+        <div class="list-right">
+          <p>【微信用户名】</p>
+          <p>支持时间：2016-12-20 15:33</p>
+        </div>
+      </div> -->
+    </div>
+    <img class="lemon" src="../addons/manor_shop/template/mobile/tangsheng/static/images/dream/lemon.png" />
+  </div>
+  <script src="../addons/alan_ticket/app/resource/js/jquery-1.11.1.min.js"></script>
+  <script>
+    var page = 1;
+    var loading = false;
+    var pager = true;
+    var scrolling = false;
+    function loadMore(){
+      $.ajax({
+        type: "get",
+        url: "{php echo app_url('share/index/my_friend')}",
+        dataType: 'json',
+        data:{'page':page},
+        success:function(data){
+          var html="";
+          if(data.result.number>0){
+            $(".supporterNum").html("<div class='guide' onclick='history.back();'> </div>我的支持者："+data.result.number);
+          }else{
+            $(".supporterNum").html("<div class='guide' onclick='history.back();'> </div>我的支持者：0");
+          }
+          var list=data.result.friend;
+          pager=true;
+            if($('#index_loading')){
+              $('#index_loading').remove();
+            }
+            for(var i=0;i<list.length;i++){
+              html+='<div class="supproter-list">'
+              html+='<div class="list-left">'
+              html+='<img src="'+list[i].headimg+'" />'
+              html+='</div>'
+              html+='<div class="list-right">'
+              html+='<p>【'+list[i].nickname+'】</p>';
+              html+='<p>支持时间：'+list[i].vote_time+'</p>'
+              html+='</div>'
+              html+='</div>'
+            }
+            $(".supporterAll").append(html);
+            if (list.length <data.result.page_num&&scrolling) {
+                $('.supporterAll').append('<div id="index_loading">已经加载全部</div>');
+                loading = true;
+                $(window).scroll = null;
+                return;
+            }
+        }
+      });
+    }
+    $(window).scroll(function(){
+      if(loading){
+        return;
+      }
+      var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+      if ($(document).height() <= totalheight) {
+          if (pager == true) {
+              pager = false;
+              scrolling=true;
+              $('.supporterAll').append('<div id="index_loading">正在加载更多...</div>');
+              page++;
+              loadMore();
+          }
+      }
+    })
+    loadMore();
+    function formatDate(datevalue, flag) {
+    	var date = new Date(datevalue),
+    		year = date.getFullYear(),
+    		month = date.getMonth() + 1,
+    		day = date.getDate(),
+    		hour = date.getHours(),
+    		minutes = date.getMinutes(),
+    		seconds = date.getSeconds();
+    	var str = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ?
+    		'0' + day : day);
+    	if (flag) {
+    		str += ' ' + (hour < 10 ? '0' + hour : hour) + ':' + (minutes < 10 ? '0' +
+    			minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds)
+    	}
+    	return str;
+    }
+
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?db5e40a8c44d0fa8673aa729e43efd10";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</body>
+</html>

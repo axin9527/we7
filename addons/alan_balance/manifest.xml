@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="">
+	<application setting="false">
+		<name><![CDATA[扫码送余额]]></name>
+		<identifie><![CDATA[alan_balance]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[扫码送余额，一次性使用，第三方企业合作必备！]]></ability>
+		<description><![CDATA[模块用于线下实体合作企业购买本平台对应优惠卷后，用户在线下购买实体商品，店员送用户一些平台余额。让用户能实现平台直接消费。本模块吹生和第三方企业合作。品牌口碑营销。]]></description>
+		<author><![CDATA[alan51]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+			<message type="qr" />
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="二维码批次管理" do="balancetimes" state="" direct="false" />
+			<entry title="二维码送余额记录" do="balancerecord" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[
+	DROP TABLE IF EXISTS `ims_alan_scan_balance`;
+CREATE TABLE `ims_alan_scan_balance` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `time_id` int(11) DEFAULT NULL COMMENT '批次id',
+  `time_name` varchar(40) DEFAULT NULL COMMENT '批次名称',
+  `title` varchar(40) DEFAULT NULL,
+  `keyword` varchar(100) DEFAULT NULL,
+  `rid` int(11) DEFAULT NULL,
+  `wx_url` varchar(150) DEFAULT NULL COMMENT '微信二维码路径',
+  `ticket` varchar(150) DEFAULT NULL,
+  `rand_str` varchar(50) DEFAULT NULL COMMENT '二维码字符',
+  `deleted` smallint(6) DEFAULT '0' COMMENT '是否删除 1 是 0 否',
+  `model` smallint(6) DEFAULT '1' COMMENT '二维码类型 1 临时 2 永久',
+  `expire` int(11) DEFAULT NULL COMMENT '过期时间',
+  `status` smallint(6) DEFAULT '1' COMMENT '状态 1 有效 2 过期 3 已使用',
+  `open_id` varchar(50) DEFAULT NULL,
+  `nickname` varchar(150) DEFAULT NULL,
+  `avarstar` varchar(300) DEFAULT NULL,
+  `path` varchar(300) DEFAULT NULL,
+  `wx_data` text,
+  `user_data` text,
+  `used_time` int(11) DEFAULT NULL,
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='二维码余额表';
+DROP TABLE IF EXISTS `ims_alan_scan_balance_time`;
+CREATE TABLE `ims_alan_scan_balance_time` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT 0,
+  `name` varchar(40) DEFAULT NULL COMMENT '批次名称',
+  `total` int(11) DEFAULT '0' COMMENT '总数量',
+  `failure_num` int(11) DEFAULT '0' COMMENT '失效数量',
+  `expired_num` int(11) DEFAULT '0' COMMENT '过期数量',
+  `valid_num` int(11) DEFAULT '0' COMMENT '有效数量',
+  `effective_time` int(11) DEFAULT NULL COMMENT '生效时间',
+  `create_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='二维码批次表';
+]]></install>
+	<uninstall><![CDATA[
+    drop table if exists  `ims_alan_scan_balance`;
+    drop table if exists  `ims_alan_scan_balance_time`;
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

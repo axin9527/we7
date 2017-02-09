@@ -1,0 +1,141 @@
+{template 'common/header'}
+<div class="main">
+    <form action="" method="post" name="qr_form" class="form-horizontal form" id="setting-form">
+        <div class="panel panel-default">
+            <div class="panel-heading">二维码参数设置</div>
+            <div class="panel-body">
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                    <strong>提示：</strong>海报模式是一张漂亮的大海报,用于分享,上面印着二维码,二维码logo是单纯只要二维码和对应的商户logo在上面嵌入
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">扫码赠送积分数</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" id="integral" class="form-control" placeholder="请输入积分数量" name="integral" value="{php echo $settings['integral'] ? $settings['integral'] : 0}" />
+                        <span class="help-block">如果扫码关注不赠送积分，请设置为0，默认为0.不支持减积分,赠送给扫码的用户</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">扫码赠送余额数</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" id="balance" class="form-control" placeholder="请输入余额数量" name="balance" value="{php echo $settings['balance'] ? $settings['balance'] : 0}" />
+                        <span class="help-block">如果扫码关注不赠送余额，请设置为0，默认为0.不支持减余额,赠送给扫码的用户</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">二维码样式</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <label class="radio radio-inline" onclick="$('.picmode').hide();">
+                            <input type="radio" name="mode" value="1" {if $settings['mode'] == 1 || empty($settings['mode'])}checked="checked"{/if}> 海报(默认)
+                        </label>
+                        <label class="radio radio-inline" onclick="$('.picmode').show();">
+                            <input type="radio" name="mode" value="2" {if intval($settings['mode']) == 2}checked="checked"{/if}> 二维码LOGO
+                        </label>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="haibao">
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">海报背景图片</label>
+                        <div class="col-xs-12 col-sm-8">
+                            {php echo tpl_form_field_image('qrcode_background', $settings['qrcode_background']?$settings['qrcode_background'] : '../addons/alan_qrcode/template/images/qrcode_background.jpg');}
+                            <span class="help-block">海报模式是一张漂亮的大海报,用于分享,建议大小在640*800</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">二维码位置</label>
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-addon">左边距</div>
+                                <input type="text" class="form-control" placeholder="" name="qrleft" value="{if $settings['qrleft'] >0}{$settings['qrleft']}{else}160{/if}">
+                                <div class="input-group-addon">px</div>
+                                <div class="input-group-addon">上边距</div>
+                                <input type="text" class="form-control" placeholder="" name="qrtop" value="{if $settings['qrtop'] >0}{$settings['qrtop']}{else}230{/if}">
+                                <div class="input-group-addon">px</div>
+                                <div class="input-group-addon">宽度</div>
+                                <input type="text" class="form-control" placeholder="" name="qrwidth" value="{if $settings['qrwidth']>0}{$settings['qrwidth']}{else}155{/if}">
+                                <div class="input-group-addon">px</div>
+                                <div class="input-group-addon">高度</div>
+                                <input type="text" class="form-control" placeholder="" name="qrheight" value="{if $settings['qrheight']>0}{$settings['qrheight']}{else}155{/if}">
+                                <div class="input-group-addon">px</div>
+                            </div>
+                            <span class="help-block">展示二维码的具体位置</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="logo">
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">二维码logo</label>
+                        <div class="col-xs-12 col-sm-8">
+                            {php echo tpl_form_field_image('qrcode_logo', $settings['qrcode_logo']);}
+                            <span class="help-block">建议大小在50*50,请把logo设置尽量小点，便于长按识别,默认没有logo</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">二维码样式</label>
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="input-group">
+                                <div class="input-group-addon">logo宽</div>
+                                <input type="text" class="form-control" placeholder="" name="logowidth" value="{$settings['logowidth']}">
+                                <div class="input-group-addon">px</div>
+                                <div class="input-group-addon">logo高</div>
+                                <input type="text" class="form-control" placeholder="" name="logoheight" value="{$settings['logoheight']}">
+                                <div class="input-group-addon">px</div>
+                                <div class="input-group-addon">二维码宽</div>
+                                <input type="text" class="form-control" placeholder="" name="logoqrwidth" value="{$settings['logoqrwidth']}">
+                                <div class="input-group-addon">px</div>
+                                <div class="input-group-addon">二维码高</div>
+                                <input type="text" class="form-control" placeholder="" name="logoqrheight" value="{$settings['logoqrheight']}">
+                                <div class="input-group-addon">px</div>
+                            </div>
+                            <span class="help-block">内嵌logo是嵌入一个小的商户logo,建议50*50大小。不然太大可能识别不了。默认是商户的logo。</span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+</div>
+<div class="form-group col-sm-12">
+    <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+    <input type="hidden" name="token" value="{$_W['token']}" />
+</div>
+</form>
+</div>
+<script>
+    require(['jquery', 'util'], function($, u){
+        $(function(){
+            {if $settings['mode'] == 1 || empty($settings['mode'])}
+                $(".logo").hide();
+                $(".haibao").show();
+            {else}
+                $(".logo").show();
+                $(".haibao").hide();
+            {/if}
+            //显示隐藏
+            $('input[name=mode]').on('click', function () {
+                var mode = $(this).val();
+                if(mode == 1) {
+                    $(".logo").hide();
+                    $(".haibao").show();
+                } else {
+                    $(".logo").show();
+                    $(".haibao").hide();
+                }
+            });
+            //提交
+            $('#setting-form').submit(function(){
+                var message = '';
+                if($('input[name=mode]:checked').val() == 1) {
+                    if($.trim($(':text[name=qrcode_background]').val()) == '') {
+                        message += '必须选择海报背景';
+                    }
+                }
+                if(message) {
+                    u.message(message);
+                    return false;
+                }
+                return true;
+            });
+        });
+    });
+</script>
+{template 'common/footer'}

@@ -1,0 +1,57 @@
+{template 'common/header'}
+<title>拆红包</title>
+<style type="text/css">
+    body {margin:0px; background:#efefef; font-family:'微软雅黑'; -moz-appearance:none;overflow-x: hidden;}
+    .mask{width: 100%; height: 100%; background: yellow; position: fixed; opacity: 0.5; z-index: 0;}
+	.desc{
+		text-align: left;
+		font-size: 14px;
+		line-height: 20px;
+		margin-left: 20px;
+	}
+</style>
+<link rel="stylesheet" href="../addons/manor_shop/plugin/coupon/template/mobile/default/static/css/shake.css">
+<div class="mask"></div>
+<div class="coupon_content" style="text-align: center;position: relative;top: 15%;">
+	<img id="red" src="{php echo tomedia($coupon['thumb'])}" alt="红包">
+	<p class="desc">
+		{$coupon['sub_desc']}
+	</p>
+</div>
+<script>
+	require(['core', 'tpl','sweetalert'], function (core, tpl,swal) {
+		$('#red').on('click', function () {
+            $('#red').addClass('shake');
+			setTimeout(function () {
+				$('#red').removeClass('shake');
+				core.pjson('coupon/util', {'op': 'send_coupon', 'coupon_id': '{$id}','is_group':true}, function (res) {
+					if (res.status != 1) {
+						core.tip.show(res.result);return;
+					}
+                    var text = "恭喜您，优惠券到手啦，您想现在就去选商品使用优惠券吗?";
+                    var button = "现在就去选~";
+
+                    swal({
+                        title:'',
+                        text: text,   type: "success",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: button,
+                        cancelButtonText: "先看看其他的",
+                        closeOnConfirm: false,   closeOnCancel: false
+                    }, function(isConfirm){
+
+                        if (isConfirm) {
+                            location.href = "{php echo $this->createMobileUrl('shop')}";
+                        } else {
+                            location.href = "{php echo $this->createPluginMobileUrl('coupon')}";
+                        }
+                    });
+				});
+			}, 500);
+
+		});
+	});
+</script>
+{php $show_footer = false}
+{template 'common/footer'}

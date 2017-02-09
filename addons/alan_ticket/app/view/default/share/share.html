@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="hahnzhu" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>2017,说出你的愿望</title>
+    <style type="text/css">
+       body,div,p,h1,h2,h3,h4,h5,ul,li,ol,span,form,input,strong,a{margin: 0;padding: 0;}{margin:0px;padding:0px;border-width:0px;}
+       body{background: #F7D70A url("../addons/alan_ticket/app/resource/images/s4.png") no-repeat center 50px;background-size: 100%;}
+
+       a{text-decoration:none;}
+       a:link,a:visited,a:hover,a:active{color:#F7D70A;}
+       .backimg{background: url("../addons/alan_ticket/app/resource/images/s5.png") no-repeat center bottom;background-size: 100%;}
+       .title{background-color: black;color:#F7D70A;font-weight: 600;height:50px;line-height: 50px;text-align: center;padding: 10px;box-sizing: border-box;}
+       .title .item-left{float:left;text-align: center;width:33.33%;line-height: 18px; font-size: 15px;border-width:0px;}
+       .title .item-right{float:right;text-align: center;width:33.33%;line-height: 18px;font-size: 15px;border-width:0px;}
+       .content{text-align: center;  position: relative; }
+       .bac-img1{position: absolute;top: 0px; width: 100%; left:0px;}
+       .bac-img2{position: absolute;bottom: 18%; width: 100%;left:0px;}
+       .user-page{ width: 100%;padding-top:10%;  display: none;}
+       .imageBorder{display: inline-block;width: 70%;padding: 6px;background-size: 100% 100%;}
+       #hb-img{width:99.5%;}
+       #hdgz{font-size: 14px;font-weight: 400;margin-bottom:26px;}
+       .item-left-50{align-self: center;text-align: center;width:100%;line-height: 80px; font-size: 14px;border-width:0px;margin-top: 14px;}
+       .item-left-50 a{padding: 12px 55px;border-radius: 10px;color: white;font-weight: 600;background: #ff5252;}
+       .item-right-50{float:right;text-align: center;width:50%;line-height: 80px;font-size: 12px;border-width:0px;}
+       .item-right-50 a{padding: 12px 28px;background: black;border: 2px solid black;border-radius: 10px;color: #F7D70A;font-weight: 600;}
+       .invest-img{position: absolute;bottom:0px;left:0px;}
+       #zcwdr{font-size: 14px;font-weight: 500;padding: 5px 0px; border: 2px solid black; border-left-width: 0px;border-right-width: 0px;display: none;}
+       .zcwdr-icon{position: absolute;bottom: 0px;left:0px;}
+       .zcwdr-item{text-align:center;padding:20px 0px;}
+       .zcwdr-item-img{width:30%; float:left;}
+       .zcwdr-item-img img{/*width:100%;*/border-radius: 50%;width:60px;height:60px;}
+       .zcwdr-item-remark{width:70%; float:right;font-size:16px;}
+       .zcwdr-item-name{line-height:30px;text-align:left;font-size: 14px;font-weight: 550;}
+       .zcwdr-item-time{line-height:30px;text-align:left;font-size: 14px;font-weight: 550;}
+       /*.item-right-100{text-align: center;width:50%;font-size: 16px;border-width:0px;margin-top:40px;text-align:center;}*/
+       .item-right-100 a{display: block;width: 50%;margin:0 auto;
+         border: 2px solid black;color: black;font-weight: 600;height: 36px;line-height: 36px;}
+
+
+
+       .nodata{font-size: 14px;font-weight: 600;}
+
+
+       .clear{clear:both;}
+        #messageZone {width: 150px; line-height: 30px; height: 30px;background: rgba(27, 26, 26, 0.71);text-align: center; color: #fff; font-size: 13px;  border-radius: 2px; margin: 0 110px; position: fixed; top: 47%;  z-index: 10000;display: none}
+
+
+
+
+
+
+       .yindao{position: fixed; top:0px; background-color: rgba(0, 0, 0, 0.69); height:100%;width:100%;z-index: 1;overflow: auto; display: none; z-index: 10}
+       .yindao img{width:94%;height: 50%;margin-top:55%;}
+
+
+       .jtyindao{width:50px; position: fixed; top:40%;text-align: center; color:black;font-size: 18px;font-weight: 500; z-index:1;}
+        .jtyindao a{color:black;display:block;}
+        .jtyindao a:link,.jtyindao a:visited,.jtyindao a:hover,.jtyindao a:active{color:black;}
+        .jtyindao img{width:35px;}
+        .jtyindao p{margin-top:5px;}
+
+       .jtyindao.left{left:0px;}
+       .jtyindao.right{right:0px;}
+
+
+
+       .scfxhb{position: fixed; top:0px; background-color: rgba(0, 0, 0, 0.6); height:100%;width:100%;z-index: 1;overflow: auto; display: none;}
+       .scfxhb-con{padding:7% 10%;}
+       .scfxhb-close{text-align:right;}
+       .scfxhb-close img{width:45px;margin-bottom: -5px;}
+       .scfxhb-img{}
+       .scfxhb-img img{width:100%;}
+       .scfxhb-remark{color: white;font-size: 16px;padding: 20px 50px;text-align: center}
+
+
+
+
+       .fxhy{position: fixed; top:0px; background-color: rgba(0, 0, 0, 0.87); height:100%;width:100%;z-index: 1;display: none;}
+       .fxhy-con{height:100%;}
+       .fxhy-fxjt{text-align:right;}
+       .fxhy-fxjt img{width:50px;}
+
+
+        .hdgz{background: rgba(27, 26, 26, 0.71);padding: 20px 20px;font-size: 15px;z-index: 1;height: 100%;position: fixed; top: 0px; overflow: auto;font-weight: 550; display: none;}
+        .hdgz-con{background: #fff;margin-top: 10%;}
+        .hdgz-title{ position: relative; line-height: 40px;}
+        .hdgz-title span {position: absolute;top: 0px; right: 33px; font-size: 40px;}
+        .hdgz-rules{ text-align: left; padding: 0px 26px;}
+        .redfont{color:red;}
+        .user-dream{
+          width: 90%;
+          margin: 0 auto;
+          background: #ffffff;
+          border:6px solid #020202;
+          padding: 25px 30px;
+          box-sizing: border-box;
+        }
+        .userSelf{
+          overflow: hidden;
+          padding-bottom: 20px;
+        }
+        .userSelf img{width: 35%;float: left;border-radius: 50%;border:2px solid #020202;}
+        .selfDream{float: right;width: 50%;text-align: left;}
+        .selfDream h3{font-size: 16px;line-height: 36px;padding-top: 10px;}
+        .selfDream p{font-size: 12px;line-height: 20px;}
+        .zcwdr-icon{width:40%;}
+        .erweima{background: #ececec;padding: 20px 10px;}
+        .erweima p{font-size: 12px;padding-bottom: 16px;}
+        .erweima h3{font-size: 14px;font-weight: normal;line-height: 24px;}
+        .erweima img{
+          width: 110px;height: 110px;margin: 20px auto;
+        }
+        .share{
+          font-size: 15px;
+          margin-top: 5px;
+        }
+        .ydbox{
+          width: 90%;
+          position: absolute;
+          z-index: 10;
+          top: 200px;
+          left: 5%;
+        }
+        .closeLogo{
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+      @media screen and (max-width: 414px){
+            .ydbox{
+              top:225px;
+            }
+          }
+      @media screen and (max-width: 375px){
+        .ydbox{
+          top:210px;
+        }
+      }
+
+        .ydbox img{width: 100%}
+    </style>
+    <script src="../addons/alan_ticket/app/resource/js/jquery-1.11.1.min.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+    //引导图片的代码
+       $(function(){
+		   var tan_times = localStorage.getItem('tan_times');
+          if(tan_times < 5){
+    			  if(tan_times <=0) {
+    				  tan_times = 0;
+    			  } else {
+    				  tan_times = parseInt(tan_times);
+    			  }
+            $('.yindao').show();
+    			  tan_times ++;
+    			  localStorage.setItem('tan_times', tan_times);
+          }else{
+            $('.yindao').hide();
+          }
+          $('.yindao img').on('click',function(){
+            //localStorage.isfirstin = true;
+        	  $('.yindao').hide();
+          })
+
+
+          $('#scfxhb').on('click',function(){
+
+        	   $('.scfxhb').show();
+             $('body').css({
+                 'overflow':'hidden',
+                 'height':'100%'
+             })
+             $('body').bind('touchmove',function(e){
+               e.preventDefault()
+             },false)
+          })
+
+
+          $('#scfxhbclase').on('click',function(){
+            $('body').css({
+                'overflow':''
+            })
+            $('body').unbind('touchmove')
+        	$('.scfxhb').hide();
+          })
+
+
+          $('#fxhy').on('click',function(){
+        	$('.fxhy').show();
+          })
+
+
+          $('.fxhy,#fxhyclose').on('click',function(){
+        	$('.fxhy').hide();
+          })
+
+
+
+          $('#hdgz').on('click',function(){
+          	console.log('23456.......');
+            $('body').css({
+                'overflow':'hidden',
+                'height':'100%'
+            })
+            $('body').bind('touchmove',function(e){
+              e.preventDefault()
+            },false)
+        	$('.hdgz').show();
+          })
+
+
+          $('.closehdgz').on('click',function(){
+            $('body').css({
+                'overflow':''
+            })
+            $('body').unbind('touchmove')
+        	$('.hdgz').hide();
+          })
+
+            $.ajax({
+               type: "GET",
+               url: "{php echo app_url('share/share/my_info')}",
+               //url:"/tangshengmanor/app/index.php?i=6&c=entry&do=Share&m=alan_ticket&ac=share&op=my_info",
+               data: {},
+                beforeSend:function(){$("#messageZone").show();}, //添加loading信息
+               success: function(data){
+                   //console.log(data);
+                   $("#messageZone").hide();
+                   var getdata = JSON.parse(data);
+                   if(getdata.status=='1'){
+                      $('#vote_num').html(getdata.result.vote_num);
+                      $('#rank').html(getdata.result.rank);
+                      $('.poster_path').attr('src',getdata.result.poster_path+'?t='+new Date().getTime());
+                      var friend = getdata.result.friend;
+                      var friendhtml = '';
+                      if(friend.length){
+                            for (var i = 0; i < friend.length; i++) {
+                              var item = friend[i];
+                              var imgurl = item.headimg;
+                              var nickname = item.nickname;
+                              var vote_time = item.vote_time;
+                              friendhtml  += '<div class="zcwdr-item" ><div class="zcwdr-item-img" ><img  src="'+ imgurl +'" /></div><div class="zcwdr-item-remark" ><div class="zcwdr-item-name" >'+ nickname +'</div><div class="zcwdr-item-time" >支持时间：'+ vote_time +'</div></div></div><div class="clear"></div>';
+                            }
+                            $('#firend').html(friendhtml);
+                            if(friend.length>8){
+                               $('.ckgd').show();
+                            }else{
+                                $('.ckgd').hide();
+                            }
+                      }else{
+                          $('#firend').html('<div class="zcwdr-item nodata" >还没有人给你投票,快去拉票吧！ ^_^  </div>');
+                          $('.ckgd').hide();
+                      }
+                   }
+                   $('.user-page').show();
+                   $('#zcwdr').show();
+               }
+            });
+       })
+    </script>
+</head>
+<body>
+<div id="messageZone">请稍候，正在生成中...</div>
+    <!--  顶部 -->
+    <div class="title">
+       <div class="item-left">
+       	  <a href="{php echo app_url('share/index')}">
+       	    <div>我的票数</div>
+            <div id="vote_num" ></div>
+          </a>
+       </div>
+       <div class="item-right">
+       	  <a href="{php echo app_url('ranking')}">
+       	    <div>目前排名</div>
+            <div id="rank"></div>
+          </a>
+       </div>
+       <div class="clear"></div>
+    </div>
+
+
+    <!-- 介绍引导 -->
+
+    <div class="content yindao" >
+    	<img src="../addons/alan_ticket/app/resource/images/yindao.png" >
+    </div>
+
+
+     <!-- 箭头引导 左 -->
+    <div class="content jtyindao left" >
+      <a href="{php echo app_url('apply',array('back'=>2))}">
+       <img src="../addons/alan_ticket/app/resource/images/jtleft.png" >
+        <p>左</p>
+        <p>侧</p>
+        <p>信</p>
+        <p>息</p>
+        <p>页</p>
+      </a>
+    </div>
+
+    <!-- 箭头引导 右-->
+    <div class="content jtyindao right" >
+      <a href="{php echo app_url('ranking')}">
+        <img src="../addons/alan_ticket/app/resource/images/jtright.png" >
+        <p>右</p>
+        <p>侧</p>
+        <p>排</p>
+        <p>行</p>
+        <p>榜</p>
+      </a>
+    </div>
+
+
+
+   <!-- 长按保存图片分享到我的朋友圈 -->
+
+    <div class="content scfxhb" >
+        <div  class="scfxhb-con" >
+    	  <div  class="scfxhb-close" >
+    	    <img src="../addons/alan_ticket/app/resource/images/s7.png"  id="scfxhbclase" />
+    	  </div>
+          <div class="scfxhb-img" >
+    	    <img src=""  class="poster_path" />
+    	  </div>
+          <div class="scfxhb-remark" >长按保存图片<br/>分享到我的朋友圈</div>
+        </div>
+    </div>
+
+    <!-- 指引。。 -->
+    <!--<div class="ydbox">-->
+      <!--<img src="../addons/alan_ticket/app/resource/images/yindao.png" alt="">-->
+      <!--<div class="closeLogo">-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!-- 分享到我的朋友引导-->
+    <div class="content fxhy" >
+        <div class="fxhy-con" >
+    	  <div  class="fxhy-fxjt" >
+    	    <img src="../addons/alan_ticket/app/resource/images/s8.png"  id="fxhyclose" />
+    	  </div>
+        </div>
+    </div>
+
+    <div class="content hdgz" >
+    	  <div  class="hdgz-con" >
+    	    <div class="hdgz-title">
+    	    	<h3>活动规则</h3>
+    	       <span class="closehdgz"> × </span>
+    	    </div>
+    	    <div class="hdgz-rules">
+            <p>1.本活动愿望提交<font class="redfont">不限形式，不限内容</font>，可以是实体，也可以是虚拟；</p>
+            <p>2.本活动时间：<font class="redfont">从即日起至2017年1月15日24点</font>；</p>
+            <p>3.本活动参与者，需关注公众号【北京大学生生活圈】进行愿望提交和投票；</p>
+            <p>4.本活动投票环节，每名用户限给他人投一票，重复投票不计；</p>
+            <p>5.本活动目的，旨在帮助2016年留有遗憾的大学生完成他们的愿望，所获真实<font class="redfont">票数排名前十名者</font>将得到实现愿望机会；</p>
+            <p>6.本活动参与者，<font class="redfont">不限地域，不限年龄，不限人数</font>（可以是个人也可以是团体）；</p>
+            <p>7.所有获奖名单将在微信公众号【北京大学生生活圈】上公布，或将电话或邮件形式通知中奖者，敬请关注；</p>
+            <p>8.本活动最终解释权归公众号【北京大学生生活圈】所有；</p>
+    	    </div>
+    	    <div class="zcwdr-item closehdgz">
+	        	<div class="item-right-100">
+		       	  <a href="javascript:void(0);" style="background:black;color:#F7D70A;"  class="closehdgz">
+		       	    我知道了
+		          </a>
+		        </div>
+	        </div>
+    	  </div>
+    </div>
+
+
+
+
+    <!-- 个人主页-->
+
+
+    <div class="content backimg">
+    	<!-- <img src="../addons/alan_ticket/app/resource/images/s1.png" class="bac-img"> -->
+    	 <!-- <img src="../addons/alan_ticket/app/resource/images/s4.png" class="bac-img1">
+    	 <img src="../addons/alan_ticket/app/resource/images/s5.png" class="bac-img2"> -->
+	    <div class="user-page">
+	    	<div class="imageBorder">
+	    	  <img src="" id="hb-img"  class="poster_path">
+	    	</div>
+        <!-- <div class="user-dream">
+          <div class="userSelf">
+            <img src="../addons/alan_ticket/app/resource/images/1.jpg" />
+            <div class="selfDream">
+              <h3>我的愿望是</h3>
+              <p>我要上天，我要上天，我要上天，我要上天</p>
+            </div>
+          </div>
+          <div class="erweima">
+            <p>2017年就要来了，不要让过去留有遗憾</p>
+            <h3>不蓝瘦别香菇<br/>老司机来帮我实现愿望二维码</h3>
+            <img src="../addons/alan_ticket/app/resource/images/erweima.png" />
+            <h3>长按上方二维码 支持我的愿望</h3>
+          </div>
+        </div> -->
+        <div class='share'>长按保存图片，分享到我的朋友圈</div>
+		    <div class="item-left-50" >
+	       	  <a href="javascript:void(0);" id="scfxhb" >
+	       	    生成分享海报
+	          </a>
+	       </div>
+         <div id="hdgz">活动规则></div>
+	       <div class="clear"></div>
+       </div>
+    </div>
+
+
+    <!-- 部分支持我的人-->
+    <div class="content" style="min-height:300px;">
+    	<img src="../addons/alan_ticket/app/resource/images/s3.png" class="zcwdr-icon">
+    	<div id="zcwdr">支持我的人</div>
+        <!-- 支持我的人列表容器 -->
+        <div id="firend"></div>
+        <!-- 查看更多   -->
+        <div class="zcwdr-item ckgd">
+        	<div class="item-right-100">
+	       	  <a href="{php echo app_url('share/index')}">
+	       	    查看更多
+	          </a>
+	        </div>
+        </div>
+	    <div class="clear"></div>
+    </div>
+<script>
+	var fn = {};
+	fn['share'] = function () {
+		window.shareData = JSON.parse('{$shopshare}');
+		jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+		jssdkconfig.debug = false;
+		jssdkconfig.jsApiList = ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','hideMenuItems','showOptionMenu'];
+		wx.config(jssdkconfig);
+		wx.ready(function () {
+            wx.showOptionMenu();
+            wx.hideMenuItems({
+                menuList: [
+                    'menuItem:share:qq', //分享到QQ
+                    'menuItem:share:weiboApp', // 分享到Weibo
+                    'menuItem:share:QZone', // 分享到Weibo
+                    'menuItem:share:facebook',
+                    'menuItem:favorite',
+                    'menuItem:setFont',
+                    'menuItem:exposeArticle',
+                    'menuItem:dayMode',
+                    'menuItem:nightMode',
+                    'menuItem:openWithQQBrowser',
+                    'menuItem:openWithSafari',
+                    'menuItem:share:email',
+                    'menuItem:originPage',
+                    'menuItem:copyUrl',
+                ],
+                success: function (res) {
+                    //alert('已隐藏“阅读模式”，“分享到朋友圈”，“复制链接”等按钮');
+                },
+                fail: function (res) {
+                    //alert(JSON.stringify(res));
+                }
+            });
+
+			 wx.onMenuShareAppMessage({
+			 title:window.shareData.title,
+			 link:window.shareData.link,
+			 imgUrl:window.shareData.imgUrl,
+			 desc:window.shareData.desc,
+			 success:function () {
+
+			 },
+			 });
+			 wx.onMenuShareTimeline({
+			 title:window.shareData.title,
+			 link:window.shareData.link,
+			 imgUrl:window.shareData.imgUrl,
+			 success:function () {
+
+			 },
+			 });
+			 /* wx.onMenuShareQQ({
+			 title:window.shareData.title,
+			 link:window.shareData.link,
+			 imgUrl:window.shareData.imgUrl,
+			 success:function () {
+
+			 },
+			 });
+
+			 wx.onMenuShareWeibo({
+			 title:window.shareData.title,
+			 link:window.shareData.link,
+			 imgUrl:window.shareData.imgUrl,
+			 success:function () {
+			 },
+			 });*/
+		});
+		wx.error(function(res){
+			console.log(res);
+		});
+	};
+	fn['share']();
+
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?db5e40a8c44d0fa8673aa729e43efd10";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+</html>

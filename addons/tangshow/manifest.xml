@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[微网站宣传专题]]></name>
+		<identifie><![CDATA[tangshow]]></identifie>
+		<version><![CDATA[1.0.0]]></version>
+		<type><![CDATA[enterprise]]></type>
+		<ability><![CDATA[用于田园好鲜微网站主题宣传]]></ability>
+		<description><![CDATA[用于田园好鲜微网站主题宣传]]></description>
+		<author><![CDATA[诗意的边缘]]></author>
+		<url><![CDATA[http://bbs.we7.cc/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="宣传主页入口" do="index" state="" direct="false" />
+		</cover>
+		<rule>
+			<entry title="主页" do="index" state="" direct="false" />
+		</rule>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

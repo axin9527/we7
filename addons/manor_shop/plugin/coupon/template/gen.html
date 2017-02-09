@@ -1,0 +1,125 @@
+{template 'web/_header'}
+{template 'tabs'}
+
+<div class="panel panel-info">
+    <div class="panel-heading">筛选</div>
+    <div class="panel-body">
+        <form action="./index.php" method="get" class="form-horizontal" role="form" id="form1">
+            <input type="hidden" name="c" value="site"/>
+            <input type="hidden" name="a" value="entry"/>
+            <input type="hidden" name="m" value="manor_shop"/>
+            <input type="hidden" name="do" value="plugin"/>
+            <input type="hidden" name="p" value="coupon"/>
+            <input type="hidden" name="coupon" value="{$_GPC['coupon']}"/>
+            <input type="hidden" name="method" value="gen"/>
+            <div class="form-group">
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">微信昵称</label>
+                    <div class="col-sm-8 col-lg-9 col-xs-12">
+                        <input type="text" class="form-control" name="nickname" value="{$_GPC['nickname']}"
+                               placeholder='微信昵称'/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">是否兑换</label>
+                    <div class="col-sm-8 col-lg-9 col-xs-12">
+                        <select name='is_used' class='form-control'>
+                            <option value=''></option>
+                            <option value='0' {if $_GPC['is_used']=='0'}selected{/if}>未兑换</option>
+                            <option value='1' {if $_GPC['is_used']=='1'}selected{/if}>已兑换</option>
+                            <option value='2' {if $_GPC['is_used']=='2'}selected{/if}>兑换失败</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">获得时间</label>
+                    <div class="col-sm-7 col-lg-9 col-xs-12">
+                        <div class="col-sm-2">
+                            <label class='radio-inline'>
+                                <input type='radio' value='0' name='searchtime' {if $_GPC['searchtime']=='0'}checked{/if}>不搜索
+                            </label>
+                            <label class='radio-inline'>
+                                <input type='radio' value='1' name='searchtime' {if $_GPC['searchtime']=='1'}checked{/if}>搜索
+                            </label>
+                        </div>
+                        {php echo tpl_form_field_daterange('time', array('starttime'=>date('Y-m-d H:i',$starttime),'endtime'=>date('Y-m-d H:i', $endtime)),true);}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">兑换时间</label>
+                    <div class="col-sm-7 col-lg-9 col-xs-12">
+                        <div class="col-sm-2">
+                            <label class='radio-inline'>
+                                <input type='radio' value='0' name='searchtime1' {if $_GPC['searchtime1']=='0'}checked{/if}>不搜索
+                            </label>
+                            <label class='radio-inline'>
+                                <input type='radio' value='1' name='searchtime1' {if $_GPC['searchtime1']=='1'}checked{/if}>搜索
+                            </label>
+                        </div>
+                        {php echo tpl_form_field_daterange('time1', array('starttime'=>date('Y-m-d H:i',$starttime1),'endtime'=>date('Y-m-d H:i', $endtime1)),true);}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label"></label>
+                    <div class="col-sm-8 col-lg-9 col-xs-12">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                        <input type="hidden" name="token" value="{$_W['token']}"/>
+                        <button type="submit" name="export" value="1" class="btn btn-primary">导出 Excel</button>
+                    </div>
+                </div>
+                </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">总数：{$total}</div>
+    <div class="panel-body">
+        <table class="table table-hover table-responsive">
+            <thead class="navbar-inner" >
+                <tr>
+                    <th>ID</th>
+                    <th>劵码</th>
+                    <th>优惠券名称</th>
+                    <th>是否兑换</th>
+                    <th>微信昵称</th>
+                    <th style='width:180px;'>兑换时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {loop $list $row}
+                <tr>
+                    <td>{$row['id']}</td>
+                    <td>{$row['code']}</td>
+                    <td>{$row['coupon_name']}</td>
+                    <td>
+                        {$row['is_used']}
+                    </td>
+                    <td>
+                        {if $row['is_used'] =='已兑换'}
+                        {if !empty($row['avastar'])}
+                        <img src="{$row['avastar']}" style='width:30px;height:30px;padding1px;border:1px solid #ccc' />
+                        {/if}
+                        {if empty($row['nickname'])}未更新{else}{$row['nickname']}{/if}
+                        {else}
+                        ---
+                        {/if}
+                    </td>
+                    <td>{$row['used_time']}</td>
+                    <td>
+                        {if $row['is_used'] == '兑换失败'}
+                        <a  class='btn btn-primary  btn-sm' href="{php echo $this->createPluginWebUrl('coupon/send',array('couponid' => $row['coupon_id'], 'nickname'=>$row['nickname'], 'openid'=>$row['openid']));}" title="发放优惠券" ><i class='fa fa-send'></i></a>
+                        {/if}
+                    </td>
+                </tr>
+                {/loop}
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+    <div class='panel-footer'>
+
+    </div>
+</div>
+{template 'web/_footer'}

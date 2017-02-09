@@ -1,0 +1,8 @@
+{
+  "require": {
+      "catfan/Medoo": "^1.1"
+  },
+  "autoload": {
+    "files": ["mysql.php"]
+  }
+}

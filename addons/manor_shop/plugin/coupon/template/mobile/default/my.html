@@ -1,0 +1,194 @@
+{template 'common/header'}
+<title>我的优惠券</title>
+<link rel="stylesheet" type="text/css" href="../addons/manor_shop/plugin/coupon/template/mobile/default/images/style.css">
+<script src="../addons/manor_shop/template/mobile/tangsheng/static/js/send_coupon.js"></script>
+<style type="text/css">
+    body {margin:0px; background:#eee; font-family:'微软雅黑'; -moz-appearance:none;overflow-x: hidden; }
+    a {text-decoration:none;}
+
+    .tab {height:30px; font-size:13px;background:#fff;padding-right: -2px;}
+    .nav {height:30px;border-bottom:2px solid #fff;  width:33.3%;  background:#fff; color:#666; text-align:center; line-height:30px; float:left;}
+    .navon { border-bottom:2px solid #ff6801;  }
+    .no {height:100px; margin:50px 0px 60px; color:#ccc; font-size:12px; text-align:center;}
+    #coupon_loading {color:#666;text-align: center;font-size: 13px;height: 20px;}
+    .coupon_no {height:100px;  margin:50px 0px 60px; color:#ccc; font-size:12px; text-align:center;}
+    .coupon_menu {height:60px; width:100%; }
+    .coupon_no_nav {height:38px; background:#eee; margin:0px 3%; border:1px solid #d4d4d4; border-radius:5px; text-align:center; line-height:38px; color:#666;}
+    .coupon_more { height:40px; line-height:40px; font-size:14px;color:#232323; margin:10px; border-radius: 5px; background-repeat:no-repeat; border:1px solid #232323; text-align: center; }
+    .qname{ width: 20px;font-size: 20px;word-wrap: break-word;letter-spacing: 20px;color: #fff;float: right;position: absolute;right:8%;font-weight: 500;top: 17%;}
+    .coupon_item{height:auto;}
+    .qcon{position: absolute;top: 8%;bottom:10%;max-width:80%;left: 7%;height: 80%;width: 68%;padding: 0px;border: 1px dashed #fff; border-radius: 5px;}
+    .qgz1{text-align: center;font-size: 50px; color: #fff;font-weight: 500;line-height:50px;margin: 5px;}
+    .qgz2{line-height: 20px; font-size: 12px;margin-left: 10px;color: #fff;font-weight: 500;}
+    .coupon_code {height:30px; width:70%;display:block; padding:0px; margin:0px; border:0px; float:left; font-size:16px;border-radius: 8px;margin-left: 14px}
+    .coupon_exchange{background: #ff771b;border: 0; border-radius: 8px;width: 70px; height: 30px; line-height: 15px; color: #fff; margin-left: 10px;}
+</style>
+<div class="page_topbar">
+    <a href="javascript:;" class="back" onclick="history.back()"><i class="fa fa-angle-left"></i></a>
+    <div class="title">我的优惠券</div>
+</div>
+
+<div class="tab">
+    <div class="nav {if $used==0 && $past!=1}navon{/if}" onclick="location.href='{php echo $this->createPluginMobileUrl('coupon/my')}'">未使用</div>
+    <div class="nav {if $used==1 && $past!=1}navon{/if}"  onclick="location.href='{php echo $this->createPluginMobileUrl('coupon/my',array('used'=>1))}'">已使用</div>
+    <div class="nav {if $past==1}navon{/if}"  onclick="location.href='{php echo $this->createPluginMobileUrl('coupon/my',array('past'=>1))}'">已过期</div>
+</div>
+{if empty($set['closecenter'])}
+<div class="coupon_more" onclick="location.href = '{php echo $this->createPluginMobileUrl('coupon')}'"><i class="fa fa-gift"></i> 赶紧去领券中心看看更多优惠券~</div>
+{/if}
+{if empty($set['close_gen'])}
+<div style="margin-top: 8px;">
+    <input class="coupon_code" type="text" name="coupon_code" class=""> <button class="coupon_exchange">兑换</button>
+</div>
+{/if}
+<div id='container'></div>
+
+
+<script id='tpl_empty' type='text/html'>
+    <div class="coupon_no"><i class="fa fa-credit-card" style="font-size:100px;"></i><br><span style="line-height:18px; font-size:16px;">您还没有优惠券~</span></div>
+</script>
+<script id='tpl_list' type='text/html'>
+    <%each list as coupon%>
+    <div class="coupon_item" onclick="location.href = '{php echo $this->createPluginMobileUrl('coupon/mydetail')}&id=<%coupon.id%>'">
+        <!-- 老版优惠券-->
+        <!--     <div class='bg cside side side-left'></div>
+        <div class="cthumb" <%if coupon.thumb==''%>style="width:8px;"<%/if%>> <%if coupon.thumb!=''%><img src='<%coupon.thumb%>' /><%/if%></div>
+    <div class="cinfo" >
+        <div class="inner" >
+            <div class="name"><%coupon.couponname%></div>
+            <div class="time">
+                <%if coupon.past%>已使用 <%/if%>
+                <%if coupon.timestr==''%>
+                永久有效
+                <%else%>
+                <%if coupon.past%>已过期<%else%>
+                有效期 <%coupon.timestr%>
+                <%/if%>
+                <%/if%></div>
+        </div>
+    </div>
+    <div class="cright">
+        <div class="bg png png-<%coupon.css%>"></div>
+        <div class="bg sideleft side side-<%coupon.css%>"></div>
+        <div class="rinfo" >
+            <div class='rinner <%coupon.css%>'>
+                <div class="price"><%if coupon.backpre%>￥<%/if%><span><%coupon._backmoney%></span></div>
+                <div class="type"><%coupon.backstr%></div>
+            </div>
+        </div>
+        <div class="bg sideright side side-<%coupon.css%>"></div>
+
+    </div> -->
+        <!-- 新版优惠券开始-->
+        <%if coupon.coupon_goods_id>0%>
+        <img src="../addons/manor_shop/plugin/coupon/template/mobile/default/images/yhq3.png" style="width:100%;" />
+        <%else if coupon.backtype == 0 && coupon.enough<=0%>
+        <img src="../addons/manor_shop/plugin/coupon/template/mobile/default/images/yhq2.png" style="width:100%;" />
+        <%else if coupon.backtype == 0 && coupon.enough>0%>
+        <img src="../addons/manor_shop/plugin/coupon/template/mobile/default/images/yhq1.png" style="width:100%;" />
+        <%/if%>
+        <div class="qcon">
+            <div class="qgz1"><%if coupon.backpre%>￥<%/if%><%coupon.deduct%></div>
+            <div class="qgz2"><%coupon.couponname%></div>
+            <div class="qgz2">
+                <%if coupon.timestr==''%>
+                永久有效
+                <%else%>
+                <%if coupon.past%>已过期<%else%>
+                截止时间 <%coupon.timestr%>
+                <%/if%>
+                <%/if%>
+            </div>
+            <div class="qgz2">特别提醒：本优惠券不可用于支付运费</div>
+        </div>
+        <div class="qname">
+            <%if coupon.coupon_goods_id>0%>
+            单品
+            <%else if coupon.enough>0%>
+            购物
+            <%else if coupon.enough<=0%>
+            购物
+            <%/if%>
+            <%if coupon.backtype == 0 && coupon.enough<=0%>
+            立减
+            <%else if coupon.backtype == 0 && coupon.enough>0%>
+            满减
+            <%else if coupon.backtype == 1%>
+            💉打折
+            <%else if coupon.backtype == 2%>
+            返利
+            <%/if%>
+
+        </div>
+    </div>
+    <%/each%>
+</script>
+
+<script language='javascript'>
+    var page = 1;
+    require(['core','tpl'],function(core,tpl){
+
+        core.pjson('coupon/my', {page:page, used:'{$_GPC['used']}',past:'{$_GPC['past']}'}, function(json) {
+
+            if (json.result.list.length <= 0) {
+                $("#container").html(tpl('tpl_empty'));
+                return;
+            }
+            $("#container").html(tpl('tpl_list', json.result));
+
+            var loaded = false;
+            var stop=true;
+            $(window).scroll(function(){
+                if(loaded){
+                    return;
+                }
+                totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+                if($(document).height() <= totalheight){
+
+                    if(stop==true){
+                        stop=false;
+                        $('#container').append('<div id="coupon_loading"><i class="fa fa-spinner fa-spin"></i> 正在加载...</div>');
+                        page++;
+                        core.pjson('coupon/my', {page:page, used: '{$_GPC['used']}',past:'{$_GPC['past']}'}, function(morejson) {
+                            stop = true;
+                            $('#coupon_loading').remove();
+                            $("#container").append(tpl('tpl_list', morejson.result));
+                            if (morejson.result.list.length <morejson.result.pagesize) {
+                                $('#container').append('<div id="coupon_loading">已经加载全部优惠券</div>');
+                                loaded = true;
+                                return;
+                            }
+                        },true);
+                    }
+                }
+            });
+        }, true);
+        $('.coupon_exchange').on('click', function () {
+            var url = 'index.php?i='+"{$_W['acid']}"+'&c=entry';
+            var coupon_code = $('.coupon_code').val();
+            if(!coupon_code) {
+                core.tip.show('请输入兑换码');return;
+            }
+            core.pjson('coupon/util',{op:'exchange',code:coupon_code, type:'exchange'}, function (res) {
+                if(res.status != 1) {
+                    core.tip.show(res.result);
+                    return;
+                }
+                var coupon_id = res.result;
+                core.pjson('coupon/util', {op:'send_coupon',coupon_id:coupon_id}, function (res) {
+                    if(res.status == -1) {
+                        core.pjson('coupon/util',{op:'exchange',code:coupon_code, type:'error'}, function (res) {});
+                        core.message('兑换失败', url+'&method=my&p=coupon&m=manor_shop&do=plugin', 'error')
+                    } else {
+                        core.pjson('coupon/util',{op:'exchange',code:coupon_code, type:'success'}, function (res) {});
+                        core.message('兑换成功' ,url+'&method=my&p=coupon&m=manor_shop&do=plugin');
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
+{php $show_footer = true}
+{template 'common/footer'}

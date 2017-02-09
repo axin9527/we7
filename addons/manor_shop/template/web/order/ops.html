@@ -1,0 +1,111 @@
+<div class="dropdown" >
+    <input type="hidden" class="realname" value="{$item['realname']}">
+    <input class='addressdata' type='hidden' value='{php echo json_encode($item["addressdata"])}' />
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+        操作
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="操作" style="z-index: 9999">
+        {if empty($g['statusvalue'])}
+            {ifp 'order.op.pay'}
+                {if $item['paytypevalue']==3}
+                    <li role="presentation">
+                        <a role="menuitem" href="javascript:;"
+                           onclick="send(this)" data-item='{php echo json_encode($g)}' data-itemid='{$item["id"]}'
+                           data-address='{php echo json_encode($item["addressdata"])}' data-toggle="modal" data-target="#modal-confirmsend">确认发货</a>
+                    </li>
+                {else}
+                    <li role="presentation">
+                        <a role="menuitem" tabindex="-1"
+                           href="{php echo $this->createWebUrl('order', array('op' => 'deal','to'=>'confirmpay','og_id'=>$g['og_id'],'id' => $item['id']))}"
+                           onclick="return confirm('确认此订单已付款吗？');return false;">确认付款</a>
+                    </li>
+                {/if}
+            {/if}
+        {elseif  $g['statusvalue'] == 1}
+            {if !empty($item['addressid']) }
+                {ifp 'order.op.send'}
+                    <li role="presentation">
+                        <a role="menuitem" href="javascript:void(0);"
+                           onclick="send(this)"  data-itemid='{$item["id"]}' data-address='{php echo json_encode($item["addressdata"])}' data-item='{php echo json_encode($g)}'
+                           data-toggle="modal" data-target="#modal-confirmsend">确认发货</a>
+                    </li>
+                {/if}
+            {else}
+                {if $item['isverify']==1}
+                    {ifp 'order.op.verify'}
+                        <li role="presentation">
+                            <a role="menuitem" href="{php echo $this->createWebUrl('order', array('op' => 'deal','to'=>'confirmsend1','id' => $item['id']))}"
+                                                   onclick="return confirm('确认使用吗？');return false;">确认使用</a>
+                        </li>
+                    {/if}
+                {else}
+                    {ifp 'order.op.fetch'}
+                        <li role="presentation">
+                            <a role="menuitem" href="{php echo $this->createWebUrl('order', array('op' => 'deal','to'=>'confirmsend1','id' => $item['id']))}"
+                               onclick="return confirm('确认取货吗？');return false;">确认使用</a>
+                        </li>
+                    {/if}
+                {/if}
+            {/if}
+        {elseif $g['statusvalue'] == 2}
+            {if !empty($item['addressid'])}
+                {ifp 'order.op.sendcancel'}
+                    <li role="presentation">
+                        <a role="menuitem"  onclick="
+                        $('#modal-cancelsend').find(':input[name=id]').val('{$item['id']}');
+                        $('#modal-cancelsend').find(':input[name=og_id]').val('{$g['og_id']}')"
+                           data-toggle="modal" data-target="#modal-cancelsend">取消发货</a>
+                    </li>
+                {/if}
+                {ifp 'order.op.finish'}
+                    <li role="presentation">
+                        <a role="menuitem" href="{php echo $this->createWebUrl('order', array('op' => 'deal','to'=>'finish','og_id'=>$g['og_id'],'id' => $item['id']))}"
+                           onclick="return confirm('确认订单收货吗？');return false;">确认收货</a>
+                    </li>
+                {/if}
+                <li role="presentation">
+                    <a role="menuitem" href="javascript:void(0);"
+                       onclick="updateexpress(this)"  data-itemid='{$item["id"]}' data-expresssn='{$g["expresssn"]}' data-expresscom='{$g["expresscom"]}' data-express='{$g["express"]}' data-address='{php echo json_encode($item["addressdata"])}' data-item='{php echo json_encode($g)}'
+                       data-toggle="modal" data-target="#modal-update-express">修改物流</a>
+                </li>
+            {else}
+
+            {/if}
+        {elseif $g['statusvalue'] == 3}
+            <li role="presentation">
+                <a role="menuitem" href="{php echo url('mc/notice/tpl', array('id' => $item['fanid']));}">发送消息</a>
+            </li>
+        {/if}
+
+        {if $_GPC['status'] == 4}
+            <li role="presentation">
+                <a role="menuitem" href="javascript:;"
+                   onclick="$('#modal-refund').find(':input[name=id]').val({$item['id']})" data-toggle="modal"
+                   data-target="#modal-refund" data-addressdata="{php echo json_encode($item[' addressdata'])}" data-item="{php echo json_encode($g)}" data-itemid="{$item['id']}">退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款</a>
+            </li>
+        {/if}
+        {if $g['statusvalue'] >=2}
+        <li role="presentation">
+            <a role="menuitem" href="#" onclick='express_find(this,"{$item['id']}","{$g['og_id']}")' >查看物流</a>
+        </li>
+        {/if}
+        {if !$_GPC['id']}
+        <li role="presentation">
+            <a role="menuitem" href="{php echo $this->createWebUrl('order', array('op' => 'detail', 'id' => $item['id']))}">查看详情</a>
+        </li>
+        {/if}
+        <!-- <li role="presentation">
+            <a role="menuitem" href="javascript:;"
+                                   onclick="send(this)" data-item='{php echo json_encode($g)}' data-itemid='{$item["id"]}' data-address='{php echo json_encode($item["addressdata"])}' data-toggle="modal" data-target="#modal-confirmsend">确认发货</a></li>-->
+        <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">确认付款</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">确认使用</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">确认取货</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">取消发货</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">确认收货</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">发送消息</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">查看物流</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">修改物流</a></li>-->
+    </ul>
+</div>

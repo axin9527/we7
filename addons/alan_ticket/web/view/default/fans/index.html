@@ -1,0 +1,143 @@
+{php include ticket_template('common/header');}
+<style>
+    .main{margin-top: 20px}
+</style>
+<div class="main" style="clear: both">
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="c" value="site">
+                <input type="hidden" name="a" value="entry">
+                <input type="hidden" name="m" value="alan_ticket">
+                <input type="hidden" name="do" value="fans">
+                <input type="hidden" name="ac" value="index">
+                <input type="hidden" name="op" value="index">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键字</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        <input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">是否填写愿望</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        <select name="iswish" class="form-control">
+                            <option value="" selected=""></option>
+                            <option {if isset($_GPC['iswish']) && $_GPC['iswish'] == 1}selected{/if} value="1">是</option>
+                            <option {if isset($_GPC['iswish']) && $_GPC['iswish'] != '' && $_GPC['iswish']== 0}selected{/if} value="0">否</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">是否假人</label>
+                    <div class="col-xs-12 col-sm-10 col-lg-8">
+                        <select name="status" class="form-control">
+                            <option value="" selected=""></option>
+                            <option {if isset($_GPC['status']) && $_GPC['status'] == 1}selected{/if} value="1">是</option>
+                            <option {if isset($_GPC['status']) && $_GPC['status'] != '' && $_GPC['status']== 0}selected{/if} value="0">否</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-lg-2">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="main">
+    <form action="" method="post">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                粉丝管理 - 数量 : {$total}
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead class="navbar-inner">
+                    <tr>
+                        <th>编号</th>
+                        <th>昵称</th>
+                        <th>姓名</th>
+                        <th>电话</th>
+                        <th>愿望</th>
+                        <th>是否假人</th>
+                        <th>进入时间</th>
+                         <th >操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {loop $list $value}
+                        <tr>
+                            <td>{$value['id']}</td>
+                            <td><img style="border-radius: 20px;width: 40px;" src="{$value['headimg']}">  {$value['nickname']}</td>
+                            <td>{$value['realname']}</td>
+                            <td>{$value['phone']}</td>
+                            <td>{$value['wish']}</td>
+                            <td>
+                                {if $value['ismock'] == 1}
+                                是
+                                {else}
+                                否
+                                {/if}
+                            </td>
+                            <td>
+                                {if strlen($value['created_time'])>=10}
+                                {php echo date('Y-m-d H:i', $value['created_time'])}
+                                {/if}
+                            </td>
+                            <td>
+                                {if $value['ismock'] == 1}
+                                 <a data-id="{$value['id']}" class="btn btn-default btn-sm add_ranking">进排行榜</a>
+                                {/if}
+                            </td>
+                        </tr>
+                    {/loop}
+                    </tbody>
+                </table>
+                {$pager}
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+     require(['../../../../../alan_ticket/web/resource/components/sweetalert/sweetalert.min'], function (swal) {
+        $('.add_ranking').on('click', function () {
+            var id = $(this).data('id');
+            swal({
+                title: "确定将该用户提到排行榜",
+                text: "操作此选项该用户将会出现在排行榜，只正对假人操作",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                animation: "slide-from-top",
+                inputPlaceholder: "请输入愿望"
+            },
+            function(inputValue){
+                if (inputValue === false) return false;
+
+                if (inputValue === "" || inputValue<=0) {
+                    swal.showInputError("您还没有输入任何东西");
+                    return false
+                }
+                $.ajax({
+                    url:"{php echo web_url('fans/index', array('op'=>'add_ranking'))}&id="+id+"&wish="+inputValue,
+                    type:'post',
+                    dataType:'json',
+                    success:function (res) {
+                        if(res.status == -1) {
+                            swal("错误!", res.result, "error");
+                        } else {
+                            swal("成功!", res.result, "success");
+                            setTimeout(function () {
+                                //location.reload();
+                            }, 1000);
+                        }
+                    }
+                })
+            });
+        })
+    });
+</script>
+{php include ticket_template('common/footer');}

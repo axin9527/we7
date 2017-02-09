@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="hahnzhu" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>2017,说出你的愿望！</title>
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+  <style>
+  body,div,p,h1,h2,h3,h4,h5,ul,li,ol,span,form,input,strong,{margin: 0;padding: 0;}
+    body{
+      background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/dream/background.png") no-repeat;
+      background-size: cover;
+      padding-top: 195%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      margin: 0;
+    }
+    .page3{
+      box-sizing: border-box;
+      position: relative;
+
+      padding-top: 66%;
+    }
+    .page3 .page3_1{
+      width: 100%;
+      position: absolute;
+      top: 0;
+    }
+    .dream_name{
+      overflow: hidden;
+      padding:35px 10px 0;
+    }
+    .dream_name .dream{
+      width: 48%;
+      box-sizing: border-box;
+      background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/dream/page3_2.png") no-repeat;
+      background-size: 100%;
+      padding: 120px 10px 0;
+    }
+    .dream_name .name{
+      width: 48%;
+      box-sizing: border-box;
+      background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/dream/page3_11.png") no-repeat;
+      background-size: 100%;
+      padding: 120px 10px 0;
+    }
+    .dream_name .dream{
+      float: left;
+    }
+    .dream_name .name{
+      float: right;
+    }
+    .dream_name .dream textarea,.dream_name .name input{
+      border: none;
+      background: none;
+      resize: none;
+      outline: none;
+      color: #909090;
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
+    .dream_name .dream textarea{
+      height: 100px;
+    }
+    .redfont{color:red;}
+    .phone{
+      padding: 50px 10px;
+    }
+    .phone input{
+      display: block;
+      width: 100%;
+      background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/dream/input.png") no-repeat;
+      background-size: 100%;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      box-sizing: border-box;
+      text-align: center;
+      padding-bottom: 15px;
+      color: #000000;
+    }
+    .page3_4{
+      width: 70%;
+      display: block;
+    }
+    .dreamBtn{
+      display: block;
+      width: 76%;
+      margin: 0 auto;
+      background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/dream/button.png") no-repeat;
+      background-size:100%;
+    }
+    /*.page3_bottom{
+      width: 100%;
+      background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/dream/page3_6.png") no-repeat;
+      background-size:100%;
+      position: absolute;
+      bottom: 0;
+    }*/
+    /*.page3_bottom img{
+      width: 100%;
+    }*/
+    .button-group{
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 0;
+    }
+    .look{
+      display: block;
+      width: 34%;
+      height: 40px;
+    }
+    .rule{
+      width: 34%;
+      height: 40px;
+    }
+    .look img,.rule img{width: 100%;}
+    .popupRule{
+      width: 96%;
+      position: fixed;
+      height:auto;
+      overflow:auto;
+      top: 15%;
+      left: 2%;
+      /* margin-left: -48%;*/
+      background: #ffffff;
+      box-sizing: border-box;
+      padding: 0 25px;
+      border-radius: 5px;
+      color: #020202;
+      display: none;
+    }
+    .popupRule h3{
+      font-size: 18px;
+      text-align: center;
+      line-height: 30px;
+    }
+    .popupRule p{
+      font-size: 12px;
+    }
+    .popupRule button{
+      display: block;
+      width: 60%;
+      height: 40px;
+      background: #020202;
+      text-align: center;
+      line-height: 40px;
+      font-size: 16px;
+      color: #f5d22e;
+      border-radius: 10px;
+      margin: 10px auto 20px;
+    }
+    .mask{
+      background: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      height : 100%;
+      width : 100%;
+      left: 0;
+      right: 0;
+      top: 0;bottom: 0;
+      display: none;
+    }
+    .popupRule img{
+      width: 17px;
+      height: 17px;
+      position: absolute;
+      right: 20px;
+      top: 8px;
+    }
+    .phone{
+      align-self: center;
+      color: #000;
+      text-align: center;
+    }
+    .wish-title{
+      font-weight: bold;;
+      font-size: 19px;
+      text-align: center;
+      margin: 0;
+    }
+  @media screen and (max-width: 414px) {
+
+    .dream_name .dream,.dream_name .name{
+      height: 280px;
+    }
+    .button-group,.phone{
+      padding: 20px 50px;
+    }
+    .phone input{
+      height: 75px;
+    }
+    .page3_4{
+      margin: 0 auto 18px;
+    }
+    .dreamBtn{
+      height: 71px;
+    }
+    /*.page3_bottom{
+      height: 80px;
+    }*/
+    .button-group{
+      padding-bottom: 0
+    }
+  }
+  @media screen and (max-width: 376px) {
+    .dream_name .dream,.dream_name .name{
+      height: 252px;
+    }
+    .button-group,.phone{
+      padding: 15px 45px;
+    }
+    .phone input{
+      height: 68px;
+    }
+    .page3_4{
+      margin: 0 auto 15px;
+    }
+    .dreamBtn{
+      height: 65px;
+    }
+    /*.page3_bottom{
+      height: 74px;
+    }*/
+    .button-group{
+      padding-bottom: 0
+    }
+  }
+    @media screen and (max-width: 414px) {
+
+      .dream_name .dream,.dream_name .name{
+        height: 280px;
+      }
+      .button-group,.phone{
+        padding: 20px 50px;
+      }
+      .phone input{
+        height: 75px;
+      }
+      .page3_4{
+        margin: 0 auto 18px;
+      }
+      .dreamBtn{
+        height: 71px;
+      }
+      /*.page3_bottom{
+        height: 80px;
+      }*/
+      .button-group{
+        padding-bottom: 0
+      }
+    }
+    @media screen and (max-width: 376px) {
+      .dream_name .dream,.dream_name .name{
+        height: 252px;
+      }
+      .button-group,.phone{
+        padding: 15px 45px;
+      }
+      .phone input{
+        height: 68px;
+      }
+      .page3_4{
+        margin: 0 auto 15px;
+      }
+      .dreamBtn{
+        height: 65px;
+      }
+      /*.page3_bottom{
+        height: 74px;
+      }*/
+      .button-group{
+        padding-bottom: 0
+      }
+    }
+    @media screen and (max-width: 320px) {
+      .page3{
+        padding-top: 72%;
+      }
+      .dream_name .dream,.dream_name .name{
+        height: 212px;
+      }
+      .button-group,.phone{
+        padding: 15px 40px;
+      }
+      .phone input{
+        height: 58px;
+      }
+      .page3_4{
+        margin: 0 auto 10px;
+      }
+      .dreamBtn{
+        height: 54px;
+      }
+      .button-group{
+        padding-bottom: 0
+      }
+      /*.page3_bottom{
+        height: 62px;
+      }*/
+    }
+
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="pages">
+    <!-- 第三屏 -->
+    <section class="page page3">
+        <h1 class='wish-title'>说出你的愿望</h1>
+        <div class="phone">
+          <input type="text" id="wish" placeholder="我想去巴黎" />
+        </div>
+        <p class="dreamBtn"></p>
+      <div class="button-group">
+              <a href="{php echo app_url('ranking/index')}" class="look">
+                <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/dream/look.png" />
+              </a>
+              <div class="rule">
+                <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/dream/rule.png" />
+              </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+      <div class="mask"></div>
+      <div class="popupRule">
+        <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/dream/close.png" />
+        <h3>活动规则</h3>
+        <p>1.本活动愿望提交<font class="redfont">不限形式，不限内容</font>，可以是实体，也可以是虚拟；</p>
+        <p>2.本活动时间：<font class="redfont">从即日起至2017年1月15日24点</font>；</p>
+        <p>3.本活动参与者，需关注公众号【北京大学生生活圈】进行愿望提交和投票；</p>
+        <p>4.本活动投票环节，每名用户限给他人投一票，重复投票不计；</p>
+        <p>5.本活动目的，旨在帮助2016年留有遗憾的大学生完成他们的愿望，所获真实<font class="redfont">票数排名前十名者</font>将得到实现愿望机会；</p>
+        <p>6.本活动参与者，<font class="redfont">不限地域，不限年龄，不限人数</font>（可以是个人也可以是团体）；</p>
+        <p>7.所有获奖名单将在微信公众号【北京大学生生活圈】上公布，或将电话或邮件形式通知中奖者，敬请关注；</p>
+        <p>8.本活动最终解释权归公众号【北京大学生生活圈】所有；</p>
+        <button>朕知道了</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+<script src="../addons/manor_shop/template/mobile/tangsheng/static/js/zepto.min.js"></script>
+<!--<script src="../addons/manor_shop/template/mobile/tangsheng/static/js/parallax.js"></script> -->
+<script>
+    $('#wish').focus(function(){
+        this.placeholder=''
+    });
+    $('#wish').blur(function(){
+        this.placeholder='我想去巴黎'
+    })
+    function check(){
+        wish   = $('#wish').val();
+        submits = true;
+        if(wish.length>20 || wish == ""){
+            alert('梦想不能大于20字符且不能为空');
+            submits=false;
+        }
+        return submits;
+    }
+
+    $('.dreamBtn').click(function(){
+        wish   = $('#wish').val();
+        checks =check();
+        if(checks){
+            $.ajax({
+                url: "{php echo app_url('apply/index')}",
+                type: "post",
+                data: {op: 'add_dream', wish: wish,back:"{php echo $_GPC['back']}"},
+                cache: false,
+                success: function (jsonStr) {
+                    json = JSON.parse(jsonStr);
+                    if(json.status==1){
+                        window.location.href="{php echo app_url('share/share')}";
+                    }else{
+                        alert(json.result);
+                    }
+                }
+            })
+        }
+
+    });
+
+    $(".rule").click(function(){
+        $(".mask").show();
+        $(".popupRule").show();
+        $('body').css({
+            'overflow':'hidden',
+            'height':'100%'
+        })
+        $('body').bind('touchmove',function(e){
+          e.preventDefault()
+        },false)
+    })
+    $(".popupRule button").click(function(){
+        $(".mask").hide();
+        $(".popupRule").hide();
+        $('body').css({
+            'overflow':''
+        })
+          $('body').unbind('touchmove')
+    })
+    $(".popupRule img").click(function(){
+        $(".mask").hide();
+        $(".popupRule").hide();
+        $('body').css({
+            'overflow':''
+        })
+          $('body').unbind('touchmove')
+    })
+
+
+    var fn = {};
+    fn['share'] = function () {
+        window.shareData = JSON.parse('{$shopshare}');
+        jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','hideMenuItems','showOptionMenu'];
+        wx.config(jssdkconfig);
+        wx.ready(function () {
+            wx.showOptionMenu();
+            wx.hideMenuItems({
+                menuList: [
+                    'menuItem:share:qq', //分享到QQ
+                    'menuItem:share:weiboApp', // 分享到Weibo
+                    'menuItem:share:QZone', // 分享到Weibo
+                    'menuItem:share:facebook',
+                    'menuItem:favorite',
+                    'menuItem:setFont',
+                    'menuItem:exposeArticle',
+                    'menuItem:dayMode',
+                    'menuItem:nightMode',
+                    'menuItem:openWithQQBrowser',
+                    'menuItem:openWithSafari',
+                    'menuItem:share:email',
+                    'menuItem:originPage',
+                    'menuItem:copyUrl',
+                ],
+                success: function (res) {
+                    //alert('已隐藏“阅读模式”，“分享到朋友圈”，“复制链接”等按钮');
+                },
+                fail: function (res) {
+                    // alert(JSON.stringify(res));
+                }
+            });
+
+            wx.onMenuShareAppMessage({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                desc:window.shareData.desc,
+                success:function () {
+
+                },
+            });
+            wx.onMenuShareTimeline({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+
+                },
+            });
+        });
+        wx.error(function(res){
+            console.log(res);
+        });
+    };
+    fn['share']();
+
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?db5e40a8c44d0fa8673aa729e43efd10";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+</html>

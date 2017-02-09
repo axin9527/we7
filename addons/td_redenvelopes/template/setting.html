@@ -1,0 +1,103 @@
+{template 'common/header'}
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" >
+        <input type='hidden' name='setid' value="{$set['id']}" />
+        <input type='hidden' name='op' value="follow" />
+        <div class="panel panel-default">
+            <div class='panel-heading'>
+                微信支付参数设置
+            </div>
+            <div class='panel-body'>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">商户号</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="app_mchid" class="form-control" value="{$setting['app_mchid']}" />
+                        <span class="help-block">请输入微信商户号</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">app_id</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="app_id" class="form-control" value="{$setting['app_id']}" />
+                        <span class="help-block">请输入微信公众号的app_id</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">CERT证书文件</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="hidden" name="cert" value="{$setting['cert']}"/>
+                        <input type="file" name="weixin_cert_file" class="form-control" />
+                        <span class="help-block">
+                                {if !empty($setting['cert'])}
+                                <span class='label label-success'>已上传</span>
+                                {else}
+                                <span class='label label-danger'>未上传</span>
+                                {/if}
+                                下载证书 cert.zip 中的 apiclient_cert.pem 文件</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">KEY密钥文件</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="hidden" name="key"  value="{$setting['key']}"/>
+                        <input type="file" name="weixin_key_file" class="form-control" />
+                        <span class="help-block">
+                               {if !empty($setting['key'])}
+                                <span class='label label-success'>已上传</span>
+                                {else}
+                                <span class='label label-danger'>未上传</span>
+                                {/if}
+                                下载证书 cert.zip 中的 apiclient_key.pem 文件
+                            </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">ROOT文件</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="hidden" name="root" value="{$setting['root']}"/>
+                        <input type="file" name="weixin_root_file" class="form-control" />
+                        <span class="help-block">
+                              {if !empty($setting['root'])}
+                                <span class='label label-success'>已上传</span>
+                                {else}
+                                <span class='label label-danger'>未上传</span>
+                                {/if}
+                                下载证书 cert.zip 中的 rootca.pem 文件
+                            </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">发放总金额</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="number" name="total_amount" class="form-control" value="{$setting['total_amount']}" />
+                        <span class="help-block">请输入您在本次活动发放的总金额,为空或者为0代表无上限</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">预警人</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="notice_openid" class="form-control" value="{$setting['notice_openid']}" />
+                        <span class="help-block">输入预警人的openid</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">发放方式</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <label class='radio-inline'><input type='radio' name='red_power' value='1' {if $setting['red_power']==1}checked{/if}/> 手动发放</label>
+                        <label class='radio-inline'><input type='radio' name='red_power' value='2' {if $setting['red_power']==2}checked{/if} /> 自动发放</label>
+                    </div>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1"  />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+{template 'common/footer'}

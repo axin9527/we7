@@ -1,0 +1,212 @@
+{template 'web/_header'}
+{template 'tabs'}
+{if $_GPC['op'] == 'display' || !$_GPC['op']}
+<div class="panel panel-default">
+	<div class='panel-heading'>
+		劵组管理
+	</div>
+    <div class="panel-body table-responsive">
+        <table class="table table-hover">
+            <thead class="navbar-inner">
+                <tr>
+                    <th style="width:60px;">编号</th>
+                    <th>名称</th>
+                    <th>劵数量</th>
+                    <th>劵列表</th>
+                    <th style="width:80px;">状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id='tbody-items'>
+                {loop $list $row}
+                <tr>
+                    <td>{$row['id']}</td>
+		            <td><img src="{php echo tomedia($row['thumb'])}" style="width: 45px;border-radius: 10px;" alt="">{$row['name']}</td>
+                    <td>
+                        {php echo count($row['coupon'])}
+                    </td>
+                    <td>
+                        {loop $row['coupon'] $value}
+                        <span style="color: #00a0e9;font-size: 12px;">{$value['couponname']}</span><br/>
+                        {/loop}
+                    </td>
+                    <td>
+                        {if $row['status']==1}
+                        开启
+                        {else}
+                        关闭
+                        {/if}
+					</td>		
+                    <td>
+                        {ifp 'coupon.category.edit'}
+                        <a class='btn btn-default btn-sm' href="{php echo $this->createPluginWebUrl('coupon/category/add',array('id' => $row['id']));}" title="编辑" ><i class='fa fa-edit'></i></a>
+                        {/if}
+                        {ifp 'coupon.category.delete'}
+                        <a href="{php echo $this->createPluginWebUrl('coupon/category', array('op' => 'delete', 'id' => $row['id']))}"class="btn btn-default btn-sm" onclick="return confirm('确认删除此分组?')" title="删除"><i class="fa fa-times"></i></a>
+                        {/if}
+                        {ifp 'coupon.category.grouprecord'}
+                        <a  class='btn btn-default  btn-sm' href="{php echo $this->createPluginWebUrl('coupon/sendgroup',array('groupid' => $row['id'],'op'=>'record'));}" title="查看组发送记录" ><i class='fa fa-navicon'></i></a>
+                        {/if}
+                        {ifp 'coupon.category.sendgroup'}
+                         <a  class='btn btn-default  btn-sm' href="{php echo $this->createPluginWebUrl('coupon/sendgroup',array('groupid' => $row['id']));}" title="发放优惠券组" ><i class='fa fa-send'></i></a>
+                        {/if}
+                    </td>
+                </tr>
+                {/loop} 
+              
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+    <div class='panel-footer'>
+            {ifp 'coupon.category.add'}
+                 <a href="{php echo $this->createPluginWebUrl('coupon/category',array('op' => 'add'));}" class="btn btn-default" >添加劵组</a>
+           {/if}
+    </div>
+</div>
+{else if $_GPC['op'] == 'add'}
+<form id="setform"  action="" method="post" class="form-horizontal form">
+    <div class='panel panel-default'>
+        <div class='panel-heading'>
+            {if $_GPC['id']}新增{else}编辑{/if}劵组
+        </div>
+        <div class='panel-body'>
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+                <strong>提示：</strong>优惠劵劵组支持一组劵包含1张A优惠劵，2张B优惠劵等优惠卷发放，每张劵发放多少在在优惠劵新增的时候填写的没人最多可获取张数限制里头。劵组发放数量为了限制领取最大数量。
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    <label class="radio-inline "><input type="radio" name="status" value="1" {if $item['status']==1}checked{/if}> 开启</label>
+                    <label class="radio-inline"><input type="radio" name="status"  value="0" {if $item['status']==0}checked{/if}> 关闭</label>
+                    <span class="help-block">是否可以领取该组所有优惠劵</span>
+                    {else}
+                    <div class='form-control-static'>
+                        {if $item['status']==0}
+                        开启
+                        {elseif $item['status']==1}
+                        关闭
+                        {/if}
+                    </div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">排序</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    <input type="number" name="displayorder" class="form-control" value="{$item['displayorder']}" />
+                    　{else}
+                    <div class='form-control-static'>{$item['displayorder']}</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">劵组名称</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    <input type="text" name="name" class="form-control" value="{$item['name']}" />
+                    　{else}
+                    <div class='form-control-static'>{$item['name']}</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">组图片</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    {php echo tpl_form_field_image('thumb', $item['thumb'])}
+                    {else}
+                    {if !empty($item['thumb'])}
+                    <a href='{php echo tomedia($item['thumb'])}' target='_blank'>
+                    <img src="{php echo tomedia($item['thumb'])}" style='width:100px;border:1px solid #ccc;padding:1px' />
+                    </a>
+                    {/if}
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">每人领取组数量</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    <input type="text" name="get_max" class="form-control" value="{$item['get_max']}">
+                    {else}
+                    <div class='form-control-static'>{$item['get_max']}</div>
+                    {/if}
+                    <span class="help-block">不填写默认不限制</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">关键字</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    <input type="text" name="keyword" id="keyword" class="form-control" value="{$item['keyword']}" />
+                    {else}
+                    <div class='form-control-static'>{$item['sub_title']}</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">推送标题</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    <input type="text" name="sub_title" id="title" class="form-control" value="{$item['sub_title']}" />
+                    {else}
+                    <div class='form-control-static'>{$item['keyword']}</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">推送图片</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    {php echo tpl_form_field_image('sub_thumb', $item['sub_thumb'])}
+                    {else}
+                    {if !empty($item['sub_thumb'])}
+                    <a href='{php echo tomedia($item['sub_thumb'])}' target='_blank'>
+                    <img src="{php echo tomedia($item['sub_thumb'])}" style='width:100px;border:1px solid #ccc;padding:1px' />
+                    </a>
+                    {/if}
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">推送描述</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    <textarea name="sub_desc" class="form-control" >{$item['sub_desc']}</textarea>
+                    {else}
+                    <div class='form-control-static'>{$item['sub_desc']}</div>
+                    {/if}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label">推送链接</label>
+                <div class="col-sm-9 col-xs-12">
+                    {ifp 'coupon.category.edit'}
+                    <input type="text" name="sub_url" class="form-control" value="{$item['sub_url']}">
+                    {else}
+                    <div class='form-control-static'>{$item['sub_url']}</div>
+                    {/if}
+                    <span class="help-block">不填默认为劵组领取详情，例如：<a target="_blank" href="{php echo $this->createPluginMobileUrl('coupon/group', array('id'=>$_GPC['id']?$_GPC['id']:'id'))}">{php echo $this->createPluginMobileUrl('coupon/group', array('id'=>$_GPC['id']?$_GPC['id']:'id'))}</a>，id为劵组的id</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                <div class="col-sm-9">
+                    <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" onclick='return formcheck()' />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{/if}
+<script>
+
+</script>
+
+{template 'web/_footer'}
+

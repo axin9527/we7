@@ -1,0 +1,1 @@
+<?php if(!defined('IN_IA')) {exit('Access Denied');}if(!defined('manor_shop_VERSION')) {define('manor_shop_VERSION', '1.12.5');}

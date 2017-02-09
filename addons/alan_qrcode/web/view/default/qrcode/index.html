@@ -1,0 +1,102 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo $this->createWebUrl('qrcode')}">管理二维码</a></li>
+    <li><a href="{php echo $this->createWebUrl('qrcode',array('op'=>'create'))}">生成二维码</a></li>
+    <li><a href="{php echo $this->createWebUrl('qrcode_fans_group')}">粉丝分组</a></li>
+
+</ul>
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+    <strong>提示：</strong> 二维码记录用户或者场景扫码过来的用户数据，一个用户以最原始记录的数据为准。老用户（已关注用户）在进行扫码将不统计在该二维码上
+</div>
+<div class="panel panel-info">
+    <div class="panel-heading">筛选</div>
+    <div class="panel-body">
+        <form action="./index.php" method="get" class="form-horizontal" id="form" role="form" id="form1">
+            <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="alan_qrcode" />
+            <input type="hidden" name="do" value="qrcode" />
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">粉丝组</label>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <select name="group_id" class="form-control">
+                        <option value="" selected="selected">所有</option>
+                        {loop $fansgroup $k $v}
+                        <option {if $_GPC['group_id'] == $v['id']}selected="selected"{/if} value="{$v['id']}">{$v['name']}</option>
+                        {/loop}
+                    </select>
+                </div>
+                <label class="col-xs-12 col-sm-4 col-md-2 col-lg-1 control-label">名称</label>
+                <div class="col-sm-4 col-lg-4 col-xs-12">
+                    <input type="text" name="keyword" value="{$_GPC['keyword']}" class="form-control" placeholder="请输入二维码名称">
+                </div>
+                <div class="pull-right col-xs-12 col-sm-3 col-lg-2">
+                    <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="table-responsive panel-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>粉丝组</th>
+                <th>二维码</th>
+                <th>关注数</th>
+                <th>取关数</th>
+                <th style="width:200px;">生成时间</th>
+                <th style="width:180px;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {if !empty($list)}
+            {loop $list $row}
+            <tr>
+                <td><a href="{php echo $this->createWebUrl('qrcode_fans')}&qrcode_id={$row['id']}" title="{$row['title']}">{php echo cutstr($row['title'], 8)}</a></td>
+                <td>{$row['group_name']}</td>
+                <td><a href="{php echo $this->createWebUrl('qrcode', array('op'=>'view_code', 'id'=>$row['id']))}" target="_blank">查看</a></td>
+                <td>{$row['subnum']}</td>
+                <td>{$row['cancelnum']}</td>
+                <td style="font-size:12px; color:#666;">
+                    {php echo date('Y-m-d <br /> h:i:s', $row[create_time]);}
+                </td>
+
+                <td>
+                    <a href="{php echo $this->createWebUrl('qrcode', array('op'=>'post','id'=> $row['id']))}"class="btn btn-default"
+                       data-toggle="tooltip" data-placement="top" title="编辑"><i class="fa fa-pencil"></i></a>
+                    <a href="{php echo $this->createWebUrl('qrcode', array('op'=>'del','id'=> $row['id']))}" class="btn btn-default"
+                       data-toggle="tooltip" title="强制删除" onclick="return confirm('您确定要删除该二维码以及其统计数据吗？')">
+                        <i class="fa fa-times"></i>
+                    </a>
+                    <a href="{php echo $this->createWebUrl('qrcode_stat', array('op'=>'display','qrcode_id'=> $row['id']))}" class="btn btn-default"
+                       data-toggle="tooltip" title="查看统计">
+                        <i class="fa fa-area-chart"></i>
+                    </a>
+
+
+
+                </td>
+            </tr>
+            {/loop}
+            {else}
+            <tr><td colspan="7" style="text-align: center;color:#ccc;font-size: 12px;">暂无数据</td></tr>
+            {/if}
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+</div>
+<script type="text/javascript">
+    require(['bootstrap', 'util'],function($, u){
+        $('.btn').hover(function(){
+            $(this).tooltip('show');
+        },function(){
+            $(this).tooltip('hide');
+        });
+    });
+</script>
+{template 'common/footer'}

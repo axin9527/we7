@@ -1,0 +1,73 @@
+{php include ticket_template('common/header');}
+<style>
+    .main{margin-top: 20px}
+</style>
+<div class="main" style="clear: both">
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="c" value="site">
+                <input type="hidden" name="a" value="entry">
+                <input type="hidden" name="m" value="alan_ticket">
+                <input type="hidden" name="do" value="ticket">
+                <input type="hidden" name="ac" value="index">
+                <input type="hidden" name="op" value="index">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键字</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        <input class="form-control" name="keyword"  id="" type="text" value="{$_GPC['keyword']}">
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-lg-2">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="main">
+    <form action="" method="post">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                投票管理
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead class="navbar-inner">
+                    <tr>
+                        <th>编号</th>
+                        <th>投票人</th>
+                        <th>投给</th>
+                        <th>投票时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {loop $list $value}
+                        <tr>
+                            <td>{$value['vid']}</td>
+                            <td><img style="border-radius: 20px;width: 40px;" src="{$value['headimg']}">  {$value['nickname']}</td>
+                            <td><img style="border-radius: 20px;width: 40px;" src="{$value['to_headimg']}">  {$value['to_nickname']}</td>
+                            <td>
+                                {if strlen($value['vote_time'])>=10}
+                                {php echo date('Y-m-d H:i', $value['vote_time'])}
+                                {/if}
+                            </td>
+                        </tr>
+                    {/loop}
+                    </tbody>
+                </table>
+                {$pager}
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    /* require(['../../../../../alan_ticket/web/resource/components/sweetalert/sweetalert.min'], function (swal) {
+        $('.add_ticket').on('click', function () {
+
+        })
+    });*/
+</script>
+{php include ticket_template('common/footer');}

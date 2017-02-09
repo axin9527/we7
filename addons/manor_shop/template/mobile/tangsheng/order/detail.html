@@ -1,0 +1,858 @@
+{template 'common/header'}
+<title>订单详情</title>
+<style type="text/css">
+    html{font-size: 11.7188px;}
+    body {margin:0px; background:#efefef; -moz-appearance:none;}
+    .detail_topbar {height:44px; background:#5f6e8b; padding:15px;}
+    .detail_topbar .ico {height:44px; width:30px; line-height:34px; float:left; font-size:26px; text-align:center; color:#fff;}
+    .detail_topbar .tips {height:34px;  margin-left:10px; font-size:13px; color:#fff; line-height:17px;}
+    .detail_user {height:54px;  background:#fff; padding:5px; border-bottom:1px solid #eaeaea;}
+    .detail_user .info .ico { float:left;  height:50px; width:30px; line-height:50px; font-size:26px; text-align:center; color:#666}
+    .detail_user .info .info1 {height:54px; width:100%; float:left;margin-left:-30px;margin-right:-30px;}
+    .detail_user .info .info1 .inner { margin-left:30px;margin-right:30px;overflow:hidden;}
+    .detail_user .info .info1 .inner .user {height:30px; width:100%; font-size:16px; color:#333; line-height:35px;overflow:hidden;}
+    .detail_user .info .info1 .inner .address {height:20px; width:100%; font-size:14px; color:#999; line-height:20px;overflow:hidden;}
+    .detail_user .info .ico2 {height:50px; width:30px;padding-top:15px; float:right; font-size:16px; text-align:right; color:#999;}
+
+    .detail_exp {height:42px; width:94%; background:#fff; padding:0px 3%; border-bottom:1px solid #eaeaea; line-height:42px; font-size:16px; color:#333;}
+    .detail_exp .t1 {height:42px; width:auto; float:left;}
+    .detail_exp .t2 {height:42px; width:auto; float:right;}
+    .detail_exp .ico {height:42px; width:10%; float:right;text-align:right;color:#999; font-size:16px;margin-top:5px; }
+    
+    .detail_good {height:auto;padding:10px;background:#fff;  margin-top:16px; border-top:1px solid #eaeaea;}
+    .detail_good .ico {height:6px; width:10%; line-height:36px; float:left; text-align:center;}
+    .detail_good .shop {height:36px; width:90%; padding-left:10%; border-bottom:1px solid #eaeaea; line-height:36px; font-size:18px; color:#333;}
+    .detail_good .good {height:60px; width:100%; padding:10px 0px; border-bottom:1px solid #eaeaea;}
+    .detail_good .img {width:50px; float:left;margin-top: 10px}
+    .detail_good .img img {height:100%; width:100%;}
+    .detail_good .info {width:100%;float:left; margin-left:-50px;margin-right:-60px;}
+    .detail_good .info .inner { margin-left:60px;margin-right:60px; }
+    .detail_good .info .inner .name {height:32px; width:100%; float:left; font-size:12px; color:#555;overflow:hidden;}
+    .detail_good .info .inner .option {height:16px; width:100%; float:left; font-size:12px; color:#888;overflow:hidden;word-break: break-all}
+    .detail_good span { color:#666;}
+    .detail_good .price { float:right;width:60px;;height:54px;margin-left:-60px;;}
+    .detail_good .price .pnum { height:20px;width:100%;text-align:right;font-size:14px; }
+    .detail_good .price .num { height:20px;width:100%;text-align:right;}
+    
+    .detail_price {height:auto; padding:10px; padding-bottom:20px;  background:#fff;   }
+    .detail_price .price {height:auto; width:100%; }
+    .detail_price .price .line {height:26px; width:100%; font-size:13px; color:#666; line-height:26px;}
+    .detail_price .price .line span {height:26px; width:auto; float:right;}
+    
+   
+    .detail_pay {height:60px; width:94%; background:#fff; padding:0px 3%; margin-top:30px; border-top:1px solid #eaeaea;position:fixed;bottom:0px}
+    .detail_pay span {height:60px; width:auto; margin-right:16px; float:right; line-height:60px; color:#ff771b; font-size:16px;}
+    .detail_pay .paysub {height:38px; width:auto;margin-left:5px; background:#ff771b; padding:0px 10px; margin-top:10px; border-radius:5px; color:#fff; line-height:38px; float:right;}
+    
+    .detail_pay .paysub1 {height:38px; width:auto; margin-left:5px;background:#fff; padding:0px 10px; margin-top:10px; border-radius:5px; color:#5f6e8b; line-height:38px; float:right;border:1px solid #5f6e8b;}
+       
+       
+    .chooser {height: 100%; width: 100%; background:#efefef; position: fixed; top: 0px; right: -100%; z-index: 1;}
+    .chooser .address {height:50px; width:94%; background:#fff; padding:10px 3%; border-bottom:1px solid #eaeaea;}
+    .chooser .address .ico {height:50px; width:10%; line-height:50px; float:left; font-size:20px; text-align:center; color:#999;}
+    .chooser .address .info {height:50px; width:77%; margin-right:3%; float:left;}
+    .chooser .address .info .name {height:28px; width:100%; font-size:16px; color:#666; line-height:28px;}
+    .chooser .address .info .addr {height:22px; width:100%; font-size:14px; color:#999; line-height:22px;}
+    .chooser .address .edit {height:50px; width:10%; float:left; }
+
+    .chooser .add_address {height:44px; width:94%; background:#fff; padding:0px 3%; border-bottom:1px solid #eaeaea; line-height:44px; font-size:16px; color:#666;}
+    
+    .detail_nav { height:30px; width:94%;padding:10px;}
+    .detail_nav .nav { padding:2px 5px 2px 5px;; border:1px solid #5f6e8b; color:#5f6e8b; background:#fff; float:left; margin-left:10px;}
+    .detail_nav .selected { border:1px solid #ff6600; color:#ff6600; }
+    
+.address_main {height:100%; width:94%; background:#fff; padding:0px 3%;  position: fixed; top: 0px; right: -100%; z-index: 1;}
+.address_main .line {height:44px; width:100%; border-bottom:1px solid #f0f0f0; line-height:44px;}
+
+.address_main .line input {float:left; height:44px; width:100%; padding:0px; margin:0px; border:0px; outline:none; font-size:16px; color:#666;padding-left:5px;}
+.address_main .line select  { border:none;height:25px;width:100%;color:#666;font-size:16px;}
+.address_main .address_sub1 {height:44px; width:94%; margin:14px 3% 0px; background:#ff4f4f; border-radius:4px; text-align:center; font-size:16px; line-height:44px; color:#fff;}
+.address_main .address_sub2 {height:44px; width:94%; margin:14px 3% 0px; background:#ddd; border-radius:4px; text-align:center; font-size:18px; line-height:44px; color:#666; border:1px solid #d4d4d4;}
+select { width:100px;height:40px;position:absolute;left:0; -webkit-appearance: none;background:#fff; -webkit-tap-highlight-color: transparent;filter:alpha(Opacity=0); opacity: 0;};
+ 
+.stores {overflow:hidden;background:#fff;}
+.store {height:65px;  background:#fff; padding:5px; border-bottom:1px solid #eaeaea;}
+.store .info .ico { float:left;  height:50px; width:30px; line-height:30px; font-size:16px; text-align:center; color:#666}
+.store .info .info1 {height:54px; width:100%; float:left;margin-left:-30px;margin-right:-60px;}
+.store .info .info1 .inner { margin-left:30px;margin-right:60px;overflow:hidden;}
+.store .info .info1 .inner .user {height:25px; width:100%; font-size:14px; color:#333; line-height:25px;overflow:hidden;}
+.store .info .info1 .inner .tel {height:20px; width:100%; font-size:13px; color:#999; line-height:20px;overflow:hidden;}
+.store .info .info1 .inner .address {height:20px; width:100%; font-size:13px; color:#999; line-height:20px;overflow:hidden;}
+.store .info .ico2 {height:50px; width:30px;padding-top:15px; float:right; font-size:24px; text-align:center; color:#ccc;}
+.store .info .ico3 {height:50px; width:30px;padding-top:15px; float:right; font-size:24px; text-align:center; color:#ccc;} 
+.store_title {height:44px; width:94%; overflow: hidden; background:#fff; padding:0px 3%; margin-top:14px; border-bottom:1px solid #eaeaea; border-top:1px solid #eaeaea; line-height:44px; color:#666; font-size:14px;} 
+.store_more {height:20px;  background:#fff; font-size:14px; color:#999; line-height:20px; padding:5px; border-bottom:1px solid #eaeaea; text-align: center;}
+.page_topbar .nav { position:absolute;right:5px;;color:#333;}
+
+.detail_good .text { padding:10px; color:#666;font-size:13px;}
+
+
+    .diyform_info {height:auto;  background:#fff; margin-top:14px; border-bottom:1px solid #e8e8e8; border-top:1px solid #e8e8e8;}
+    .diyform_info .dline {margin:0 10px; height:40px; border-bottom:1px solid #e8e8e8; line-height:40px; color:#666;}
+    .diyform_info .dline .dtitle {height:40px; width:90px; line-height:40px; color:#444; float:left; font-size:16px;  }
+    .diyform_info .dline .dinfo { width:100%;float:right;margin-left:-90px; position: relative; font-size:14px; color:#999; line-height:40px; height:40px; }
+    .diyform_info .dline .dinner { margin-left:90px; }
+    .diyform_info .dline1  { height:auto;overflow:hidden;}
+     .diyform_info .dline2 .dinfo img  { margin-top:5px;}
+   .diyform_info .dline1 .dinfo { height:auto; line-height:35px;}
+   .diyform_info1 { border:none; margin-top:0px; border:1px solid #efefef; border-top:none;  }
+   .diyform_info1 .dline { margin:0;}
+   .diyform_info1 .dline .dtitle { padding-left:10px;width:80px;font-size:13px;}
+   .diyform_info1 .dline .dinner { font-size:13px;}
+   .diyform_info .btn { text-decoration: none;  display: block; background:#f0f0f0; width:100%; text-align: center; color: #999;padding:3px; border-radius:1px; line-height:25px;  }
+    .span_tips{background: green;  color: #fff !important;  border-radius: 4px;  padding: 1px;  font-size: 12px;}
+</style>
+<link rel="stylesheet" href="../addons/manor_shop/template/mobile/tangsheng/static/css/order.css">
+<div id='container'></div>
+
+<script id='tpl_detail' type='text/html'>
+    <div id="mod-container" class="mod-container clearfix">
+        <div class="mod-order mod-pageview pageview-hadtitle" style="z-index: 102; display: block;">
+            <header class="pub-header spline-bottom theme-spline">
+                <span class="tap-action header-icon header-left header-icon-back" onclick="location.href='{php echo $this->createMobileUrl('order/list')}'"></span>
+                <div class="header-content ui-ellipsis tap-action">
+                    <span id="order_status_tab" class="title-tab-item title-tab-timeline tap-action theme-border theme-bg">订单状态</span><span
+                        class="title-tab-item title-tab-detail tap-action theme-border" id="order_detail_tab">订单详情</span></div>
+                <span class="tap-action header-icon header-right header-icon-reload" onclick="location.reload()"></span>
+                <div class="header-percent theme-bg"></div>
+            </header>
+            <div class="main scroller" style="background-color: #fff;">
+                <ol class="order-tabpanel mod-order-timeline" id="order_status">
+                    {if $refund['status'] == -2}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $refund['refundtime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">退款取消</span>
+                            <p class="step-desc">{$refund['reply']}</p>
+                        </div>
+                    </li>
+                    {/if}
+                    {if $refund['status'] == -1}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $refund['endtime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">退款驳回</span>
+                            <p class="step-desc">{$refund['reply']}</p>
+                        </div>
+                    </li>
+                    {/if}
+                    {if $refund['status'] >= 1}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $refund['refundtime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">退款成功</span>
+                            <p class="step-desc">您的退款申请已通过，请稍候留意您的账户</p>
+                        </div>
+                    </li>
+                    {/if}
+                    <!-- 退款申请-->
+                    {if $refund && $refund['status'] >= -1}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $refund['createtime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">已提交退款申请</span>
+                            <p class="step-desc">订单已经提交退款申请成功。请耐心等待</p>
+                        </div>
+                    </li>
+                    {/if}
+                    {if $order['status'] >=3}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $order['finishtime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">已完成</span>
+                            <p class="step-desc">您的订单已经完成</p>
+                        </div>
+                    </li>
+                    {/if}
+                    {if $order['status'] >=2}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $order['sendtime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">已发货</span>
+                            <p class="step-desc">您的订单已经发货</p>
+                        </div>
+                    </li>
+                    {/if}
+                    {if $order['status'] >=1 || ($refund['status'] >= 0 &&  isset($refund['status']))}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $order['paytime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">已付款</span>
+                            <p class="step-desc">订单已经付款成功,我们将在24小时内安排给您发货,请耐心等待</p>
+                        </div>
+                    </li>
+                    {/if}
+
+                    {if $order['status'] ==0}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time countdown" style="color: #ff3366"></div>
+                        <div class="step-container">
+                            <span class="step-title">付款倒计时</span>
+                            <p class="step-desc">请尽快付款，超时将自动取消订单</p>
+                        </div>
+                    </li>
+                    {/if}
+
+                    {if $order['status'] ==-1 && !$order['refundid']}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $order['canceltime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">已取消</span>
+                            <p class="step-desc">您的订单已经取消</p>
+                        </div>
+                    </li>
+                    {/if}
+                    {if $order['status'] >0}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $order['createtime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">待支付</span>
+                            <p class="step-desc">超过{if $trade['closeordertime']}{php echo $trade['closeordertime']/60}{else}1{/if}小时未支付订单将自动取消</p>
+                        </div>
+                    </li>
+                    {/if}
+                    <li class="step theme-spline spline-bottom">
+                        <div class="step-time">{php echo date('Y-m-d H:i', $order['createtime'])}</div>
+                        <div class="step-container">
+                            <span class="step-title">订单提交成功</span>
+                            <p class="step-desc">下单成功，订单号：<%order.ordersn%></p>
+                        </div>
+                    </li>
+                </ol>
+                <div class="order-tabpanel mod-order-detail" id="order_detail" style="display: none;">
+                    <div class="block nuomi-item daojia58-item detail-timeline more tap-action">
+                        <span class="ui-colorred ui-float-right">待支付</span>
+                        订单状态
+                    </div>
+                    <div class="block">
+                        <table class="detail-table">
+                            <tbody>
+                            <tr>
+                                <th>订单号</th>
+                                <td><%order.ordersn%></td>
+                            </tr>
+                            <tr>
+                                <th>下单时间</th>
+                                <td>{php echo date('Y-m-d H:i:s', $order['createtime'])}</td>
+                            </tr>
+                            <tr>
+                                <th>支付方式</th>
+                                <td>
+                                    {if $order['paytype'] == 0}未支付{/if}
+                                    {if $order['paytype'] == 1}余额支付{/if}
+                                    {if $order['paytype'] == 11}后台付款{/if}
+                                    {if $order['paytype'] == 21}微信支付{/if}
+                                    {if $order['paytype'] == 22}支付宝支付{/if}
+                                    {if $order['paytype'] == 23}银联支付{/if}
+                                    {if $order['paytype'] == 3}货到付款{/if}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>选择支付</th>
+                                <td>
+                                    <%if order.choose_pay_type == 'weixin'%>
+                                    微信支付
+                                    <%else if order.choose_pay_type == 'alipay'%>
+                                    支付宝
+                                    <%else if order.choose_pay_type == 'unionpay'%>
+                                    银联
+                                    <%else%>
+                                    其他
+                                    <%/if%>
+                                </td>
+                            </tr>
+                            <%if order.status==3%>
+                            <tr>
+                                <th>完成时间</th>
+                                <td><%order.finishtime%></td>
+                            </tr>
+                            <%/if%>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="block">
+                        <table class="detail-table">
+                            <tbody>
+                            <%if order.addressid!=0%>
+                            <tr>
+                                <th>收货人</th>
+                                <td><span class="ui-float-right">电话:<%address.mobile%></span><%address.realname%></td>
+                            </tr>
+                            <tr>
+                                <th>收货地址</th>
+                                <td><%address.province%> <%address.city%> <%address.area%> <%address.address%></td>
+                            </tr>
+                            <%/if%>
+                            <%if order.dispatchtype==1%>
+                            <tr>
+                                <th>自提地点</th>
+                                <td><span class="ui-float-right"><%carrier.mobile%></span><%carrier.realname%></td>
+                            </tr>
+                            <tr>
+                                <th>自提地址</th>
+                                <td><%carrier.address%></td>
+                            </tr>
+                            <%/if%>
+                            <tr>
+                                <th>备注</th>
+                                <td><%order.remark%></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="block block-detail">
+                        <h3 class="products-title theme-grayfont">费用明细<%if {$url}==1 %><span class="ui-float-right">点击右上角分享免费发红包</span><%/if%> </h3>
+                        <table class="mod-order-products">
+                            <tbody>
+                            <%each goods as g%>
+                            <tr class="theme-spline spline-top">
+                                <td class="name ui-ellipsis"><img style="width:35px; border-radius: 22px;;" src="<%g.thumb%>"/>&nbsp;&nbsp;<%g.title%></td>
+                                <td class="count">x<%g.total%></td>
+                                <td class="price">￥<%g.price%></td>
+                            </tr>
+                            <%/each%>
+                            </tbody>
+                        </table>
+                        <ul class="fee-list theme-spline spline-top">
+                            <li><span class="ui-float-right">￥<%order.goodsprice%></span>商品小计</li>
+                            <li><span class="ui-float-right">￥<%order.dispatchprice|0%></span>配送费</li>
+                            <%if order.deductenough>0%>
+                            <li><span class="ui-float-right">-￥<%order.deductenough%></span>满减</li>
+                            <%/if%>
+                            <%if order.gift_good>0 && order.gift_good_info%>
+                            <li><span class="ui-float-right">-￥<%order.gift_good_info.marketprice%></span>满赠</li>
+                            <%/if%>
+                            <%if order.couponprice>0 && order.couponid >0%>
+                            <li><span class="ui-float-right">-￥<%order.couponprice%></span>优惠劵减免</li>
+                            <%/if%>
+                            <%if order.discountprice>0%>
+                            <li><span class="ui-float-right">-￥<%order.discountprice%></span>会员折扣</li>
+                            <%/if%>
+                            <%if order.deductprice>0%>
+                            <li><span class="ui-float-right">-￥<%order.deductprice%></span>积分抵扣</li>
+                            <%/if%>
+                            <%if order.deductcredit2>0%>
+                            <li><span class="ui-float-right">-￥<%order.deductcredit2%></span>余额抵扣</li>
+                            <%/if%>
+                            <%if order.changeprice!=0%>
+                            <li><span class="ui-float-right"><%if order.changeprice>0%>+<%/if%>￥<%order.changeprice%></span>改价优惠</li>
+                            <%/if%>
+                            <%if order.changedispatchprice!=0%>
+                            <li><span class="ui-float-right"><%if order.changedispatchprice>0%>+<%/if%>￥<%order.changedispatchprice%></span>运费改价</li>
+                            <%/if%>
+
+                        </ul>
+                        <div class="fee-total theme-spline spline-top cf">
+                            <span class="ui-float-right">
+                                实付费(含运费)&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span class="theme-redfont">￥<%order.price%></span>
+                            </span>
+                        </div>
+                        <div class="block-tel">
+                            <span class="theme-grayfont">若有疑问，请联系客服</span><br/><a class="theme-redfont" href="tel:{$set['phone']}">
+                            {$set['phone']}</a>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="pub-footer order-footer theme-spline spline-top">
+                <div class="detail_pay">
+                    <%if order.status==0%>
+                    <%if order.paytype!=3%>
+                     <!--<div class="order-action order-action-1 theme-bg" onclick="location.href ='{php echo $this->createMobileUrl('order/pay')}&orderid=<%order.id%>&openid={$openid}'">付款</div>-->
+                     <div class="order-action order-action-1 theme-bg go_pay">付款</div>
+                    <%/if%>
+                    <div class="paysub1 order_cancel" style='position: relative;width: 63px;background: #ffd600;height: 32px;line-height: 32px;margin-top: 14px;border: 0;'>
+                        <span style='position: absolute;display: block;width: 70px;top: -13px; left: 5px;'>取消订单</span>
+                        <select>
+                            <option value="">不取消了</option>
+                            <option value="我不想买了">我不想买了</option>
+                            <option value="信息填写错误，重新拍">信息填写错误，重新拍</option>
+                            <option value="同城见面交易">同城见面交易</option>
+                            <option value="其他原因">其他原因</option>
+                        </select>
+                    </div>
+                    <%/if%>
+
+
+                    <%if order.status==2 %>
+                    <%if order.expresssn!=''%>
+                    <div class="order_express order-action order-action-1 theme-bg">查看物流</div>
+                    <%/if%>
+                    <div class="order_complete order-action order-action-2 theme-bg">确认收货</div>
+                    <%/if%>
+                    <%if order.status==3 && order.iscomment==0%>
+                    <div class="order-action order-action-10 theme-bg order_comment">评价</div>
+                    <%/if%>
+                    <%if order.status==3 && order.iscomment==1%>
+                    <div class="order-action order-action-10 theme-bg order_comment">追加评价</div>
+                    <%/if%>
+                    <%if order.status==3  || order.status==-1%>
+                    <div class="order-action order-action-10 theme-bg order_delete">删除订单</div>
+                    <%/if%>
+                    <%if order.canrefund%>
+                    <div class="order-action order-action-10 theme-bg order_refund"><%order.refund_button%></div>
+                    <%/if%>
+                    <%if order.isverify=='1' %>
+                    <%if order.verified!='1'%>
+                    <%if order.status==1%>
+                    <div class="order-action order-action-10 theme-bg" onclick="VerifyHandler.verify('{$_GPC['id']}')" style='float:left'><i class="fa fa-qrcode"></i> 确认使用</div>
+                    <%/if%>
+                    <%/if%>
+                    <%/if%>
+                </div>
+                <!-- <span class="order-action order-action-1 theme-bg">去支付</span>
+                <span class="order-action order-action-2 theme-bg">取消订单</span>
+                <span class="order-action order-action-10 theme-bg">再来一单</span>-->
+            </div>
+            <div class="order-welfare tap-action" data-tap="welfare">
+                <div class="welfare-close tap-action" data-tap="welfareClose"></div>
+            </div>
+        </div>
+    </div>
+</script>
+{if p('verify')}
+{template 'verify/pop'}
+{/if}
+<script type="text/javascript">
+	function showDiyInfo(obj){
+				var hide = $(obj).attr('hide');
+				$(obj).next().toggle('fadeIn');
+				$(obj).attr('hide',hide=='1'?'0':'1');
+			}
+			
+     function showStores(obj){
+        if($(obj).attr('show')=='1'){
+            $(obj).next('div').slideUp(100);
+            $(obj).removeAttr('show').find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
+        }
+        else{
+            $(obj).next('div').slideDown(100);
+            $(obj).attr('show','1').find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
+        }
+    }
+    var leftsecond = '{$has_second}';
+    function countdown() {
+        var d = parseInt(leftsecond / 3600 / 24);
+        var h = parseInt((leftsecond / 3600) % 24);
+        var m = parseInt((leftsecond / 60) % 60);
+        var s = parseInt(leftsecond % 60);
+        var str  = '剩余:';
+        if(d>0) {
+            str += d+'天';
+        }
+        if(h>0) {
+            str += h+'时';
+        }
+        if(h==0) {
+            str += h+'时';
+        }
+        if(m>0) {
+            str += m+'分';
+        }
+        if(m==0) {
+            str += m+'分';
+        }
+        if(s>=0) {
+            str += s+'秒';
+        }
+        leftsecond --;
+        if(leftsecond<=0) {
+            $('.order_cancel select').val('倒计时取消');
+            $('.order_cancel select').change();
+            return;
+        }
+        $('.countdown').html(str);
+    }
+    setInterval("countdown()",1000);
+    require(['tpl', 'core'], function(tpl, core) {
+    
+	function is_weixin(){
+		
+	}
+        core.json('order/detail',{id:'{$_GPC['id']}'},function(json){
+                 if(json.status==0){
+                     core.message('订单已取消或不存在，无法查看!',"{php echo $this->createMobileUrl('order')}" ,'error');
+                     return;
+                 }
+                 $('#container').html(  tpl('tpl_detail',json.result) );
+				 
+				 
+				     var ua = navigator.userAgent.toLowerCase();
+						var isWX = ua.match(/MicroMessenger/i) == "micromessenger";
+						var z = []; 
+						$(".diyform_info img").each(function() {
+							 z.push($(this).attr("src"));
+						 });
+						 var current;
+						 if (isWX) {
+							 $(".diyform_info img").click(function(e) {
+								 e.preventDefault();
+								 var startingIndex = $(".diyform_info img").index($(e.currentTarget));
+								 var current = null;
+								 $(".diyform_info img").each(function(B, A) {
+									 if (B === startingIndex) {
+										 current = $(A).attr("src");
+									 }
+								 });
+								 WeixinJSBridge.invoke("imagePreview", {
+									 current: current,
+									 urls: z
+								 });
+							 });
+						 }
+			 
+                 $("#verifycode").html( json.result.order.verifycode);
+                 $(".order_cancel").find('select').change(function(){
+                        var reason = $(this).val();
+
+                        if(reason!=''){
+                             core.json('order/op',{'op':'cancel', orderid:'{$_GPC['id']}',reason:reason},function(json){
+
+                                 if(json.status==1){
+                                      //location.href = core.getUrl('order');
+                                      location.reload();
+                                      return;
+                                 }
+                                 else{
+                                      core.tip.show(json.result);
+                                 }
+                             },true,true);
+                        }
+                 });
+             
+                 $('.order_refund').click(function(){
+                       location.href = core.getUrl('order/op',{op:'refund',orderid:'{$_GPC['id']}'});
+                  });
+                    $('.order_express').click(function(){
+                       location.href = core.getUrl('order/express',{id:'{$_GPC['id']}'});
+                  });
+                
+                 $(".order_complete").click(function(){
+  
+                      core.tip.confirm('确认您已经收货?',function(){
+                      
+                         core.json('order/op',{'op':'complete', orderid:'{$_GPC['id']}'},function(json){
+                                 if(json.status==1){
+                                      location.reload();
+                                      return;
+                                 }
+                                 core.tip.show(json.result);
+                             },true,true);
+                       });
+                 });
+               
+                 $(".order_comment").click(function(){
+                             location.href = core.getUrl('order/op',{op:'comment',orderid:'{$_GPC['id']}'});
+                 });
+            
+                 $(".order_delete").click(function(){
+                        core.tip.confirm('确定删除该订单吗?', function(){
+                            core.json('order/op',{'op':'delete', orderid:'{$_GPC['id']}'},function(json){
+
+                                if(json.status==1){
+                                    location.href = core.getUrl('order');
+                                    return;
+                                }
+                                core.tip.show(json.result);
+                            },true,true);
+                        });
+                 });
+                $('#order_detail_tab').on('click', function () {
+                    $(this).addClass('theme-bg');
+                    $('.scroller').css('background','#efefef');
+                    $('#order_status_tab').removeClass('theme-bg');
+                    $('#order_detail').show();
+                    $('#order_status').hide();
+                });
+                $('#order_status_tab').on('click', function () {
+                    $('.scroller').css('background','#fff');
+                    $(this).addClass('theme-bg');
+                    $('#order_detail_tab').removeClass('theme-bg');
+                    $('#order_status').show();
+                    $('#order_detail').hide();
+                });
+                $('.go_pay').on('click', function () {
+                    setTimeout(function () {
+                        wx_pay(json.result.order);
+                    }, 500);
+                });
+                var pay_ok = "{$_GPC['pay']}";
+                if(pay_ok == 'ok') {
+                    //$('.go_pay').click();
+                    setTimeout(function () {
+                        wx_pay(json.result.order);
+                    }, 500);
+
+                }
+         },true);
+        function wx_pay(order){
+            var pay_type = order.choose_pay_type;
+            var orderid = order.id;
+            var url = "{php echo $this->createMobileUrl('order/detail', array('id'=>$_GPC['id']))}";
+            if($('.go_pay').attr('submitting')=='1'){
+                return;
+            }
+            $('.go_pay').attr('submitting',1);
+
+            core.json('order/pay',{'orderid':orderid}, function (result) {
+                if(result.status != 1) {
+                    core.tip.show(result.result);
+                    return;
+                } else {
+                    if(pay_type == 'weixin') {
+                        var deduct = ($('#deductmoney').length>0 &&$('#deductmoney').attr('on')=='1' )?1:0 ;
+                        core.json('order/pay', {op: 'pay',type: 'weixin', orderid:orderid,deduct:deduct}, function (rjson) {
+                            if (rjson.status != 1) {
+                                if(rjson.status == 11) {
+                                    core.json('order/pay',{
+                                                op:'complete',
+                                                orderid:orderid,
+                                                type:'credit'
+                                            },function(pay_json){
+                                                if(pay_json.status==1){
+                                                    if(pay_json.result.send_coupon_id>0) {
+                                                        core.pjson('coupon/detail', {'op': 'pay', 'id': pay_json.result.send_coupon_id}, function (coupon_ret) {
+                                                            if(coupon_ret.status == 1) {
+                                                                core.pjson('coupon/detail', {
+                                                                    op: 'payresult',
+                                                                    'id': pay_json.result.send_coupon_id,
+                                                                    logid: coupon_ret.result.logid
+                                                                }, function (c_json) {
+                                                                    if(pay_json.status == 1) {
+                                                                        pay_json.result['coupon'] = c_json.result;
+                                                                        console.log(pay_json);
+                                                                        core.message('支付成功,赠送您一张购物返劵，请前往个人中心查看', url, 'success');
+                                                                        return;
+                                                                    }
+                                                                    core.message('支付成功', url, 'success');
+                                                                    return;
+                                                                }, true, true);
+                                                            } else {
+                                                                core.message('支付成功', url, 'success');
+                                                                return;
+                                                            }
+                                                        }, true, true);
+                                                    } else {
+                                                        core.message('支付成功', url, 'success');
+                                                        return;
+                                                    }
+                                                } else {
+                                                    core.message('支付失败', url, 'error');
+                                                }
+                                            }
+                                            ,true,true)
+                                }
+                                $('.go_pay').removeAttr('submitting');
+                                core.tip.show(rjson.result);
+                                return;
+                            }
+
+                            var wechat = rjson.result.wechat;
+                            WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                                'appId': wechat.appid ? wechat.appid : wechat.appId,
+                                'timeStamp': wechat.timeStamp,
+                                'nonceStr': wechat.nonceStr,
+                                'package': wechat.package,
+                                'signType': wechat.signType,
+                                'paySign': wechat.paySign,
+                            }, function (res) {
+                                if (res.err_msg == 'get_brand_wcpay_request:ok') {
+                                    core.json('order/pay', {
+                                        op: 'complete',
+                                        orderid: orderid,
+                                        type: 'weixin', deduct: deduct
+                                    }, function (pay_json) {
+                                        if (pay_json.status == 1) {
+                                            if (pay_json.result.send_coupon_id > 0) {
+                                                core.pjson('coupon/detail', {
+                                                    'op': 'pay',
+                                                    'id': pay_json.result.send_coupon_id
+                                                }, function (coupon_ret) {
+                                                    if (coupon_ret.status == 1) {
+                                                        core.pjson('coupon/detail', {
+                                                            op: 'payresult',
+                                                            'id': pay_json.result.send_coupon_id,
+                                                            logid: coupon_ret.result.logid
+                                                        }, function (c_json) {
+                                                            if (pay_json.status == 1) {
+                                                                pay_json.result['coupon'] = c_json.result;
+                                                                console.log(pay_json);
+                                                                core.message('支付成功,赠送您一张购物返劵，请前往个人中心查看', url, 'success');
+                                                                //$('#container').html(tpl('tpl_order_pay', pay_json.result));
+                                                                return;
+                                                            }
+                                                            core.message('支付成功', url, 'success');
+                                                            //$('#container').html(tpl('tpl_order_pay', pay_json.result));
+                                                            return;
+                                                        }, true, true);
+                                                    } else {
+                                                        core.message('支付成功', url, 'success');
+                                                        return;
+                                                    }
+                                                }, true, true);
+                                            } else {
+                                                core.message('支付成功', url, 'success');
+                                                return;
+                                            }
+                                        }
+                                        else {
+                                            core.tip.show(pay_json.result);
+                                            $('.go_pay').removeAttr('submitting');
+                                        }
+                                    }, true, true);
+                                } else if (res.err_msg == 'get_brand_wcpay_request:cancel') {
+                                    $('.go_pay').removeAttr('submitting');
+                                    var url_1 = "javascript:$('.go_pay').click();";
+                                    var url_2 = "javascript:$('.add_ok2').parent().hide();$('.mask').hide();";
+                                    core.tip.alert2('是否继续支付？','取消', '确定', url_2, url_1);
+                                    //core.tip.show('取消支付');
+                                } else {
+                                    $('.go_pay').removeAttr('submitting');
+                                    alert(res.err_msg);
+                                }
+                            });
+                        }, true,true);
+                    }
+                    else if(pay_type == 'alipay') {
+                        var deduct = ($('#deductmoney').length>0 && $('#deductmoney').attr('on')=='1' )?1:0 ;
+                        core.json('order/pay', {op: 'pay',type: 'alipay', orderid:orderid,openid:"{$_GPC['openid']}",deduct:deduct}, function (rjson) {
+                            if(rjson.status!=1){
+                                $('.go_pay').removeAttr('submitting');
+                                core.tip.show(rjson.result);
+                                return;
+                            }
+                            //virtual
+                            location.href = core.getUrl('order/pay_alipay',{orderid:orderid});
+                            return;
+                        },true,true);
+                    }
+                    else if(pay_type == 'unionpay') {
+                        var deduct = ($('#deductmoney').length>0 && $('#deductmoney').attr('on')=='1' )?1:0 ;
+                        core.json('order/pay', {op: 'pay',type: 'unionpay', orderid:orderid,openid:"{$_GPC['openid']}",deduct:deduct}, function (rjson) {
+                            if(rjson.status!=1){
+                                $('.go_pay').removeAttr('submitting');
+                                core.tip.show(rjson.result);
+                                return;
+                            }
+                            //virtual
+                            location.href = core.getUrl('order/pay_unionpay',{orderid:orderid});
+                            return;
+                            return;
+                        },true,true);
+                    }
+                }
+            });
+
+            console.log(json);
+        }
+        //分享
+
+   });
+    /* require(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js'],function(wx){
+        window.shareData = {php echo json_encode($_W['shopshare'])};
+        jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+        jssdkconfig.debug = true;
+        jssdkconfig.jsApiList = ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','showOptionMenu'];
+        wx.onMenuShareAppMessage({
+            title:window.shareData.title,
+            link:window.shareData.link,
+            imgUrl:window.shareData.imgUrl,
+            desc:window.shareData.desc,
+            success:function () {
+                alert('ok');
+                //core.json('order/detail',{'op':'share'},null,false,true);
+            },
+        });
+        wx.ready(function () {
+            wx.onMenuShareAppMessage({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                desc:window.shareData.desc,
+                success:function () {
+                    alert('ok');
+                    //core.json('order/detail',{'op':'share'},null,false,true);
+                },
+            });
+            wx.onMenuShareTimeline({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+                    alert('ok');
+                   // core.json('order/detail',{'op':'share'},null,false,true);
+                },
+            });
+            wx.onMenuShareQQ({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+                    core.json('order/detail',{'op':'share'},null,false,true);
+                },
+            });
+
+            wx.onMenuShareWeibo({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+                    core.json('order/detail',{'op':'share'},null,false,true);
+                },
+            });
+        });
+
+    });*/
+</script>
+<script>
+    require(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','core'],function(wx,core){
+        window.shareData = {php echo json_encode($_W['shopshare'])};
+        jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','showOptionMenu','getLocation'];
+        wx.config(jssdkconfig);
+        var ajax_data = {'op':'share', 'fid':"{$fission['id']}",'ordersn':"{$order['ordersn']}",'id':"{$_GPC['id']}"};
+        wx.ready(function () {
+            wx.showOptionMenu();
+            wx.onMenuShareAppMessage({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                desc:window.shareData.desc,
+                success:function () {
+                    core.json('order/detail',ajax_data,null,false,true);
+                },
+            });
+            wx.onMenuShareTimeline({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+                    core.json('order/detail',ajax_data,null,false,true);
+                },
+            });
+            wx.onMenuShareQQ({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+                    core.json('order/detail',ajax_data,null,false,true);
+                },
+            });
+
+            wx.onMenuShareWeibo({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+                    core.json('order/detail',ajax_data,null,false,true);
+                },
+            });
+
+        });
+    });
+</script>
+ <!--  {template 'common/footer'}-->

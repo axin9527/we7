@@ -1,0 +1,106 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" id="setting-form">
+		<div class="panel panel-default">
+			<div class="panel-heading">参数设置</div>
+			<div class="panel-body">
+				<ul class="nav nav-tabs" id="myTab">
+					<li class="active" ><a href="#tab_basic">基本设置</a></li>
+					<li><a href="#tab_param1">通知设置</a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane  active" id="tab_basic">
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">活动开关</label>
+							<div class="col-xs-12 col-sm-8">
+								<label class="radio radio-inline">
+									<input type="radio" name="setting[power]" value="1" {if intval($settings['power']) == 1 || !isset($settings['power'])}checked="checked"{/if}> 开
+								</label>
+								<label class="radio radio-inline">
+									<input type="radio" name="setting[power]" value="2" {if intval($settings['power']) == 2}checked="checked"{/if}> 关
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">分享标题</label>
+							<div class="col-sm-8">
+								<input type="text" name="setting[share_title]" class="form-control" value="{$settings['share_title']}" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">分享图片</label>
+							<div class="col-sm-8">
+								{php echo tpl_form_field_image('setting[share_image]', $settings['share_image']);}
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">分享描述</label>
+							<div class="col-sm-8">
+								<textarea style="height:150px;" id="description" name="setting[share_desc]" class="form-control description" cols="60">{$settings['share_desc']}</textarea>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="tab_param1">
+						<div class="panel panel-warning">
+							<div class="panel-heading">获得投票通知</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">模板ID</label>
+									<div class="col-xs-12 col-sm-8">
+										<input type="text" name="setting[get_ticket_template_id]" class="form-control" value="{$settings['get_ticket_template_id']}" />
+										<span class="help-block">公众平台模板消息编号：IT科技——互联网|电子商务——OPENTM200605630</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">发送内容主题</label>
+									<div class="col-xs-12 col-sm-8">
+										<input type="text" name="setting[get_ticket_template_subject]" class="form-control" value="{$settings['get_ticket_template_subject']}" />
+										<span class="help-block">例：您获得新投票信息</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-success">
+							<div class="panel-heading">扫码投票通知</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">模板ID</label>
+									<div class="col-xs-12 col-sm-8">
+										<input type="text" name="setting[ticket_template_id]" class="form-control" value="{$settings['ticket_template_id']}" />
+										<span class="help-block">公众平台模板消息编号：IT科技——互联网|电子商务——OPENTM207423383</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">发送内容主题</label>
+									<div class="col-xs-12 col-sm-8">
+										<input type="text" name="setting[ticket_template_subject]" class="form-control" value="{$settings['ticket_template_subject']}" />
+										<span class="help-block">例：投票成功。您还剩余[票数]张</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+<script>
+require(['jquery', 'util'], function($, u){
+	$(function(){
+		u.editor($('.richtext')[0]);
+	});
+});
+$(function () {
+		window.optionchanged = false;
+		$('#myTab a').click(function (e) {
+			e.preventDefault();//阻止a链接的跳转行为
+			$(this).tab('show');//显示当前选中的链接及关联的content
+		})
+	});
+</script>
+{template 'common/footer'}

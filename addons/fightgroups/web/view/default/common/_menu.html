@@ -1,0 +1,29 @@
+<style type='text/css'>
+    .topmenu { position: relative; width:100%;float:left;background:#efefef;margin-bottom:20px;}
+    .topmenu ul li a { color:#000}
+    .topmenu .dropdown-menu li a { color:#666}
+    .topmenu ul li { content:'|'}
+	.splitter { text-align: center;background:#ccc;color:#039702;padding-top:10px; padding-bottom:10px;font-size:12px;}
+	.splitter{background:#fff;}
+    @media (min-width: 768px){.height60{height: 65px}}
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        line-height: 20px;
+    }
+    @media (min-width: 768px){.navbar-nav>li>a {
+        padding-top: 23px;
+        padding-bottom: 22px;
+        z-index: 999;
+    }}
+    .navbar-nav>.active {background: #ccc}
+    .navbar-nav>.active :hover {background: #ccc}
+</style>
+<div class='topmenu'>
+    <ul class="nav navbar-nav">
+        <li><a href="{url 'home/welcome/ext' array('m' => TG_NAME)}"><i class="fa fa fa-reply-all"></i> 返回拼团</a> </li>
+        {loop $top_menus $topmenus}
+        <li {if $_GPC['do'] == $topmenus['active']}class="active"{/if}><a href="{$topmenus['url']}">{$topmenus['title']}</a></li>
+        {/loop}
+    </ul>
+</div>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="">
+	<application setting="true">
+		<name><![CDATA[投票圆梦计划]]></name>
+		<identifie><![CDATA[alan_ticket]]></identifie>
+		<version><![CDATA[1.3]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[用户为我投票。圆我的梦想。投票最高的前十位用户将实现ta的梦想。]]></ability>
+		<description><![CDATA[愿望这么多，你咋不上天呢？没关系，老司机们帮你实现愿望！点击生成海报，晒到朋友圈，邀请朋友，为你的愿望投一票，我们只为票数前十名，实现愿望哦]]></description>
+		<author><![CDATA[alan51]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+			<message type="subscribe" />
+			<message type="unsubscribe" />
+			<message type="qr" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="image" />
+			<message type="subscribe" />
+			<message type="qr" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="申请梦想入口" do="Apply" state="" direct="false" />
+			<entry title="排行榜入口" do="Ranking" state="" direct="false" />
+			<entry title="个人分享入口" do="Share" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="粉丝管理" do="Fans" state="do=fans" direct="false" />
+			<entry title="投票管理" do="Ticket" state="do=ticket" direct="false" />
+			<entry title="排行榜" do="Ranking" state="do=ranking" direct="false" />
+			<entry title="数据统计" do="Statistics" state="do=stat" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[
+DROP TABLE IF EXISTS `ims_ticket_range_mock`;
+DROP TABLE IF EXISTS `ims_ticket_range`;
+DROP TABLE IF EXISTS `ims_ticket_user`;
+DROP TABLE IF EXISTS `ims_ticket_vote`;
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

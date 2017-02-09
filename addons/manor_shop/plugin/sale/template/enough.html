@@ -1,0 +1,388 @@
+{template 'web/_header'}
+{template 'tabs'}
+<div class="main">
+    <form id="dataform"    {ifp 'sale.deduct.save'}action="" method="post"{/if} class="form-horizontal form">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                满额包邮设置
+            </div>
+            <div class="panel-body">
+                    <div class="form-group">
+                       <label class="col-xs-12 col-sm-3 col-md-2 control-label">满额包邮</label>
+                       <div class="col-sm-9 col-xs-12">
+                           {ifp 'sale.enough.save'}
+                           <label class="radio-inline">
+                               <input type="radio" name="data[enoughfree]" value='1' {if $set['enoughfree']==1}checked{/if} /> 开启
+                           </label>
+                           <label class="radio-inline">
+                               <input type="radio" name="data[enoughfree]" value='0' {if empty($set['enoughfree'])}checked{/if} /> 关闭
+                            </label>
+                           <span class='help-block'>开启满包邮, 订单总金额超过多少可以包邮</span>
+                           {else}
+                           <div class='form-control-static'>{if $set['enoughfree']==1}开启{else}关闭{/if}</div>
+                           {/if}
+                       </div>
+                   </div> 
+                
+                  <div class="form-group">
+                       <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                       <div class="col-sm-4">
+                           {ifp 'sale.enough.save'}
+                          <div class='input-group'>
+                                   <span class="input-group-addon">单笔订单满</span>
+                                   <input type="text" name="data[enoughorder]"  value="{$set['enoughorder']}" class="form-control" />
+                                   <span class='input-group-addon'>元</span>
+                           </div>
+                           <span class='help-block'>如果开启满额包邮，设置0为全场包邮</span>
+                           {else}
+                           <div class='form-control-static'>{if empty($set['enoughmoney'])}全场包邮{else}订单金额满{$set['enoughmoney']}}元包邮{/if}</div>
+                           {/if}
+                       </div>
+                   </div> 
+                
+                
+                  <div class="form-group">
+                       <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                       <div class="col-sm-9 col-xs-12">
+                           {ifp 'sale.enough.save'}
+                           <div id="areas" class="form-control-static">{$set['enoughareas']}</div>
+                           <a href="javascript:;" class="btn btn-default" onclick="selectAreas()">添加不参加满包邮的地区</a>
+                           <input type="hidden" id='selectedareas' name="data[enoughareas]" value="{$set['enoughareas']}" />
+                           {else}
+                           <div class='form-control-static'>{$set['enoughareas']}</div>
+                           {/if}
+                       </div>
+                   </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">满额减</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'sale.enough.save'}
+                            <label class="radio-inline">
+                                <input type="radio" name="data[enoughs_reduce_power]" value='1' {if $set['enoughs_reduce_power']==1}checked{/if} /> 开启
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="data[enoughs_reduce_power]" value='0' {if empty($set['enoughs_reduce_power'])}checked{/if} /> 关闭
+                            </label>
+                            <span class='help-block'>开启满额减, 订单总金额超过多少可以减去对应的金额</span>
+                            {else}
+                            <div class='form-control-static'>{if $set['enoughs_reduce_power']==1}开启{else}关闭{/if}</div>
+                            {/if}
+                        </div>
+                    </div>
+                     <!--<div class="form-group">
+                       <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                       <div class="col-sm-4">
+                           {ifp 'sale.enough.save'}
+                          <div class='input-group'>
+                                   <span class="input-group-addon">单笔订单满</span>
+                                   <input type="text" name="data[enoughmoney]"  value="{$set['enoughmoney']}" class="form-control" />
+                                   <span class='input-group-addon'>元 立减</span>
+                                   <input type="text" name="data[enoughdeduct]"  value="{$set['enoughdeduct']}" class="form-control" />
+                                   <span class='input-group-addon'>元</span>
+			     <div class="input-group-btn"><button type='button' class="btn btn-default" onclick="removeConsumeItem_reduce(this)"><i class="fa fa-minus"></i></button></div>
+                           </div>
+                           {else}
+                           <div class='form-control-static'>{if empty($set['enoughmoney'])}全场包邮{else}订单金额满{$set['enoughmoney']}}元包邮{/if}</div>
+                           {/if}
+                       </div>
+                   </div> -->
+				<div class="form-group">
+                       <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-6">
+						<div class='recharge-items'>
+							{if count($set['enoughs']) > 0}
+							 {loop $set['enoughs'] $item}
+						 
+						<div class="input-group recharge-item" style="margin-top:5px"> 
+							<span class="input-group-addon">单笔订单满</span>
+							<input type="text" class="form-control" name='enough[]' value='{$item['enough']}' />
+							<span class="input-group-addon">元 立减</span>
+							<input type="text" class="form-control"  name='give[]' value='{$item['give']}' />
+							<span class="input-group-addon">元</span>
+							<div class='input-group-btn'>
+							<button class='btn btn-danger' type='button' onclick="removeConsumeItem(this)"><i class='fa fa-remove'></i></button>
+							</div>
+							 
+						</div>
+						 {/loop}
+                            {/if}
+						 </div>  
+						 
+					   <div style="margin-top:5px"> 
+					   <button type='button' class="btn btn-default" onclick='addConsumeItem()' style="margin-bottom:5px"><i class='fa fa-plus'></i> 增加优惠项</button>
+					   </div>
+						<span class="help-block">两项都填写才能生效</span>
+						
+						
+						 
+					 
+                       </div>
+                   </div>
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">满额赠</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'sale.enough.save'}
+                            <label class="radio-inline">
+                                <input type="radio" name="data[enoughs_goods_power]" value='1' {if $set['enoughs_goods_power']==1}checked{/if} /> 开启
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="data[enoughs_goods_power]" value='0' {if empty($set['enoughs_goods_power'])}checked{/if} /> 关闭
+                            </label>
+                            <span class='help-block'>开启满额赠, 订单总金额超过多少可以赠送对应的礼品</span>
+                            {else}
+                            <div class='form-control-static'>{if $set['enoughs_goods_power']==1}开启{else}关闭{/if}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                        <div class="col-sm-6">
+                            <div class='recharge_items_for_gift'>
+                                {loop $set['enoughs_goods'] $item}
+
+                                <div class="input-group recharge-item" style="margin-top:5px">
+                                    <span class="input-group-addon">单笔订单满</span>
+                                    <input type="text" class="form-control" name='enough_good[]' value='{$item['enough_good']}' />
+                                    <span class="input-group-addon">元 赠</span>
+                                    <select class='form-control' name='gift_good[]'>
+                                        <option value="">请选择</option>
+                                        {loop $decode_goods $k $v}
+                                        <option {if $v['id'] == $item['gift_good']}selected{/if} value="{$v['id']}">{$v['title']}</option>
+                                        {/loop}
+                                    </select>
+                                    <div class='input-group-btn' style="z-index: 9999">
+                                        <button class='btn btn-danger' type='button' onclick="removeConsumeItem(this)"><i class='fa fa-remove'></i></button>
+                                    </div>
+                                </div>
+                                {/loop}
+                            </div>
+
+                            <div style="margin-top:5px">
+                                <button type='button' class="btn btn-default" onclick='addConsumeItem_for_gift()' style="margin-bottom:5px"><i class='fa fa-plus'></i> 增加满额赠送</button>
+                            </div>
+                            <span class="help-block">两项都填写才能生效</span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label">满额返券</label>
+                        <div class="col-sm-9 col-xs-12">
+                            {ifp 'sale.enough.save'}
+                            <label class="radio-inline">
+                                <input type="radio" name="data[enoughs_coupon_power]" value='1' {if $set['enoughs_coupon_power']==1}checked{/if} /> 开启
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="data[enoughs_coupon_power]" value='0' {if empty($set['enoughs_coupon_power'])}checked{/if} /> 关闭
+                            </label>
+                            <span class='help-block'>开启满额支付成功赠优惠劵, 最终下单支付金额超过多少可以返对应的优惠劵</span>
+                            {else}
+                            <div class='form-control-static'>{if $set['enoughs_coupon_power']==1}开启{else}关闭{/if}</div>
+                            {/if}
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                        <div class="col-sm-6">
+                            <div class='recharge_items_for_coupon'>
+                                {loop $set['enoughs_coupon'] $kk $item}
+
+                                <div class="input-group recharge-item" style="margin-top:5px">
+                                    <span class="input-group-addon">单笔订单满</span>
+                                    <input type="text" class="form-control" name='enough_coupon_money[]' value='{$kk}' />
+                                    <span class="input-group-addon">元 返券</span>
+                                    <select class='form-control' name='enough_coupon_id[]'>
+                                        <option value="">请选择</option>
+                                        {loop $coupon $k $v}
+                                        <option {if $v['id'] == $item}selected{/if} value="{$v['id']}">{$v['couponname']}</option>
+                                        {/loop}
+                                    </select>
+                                    <div class='input-group-btn' style="z-index: 9999">
+                                        <button class='btn btn-danger' type='button' onclick="removeConsumeItem(this)"><i class='fa fa-remove'></i></button>
+                                    </div>
+                                </div>
+                                {/loop}
+                            </div>
+
+                            <div style="margin-top:5px">
+                                <button type='button' class="btn btn-default" onclick='addConsumeItem_for_coupon()' style="margin-bottom:5px"><i class='fa fa-plus'></i> 增加满额返券</button>
+                            </div>
+                            <span class="help-block">两项都填写才能生效</span>
+                        </div>
+                    </div>
+              
+                   {ifp 'sale.deduct.save'}
+                <div class="form-group"></div>
+                   <div class="form-group">
+                           <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                           <div class="col-sm-9 col-xs-12">
+                                 <input type="submit" name="submit"  value="保存设置" class="btn btn-primary"/>
+                                 <input type="hidden" name="token" value="{$_W['token']}" />
+                           </div>
+                    </div>
+                {/if}
+            </div>
+        </div>
+    </form>
+</div>
+<script language='javascript'>
+    var goods = '{$goods}';
+    var coupon = '{$_coupon}';
+    $('input[name="data[enoughorder]"]').on('blur', function () {
+        var a = $(this).val();
+        if(a == 0) {
+            $('#selectedareas').val("");
+            $('#areas').html('');
+        }
+    });
+	function addConsumeItem(){
+		var html= '<div class="input-group recharge-item"  style="margin-top:5px">';
+           html+='<span class="input-group-addon">单笔订单满</span>';
+		 html+='<input type="text" onblur="check_value(this)" class="form-control" name="enough[]"  />';
+							html+='<span class="input-group-addon">元 立减</span>';
+							html+='<input onblur="check_value(this)" type="text" class="form-control"  name="give[]"  />';
+							html+='<span class="input-group-addon">元</span>';
+							html+='<div class="input-group-btn"><a class="btn btn-danger" onclick="removeConsumeItem(this)"><i class="fa fa-remove"></i></a></div>';
+						html+='</div>';
+						$('.recharge-items').append(html);
+	}
+	function addConsumeItem_for_gift(){
+		var html= '<div class="input-group recharge-item"  style="margin-top:5px">';
+           html+='<span class="input-group-addon">单笔订单满</span>';
+        var eval_goods = eval("("+goods+")");
+        var option = '<option>请选择</option>';
+        $.each(eval_goods,function (k,v) {
+            option += "<option value='"+v.id+"'>"+v.title+"</option>";
+        })
+		 html+='<input onblur="check_value(this)" type="text" class="form-control" name="enough_good[]"  />';
+							html+='<span class="input-group-addon">元 赠</span>';
+                            html += '<select class="form-control" name="gift_good[]" >';
+                            html += option;
+                            html += '</select>';
+							html+='<div class="input-group-btn" style="z-index: 9999"><a class="btn btn-danger" onclick="removeConsumeItem(this)"><i class="fa fa-remove"></i></a></div>';
+						html+='</div>';
+						$('.recharge_items_for_gift').append(html);
+	}
+	function addConsumeItem_for_coupon(){
+		var html= '<div class="input-group recharge-item"  style="margin-top:5px">';
+           html+='<span class="input-group-addon">单笔订单满</span>';
+        var eval_goods = eval("("+coupon+")");
+        var option = '<option>请选择</option>';
+        $.each(eval_goods,function (k,v) {
+            option += "<option value='"+v.id+"'>"+v.couponname+"</option>";
+        })
+		 html+='<input onblur="check_value(this)" type="text" class="form-control" name="enough_coupon_money[]"  />';
+							html+='<span class="input-group-addon">元 返券</span>';
+                            html += '<select class="form-control" name="enough_coupon_id[]" >';
+                            html += option;
+                            html += '</select>';
+							html+='<div class="input-group-btn" style="z-index: 9999"><a class="btn btn-danger" onclick="removeConsumeItem(this)"><i class="fa fa-remove"></i></a></div>';
+						html+='</div>';
+						$('.recharge_items_for_coupon').append(html);
+	}
+	function removeConsumeItem(obj){
+		$(obj).closest('.recharge-item').remove();
+	}
+	function removeConsumeItem_reduce(obj){
+		$(obj).parent().parent().remove();
+	}
+    //正则验证金额
+    function check_money(s)
+    {
+        var patrn=/^-?\d+\.{0,}\d{0,}$/;
+        if (!patrn.exec(s)) {
+            return false
+        }else{
+            return true
+        }
+    }
+    function check_value(obj) {
+        var value = $(obj).val();
+        var first_val = [];
+        var last_val = [];
+        var r = false;
+        $.each($('.recharge-items').find('.recharge-item'), function (k,v) {
+            if(first_val.indexOf(value) == -1) {
+                first_val.push($(v).find('input').first().val())
+            } else {
+                $(obj).val("");
+                $(obj).css('border','1px solid red');
+                $(obj).attr('placeholder','存在相同的数值');
+                r = true;
+                return;
+            }
+            if(last_val.indexOf(value) == -1) {
+                last_val.push($(v).find('input').last().val())
+            } else {
+                r = true;
+                $(obj).val("");
+                $(obj).css('border','1px solid red');
+                $(obj).attr('placeholder','存在相同的数值');
+                return;
+            }
+        });
+        if(r) {
+            return;
+        }
+        if($(obj).parent().find('input').last().val() > $(obj).parent().find('input').first().val()) {
+            $(obj).val("");
+            $(obj).css('border','1px solid red');
+            $(obj).attr('placeholder','满的金额不能小于减的金额');
+            return;
+        }
+        if(!value || !check_money(value)) {
+            $(obj).css('border','1px solid red');
+            $(obj).attr('placeholder','请输入正确的金额');
+        } else {
+            $(obj).css('border','1px solid #ccc');
+            $(obj).attr('placeholder','');
+        }
+    }
+	$(function () {
+        $('input').on('blur', function () {
+            var value = $(this).val();
+            var first_val = [];
+            var last_val = [];
+            var r = false;
+            $.each($('.recharge-items').find('.recharge-item'), function (k,v) {
+                if(first_val.indexOf(value) == -1) {
+                    first_val.push($(v).find('input').first().val())
+                } else {
+                    $(obj).val("");
+                    $(obj).css('border','1px solid red');
+                    $(obj).attr('placeholder','存在相同的数值');
+                    r = true;
+                    return;
+                }
+                if(last_val.indexOf(value) == -1) {
+                    last_val.push($(v).find('input').last().val())
+                } else {
+                    r = true;
+                    $(obj).val("");
+                    $(obj).css('border','1px solid red');
+                    $(obj).attr('placeholder','存在相同的数值');
+                    return;
+                }
+            });
+            if(r) {
+                return;
+            }
+            if($(this).parent().find('input').last().val() > $(this).parent().find('input').first().val()) {
+                $(this).val("");
+                $(this).css('border','1px solid red');
+                $(this).attr('placeholder','满的金额不能小于减的金额');
+                return;
+            }
+            if(!value || !check_money(value)) {
+                $(this).css('border','1px solid red');
+                $(this).val("");
+                $(this).attr('placeholder','请输入正确的金额');
+            } else {
+                $(this).css('border','1px solid #ccc');
+                $(this).attr('placeholder','');
+            }
+        })
+    })
+	</script>
+{template 'selectareas'}
+{template 'web/_footer'}

@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../addons/manor_shop/static/js/dist/jquery-1.11.1.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <title>海尔-唐盛鲜果优惠劵大派送</title>
+    <style>
+        body {padding: 0;margin: 0;}
+        #list1 {position: absolute;top: 3%;width: 100%;text-align: center; }
+        .first {width: 100%;height: 66px;  }
+        .first > img {width: 190px;}
+        .go_shop {position: relative;width: 222px;margin-top: 245px;}
+        .money {font-size: 30px;}
+        .tips {position: relative; top:62px;left: -32px;color: #fff;}
+        .name {font-size: 8px;}
+        .item {float: left;width: 100%;display: flex;margin-top: 20px}
+        .it {width: 100%;height: 66px;}
+        .it > img { width: 100%;}
+        .bb_img {width: 100%;height: 100%;display: inherit}
+        .mask{position: fixed;background: black;width: 100%;height: 100%;top: 0;opacity: 0.9; z-index: 1; }
+        .show_message{position: fixed;z-index: 1000;top: 40%;left: 50%;height: 30%;width: 60%; margin: -15% 0 0 -30%; }
+        /*.message_text{position: relative;z-index: 9999;color: yellow;text-align: center;padding: 53px 0;line-height: 21px; width: 100%}*/
+        .message_text{position: fixed;z-index: 1001; top: 51%;left: 50%;height: 30%;width: 60%; margin: -15% 0 0 -30%;text-align: center;color: yellow}
+        .tan{display: none}
+        /* 兼容iphone4/4s */
+        @media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){
+            .go_shop {position: relative;width: 222px;margin-top: 185px}
+            .first > img {width: 180px;}
+            .item {float: left;width: 100%;display: flex;margin-top: 10px}
+        }
+        /* 兼容iphone5 */
+        @media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){
+            .go_shop {position: relative;width: 222px;margin-top: 195px}
+        }
+        /* 兼容iphone6 */
+        @media (device-height:667px) and (-webkit-min-device-pixel-ratio:2){
+            .go_shop {position: relative;width: 222px;margin-top: 245px}
+            .tips {position: relative; top: 70px;left: -32px;color: #fff;}
+        }
+
+        @media (device-height:736px) and (-webkit-min-device-pixel-ratio:2){
+            .go_shop {position: relative;width: 222px;margin-top: 295px}
+            #list1 {position: absolute;top: 8%;width: 100%;text-align: center; }
+            .tips {position: relative; top: 70px;left: -32px;color: #fff;}
+
+        }
+        @media screen and (min-width:768px) and (-webkit-min-device-pixel-ratio:2){
+            .go_shop {position: relative;width: 422px;margin-top: 500px}
+            .first > img {width: 360px;}
+            .item {float: left;width: 100%;display: flex;margin-top: 100px}
+            #list1 {position: absolute;top: 10%;width: 100%;text-align: center; }
+            .tips {position: relative; top: 102px;left: -55px;color: #fff;}
+            .money {font-size:  60px;}
+            .name {font-size:  18px;}
+        }
+        /*
+        !* 兼容iphone6 *!
+        @media screen and (max-width:360px) and (-webkit-min-device-pixel-ratio:2){
+            .go_shop {position: relative;width: 222px;margin-top: 245px}
+            .tips {position: relative; top: 50px;left: -32px;color: #fff;}
+        }
+        @media screen and (min-width:768px) and (-webkit-min-device-pixel-ratio:2){
+            .go_shop {position: relative;width: 422px;margin-top: 500px}
+            .first > img {width: 360px;}
+            .item {float: left;width: 100%;display: flex;margin-top: 100px}
+            #list1 {position: absolute;top: 10%;width: 100%;text-align: center; }
+            .tips {position: relative; top: 102px;left: -55px;color: #fff;}
+            .money {font-size:  60px;}
+            .name {font-size:  18px;}
+        }*/
+        /* @media screen and (min-width:414px) and (-webkit-min-device-pixel-ratio:2){
+            .go_shop {position: relative;width: 222px;margin-top: 295px}
+            #list1 {position: absolute;top: 8%;width: 100%;text-align: center; }
+            .tips {position: relative; top: 70px;left: -32px;color: #fff;}
+        }*/
+    </style>
+</head>
+<body>
+<div>
+    <img class="bb_img" src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/1.png" alt="">
+    <div style="position: relative;top: 0;">
+        <img class="bb_img" src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/2.jpg" alt="">
+        <div id="list1">
+            <div class="first">
+                <div class="tips">
+                    <span class="price"><i class="money">50元</i><br><i class="name">海尔活动专劵</i></span>
+                </div>
+                <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/coupon.png" alt="">
+            </div>
+            <div class="item">
+                <div class="it">
+                    <div class="tips">
+                        <span class="price"><i class="money">50元</i><br><i class="name">海尔活动专劵</i></span>
+                    </div>
+                    <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/coupon.png" alt="">
+                </div>
+                <div class="it">
+                    <div class="tips">
+                        <span class="price"><i class="money">50元</i><br><i class="name">海尔活动专劵</i></span>
+                    </div>
+                    <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/coupon.png" alt="">
+                </div>
+            </div>
+            <a href="{php echo $this->createMobileUrl('shop/index')}"><img class="go_shop"
+                                                                           src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/go_shop.png"
+                                                                           alt=""></a>
+        </div>
+    </div>
+
+</div>
+<div class="tan" onclick="hidden_message()">
+    <div class="mask"></div>
+    <div class="show_message">
+        <p class="message_text"></p>
+        <img class="show_message"  src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/alertt.png" alt="">
+    </div>
+</div>
+<script>
+    var fn = {};
+    var url = 'index.php?i='+"{$_W['acid']}"+'&c=entry';
+    var a = '<a href="{php echo $this->createMobileUrl('shop/index')}"><img class="go_shop" src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/go_shop.png" alt=""></a>';
+    window.shareData = {title:'送优惠劵',desc:'详情', link:"{php echo $this->createMobileUrl('shop/index')}", imgUrl:"{php echo tomedia('/addons/manor_shop/template/mobile/tangsheng/static/images/haier/1.png')}"};
+    $.ajax({
+        type: "get",
+        url: url,
+        dataType: 'json',
+        data: {op:'get_haier', 'p':'coupon','method':'util','m':'manor_shop', 'do':'plugin'},
+        success: function (res) {
+            var html = '';
+            if(res.status == 1) {
+                var option = '<div class="item">';
+                $.each(res.result, function (k, v) {
+                    if(k == 0 ){
+                        html += '<div onclick="send_coupon(this)" data-id="'+v.id+'" class="first"><div class="tips"><span class="price"><i class="money">'+(v.deduct>0?parseInt(v.deduct):0)+'元</i><br><i class="name">'+v.couponname+'</i></span>' +
+                                '</div><img src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/coupon.png" alt=""></div>';
+                    } else {
+                        option += '<div onclick="send_coupon(this)" data-id="'+v.id+'" class="it"><div class="tips"><span class="price"><i class="money">'+(v.deduct>0?parseInt(v.deduct):0)+'元</i><br><i class="name">'+v.couponname+'</i></span>' +
+                                '</div><img src="../addons/manor_shop/template/mobile/tangsheng/static/images/haier/coupon.png" alt=""></div>';
+                    }
+                });
+                option += '</div>';
+                html += option+=a;
+            }
+            $('#list1').html(html);
+        }
+    });
+    function send_coupon(obj) {
+        var object = $(obj);
+        var id = object.attr('data-id');
+        $.ajax({
+            type: "post",
+            url: url,
+            dataType: 'json',
+            data: {'op':'pay','id':id,'do':'plugin', 'm':'manor_shop','p':'coupon','method':'detail'},
+            success: function (res) {
+                if(res.status == -1) {
+                    show_message((res.result ? res.result : '领取失败'));
+                    return;
+                }
+                var logid = res.result.logid;
+                payResult(logid,id);
+                console.log(res);
+            }
+        });
+    }
+    function payResult(logid,id) {
+        $.ajax({
+            type: "post",
+            url: url,
+            dataType: 'json',
+            data: {'op':'payresult','id':id,'logid':logid,'do':'plugin', 'm':'manor_shop','p':'coupon','method':'detail'},
+            success: function (result) {
+                if(result.status != 1) {
+                    show_message('活动未开启');
+                    return;
+                } else {
+                    show_message('领取成功');
+                    return;
+                }
+            }
+        });
+    }
+
+    function show_message(message) {
+        $('.message_text').html(message);
+        $('.tan').show();
+    }
+    function hidden_message() {
+        $('.tan').hide();
+
+    }
+
+    fn['分享'] = function () {
+        jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','showOptionMenu'];
+        wx.config(jssdkconfig);
+        wx.ready(function () {
+            wx.hideOptionMenu();
+            /*wx.showOptionMenu();
+            wx.onMenuShareAppMessage({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                desc:window.shareData.desc,
+                success:function () {
+
+                },
+            });
+            wx.onMenuShareTimeline({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+
+                },
+            });
+            wx.onMenuShareQQ({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+
+                },
+            });
+
+            wx.onMenuShareWeibo({
+                title:window.shareData.title,
+                link:window.shareData.link,
+                imgUrl:window.shareData.imgUrl,
+                success:function () {
+                },
+            });*/
+        });
+        wx.error(function(res){
+            console.log(res);
+        });
+    };
+    fn['分享']();
+</script>
+</body>
+</html>

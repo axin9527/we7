@@ -1,0 +1,99 @@
+{template 'common/header'}
+    <div class="panel-body">
+        <!-- <form action="" method="get" class='form form-horizontal'>
+            <div class="panel panel-info">
+                <div class="panel-heading">筛选</div>
+                <div class="panel-body">
+                    <form action="./index.php" method="get" class="form-horizontal" plugins="form">
+                        <input type="hidden" name="c" value="site" />
+                        <input type="hidden" name="a" value="entry" />
+                        <input type="hidden" name="m" value="td_redenvelopes" />
+                        <input type="hidden" name="do" value="index" />
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键词</label>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}" placeholder="可搜索昵称/领奖码/备注">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">按时间</label>
+                            <div class="col-sm-2">
+                                <select name='searchtime' class='form-control'>
+                                    <option value='' {if empty($_GPC['searchtime'])}selected{/if}>不搜索</option>
+                                    <option value='1' {if $_GPC['searchtime']==1}selected{/if} >搜索</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-7 col-lg-9 col-xs-12">
+                                {php echo tpl_form_field_daterange('time', array('starttime'=>date('Y-m-d H:i', $starttime),'endtime'=>date('Y-m-d  H:i', $endtime)),true);}
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">发放状态</label>
+                            <div class="col-sm-2">
+                                <select name='status' class='form-control'>
+                                    <option value='' {if empty($_GPC['status'])}selected{/if}>不搜索</option>
+                                    <option value='1' {if $_GPC['status']==1}selected{/if} >发放成功</option>
+                                    <option value='0' {if $_GPC['status']==0}selected{/if} >发放失败</option>
+                                    <option value='2' {if $_GPC['status']==2}selected{/if} >未发</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label"> </label>
+                            <div class="col-xs-12 col-sm-2 col-lg-2">
+                                <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </form>-->
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body table-responsive">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                <tr>
+                    <th>微信用户</th>
+                    <th>领奖码集合</th>
+                    <th>领取总次数</th>
+                    <th>获得总金额</th>
+                    <th>注册时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                {if $list}
+                {loop $fans $row}
+                <tr>
+                    <td>
+                        <img src="{$row['avstar']}" style="width: 40px;border-radius: 8px" alt="">
+                        {$row['nickname']}
+                        {if $row['times'] > 5}
+                        <span style="    color: #fff;padding: 2px 6px;background: red;border-radius: 8px;font-size: 12px;margin-left: 10px;">异常</span>
+                        {/if}
+                    </td>
+                    <td style="font-size: 14px;">
+                        {$row['code']}
+                    </td>
+                    <td>
+                        {$row['times']}
+                    </td>
+                    <td>
+                        {$row['total']}
+                    </td>
+                    <td>
+                        {php echo date('Y-m-d H:i:s', $row['createtime'])}
+                    </td>
+                </tr>
+                {/loop}
+                {else}
+                <tr style="text-align: center"><td colspan="5">暂无数据</td></tr>
+                {/if}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{template 'common/footer'}

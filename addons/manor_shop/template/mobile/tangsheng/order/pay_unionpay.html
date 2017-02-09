@@ -1,0 +1,50 @@
+{template 'common/header'}
+<title>{if !empty($orderid)}银联支付{else}银联充值{/if}</title>
+<style type="text/css">
+    body {
+        margin: 0px;
+        background: #efefef;
+        font-family: '微软雅黑';
+        -moz-appearance: none;
+    }
+</style>
+<body>
+<form id="pay_form" name="pay_form" action="{$action}" method="post">
+
+</form>
+</body>
+</body>
+<script language="javascript">
+    var orderid = "{$orderid}";
+    var logid = "{$logid}";
+    require(['tpl', 'core'], function (tpl, core) {
+        core.json('order/pay_unionpay', {orderid: orderid, logid: logid, openid: "{$openid}"}, function (json) {
+            var result = json.result;
+            if (json.status != 1) {
+                if (orderid != '0') {
+                    core.message(json.result, "{php echo $this->createMobileUrl('order/detail',array('id'=>$orderid))}", 'error');
+                } else if (logid != '0') {
+                    core.message(json.result, "{php echo $this->createMobileUrl('member')}", 'error');
+                }
+                return;
+            }
+            if (!result.pay) {
+                if (orderid != '0') {
+                    core.message('银联支付参数错误，请选择其他支付方式', "{php echo $this->createMobileUrl('order/pay',array('orderid'=>$orderid))}", 'error');
+                } else if (logid != '0') {
+                    core.message('银联支付参数错误，请选择其他支付方式', "{php echo $this->createMobileUrl('member/recharge')}", 'error');
+                }
+                return;
+            }
+            var str = '';
+            $.each(result.unionpay, function (k, v) {
+                str += '<input type="hidden" name="'+k+'" id="'+k+'" value="'+v+'">';
+            });
+            str += '<input type="submit" type="hidden" value="稍等，支付跳转跳..." style="border:none;">';
+            $('#pay_form').html(str);
+            //发起支付
+            document.pay_form.submit();
+        }, true, true);
+    });
+</script>
+{template 'common/footer'}

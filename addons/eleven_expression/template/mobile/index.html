@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../addons/manor_shop/static/js/dist/jquery-1.11.1.min.js"></script>
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <title>分享你的双11专属表情</title>
+    <style>
+        body,ul,li,ol,p,h1,h2,h3,h4,h5,h6,form,span,label,strong,input,div,a,img {padding: 0;margin: 0;box-sizing:border-box;}
+        body{background: #fdcf4d;width: 100%;}
+        .eleven_banner{padding:11px 37px 0;}
+        .eleven_banner img{display: block;width: 100%;}
+        .eleven_container,.eleven_btn{padding:0 37px;}
+        .eleven_name img{display: block;margin:10px 0;}
+        .eleven_name input{width: 100%;height: 44px;background: #fff;border:2px solid #221f18;border-radius: 5px;outline: none;font-size: 16px;padding-left: 14px;}
+        .eleven_how >img{display: block;margin-top:15px;}
+        .eleven_how ul{padding-bottom: 8px;}
+        .eleven_how ul li{list-style: none;width: 100%;height:93px;text-align: center;background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img3.png")no-repeat center bottom;background-size: 100%;overflow: hidden;}
+        .eleven_how ul li img{margin: 52px auto 0;}
+        .eleven_how ul li .selectedText{display: none;}
+        .eleven_how ul li.selected{background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img16.png")no-repeat center bottom;background-size: 100%;}
+        .eleven_how ul li.selected .selectedText{display: block;}
+        .eleven_how ul li.selected .noSelectedText{display: none;}
+        .eleven_btn{width: 98%;height: 150px;background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img6.png")no-repeat;background-size: 100%;}
+        .eleven_btn a{display: block;}
+        .eleven_btn img{width: 100%;margin-top: 20px;}
+        @media screen and (max-width: 414px){
+          .eleven_how ul li{height: 80px!important;}
+          .eleven_how ul li img{margin:40px auto 0!important;}
+          .eleven_btn{height: 142px!important;}
+        }
+        @media screen and (max-width: 375px){
+          .eleven_how ul li{height: 70px!important;}
+          .eleven_how ul li img{margin:32px auto 0!important;}
+          .eleven_btn{height: 128px!important;}
+        }
+        @media screen and (max-width: 360px){
+          .eleven_how ul li{height: 65px!important;}
+          .eleven_btn{height: 124px!important;}
+          .eleven_how ul li img{margin:30px auto 0!important;}
+        }
+        @media screen and (max-width: 320px){
+          .eleven_how ul li{height: 52px!important;}
+          .eleven_how ul li img{margin:20px auto 0!important;}
+          .eleven_btn{height: 110px!important;}
+        }
+        .createImage{display: none;}
+        .createImage .remind{padding:0 0 0 72px;}
+        .imageItem{padding:0 32px;}
+        .imagebtn{padding:55px 60px; }
+    </style>
+</head>
+<body>
+  <div class="page1">
+    <div class="eleven_banner">
+      <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_banner1.png" >
+    </div>
+    <div class="eleven_container">
+      <div class="eleven_name">
+        <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img1.png" width="140">
+        <input type="text" placeholder="最多四个字哦">
+      </div>
+      <div class="eleven_how">
+        <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img17.png" width="145">
+        <ul>
+          <li id="selectedli_1" data-item="1" onClick="selectedTab(1)">
+            <img class="selectedText" src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img10.png" width="89">
+            <img class="noSelectedText" src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img7.png" width="89">
+          </li>
+          <li id="selectedli_2" data-item="2" onClick="selectedTab(2)">
+            <img class="selectedText" src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img13.png" width="106">
+            <img class="noSelectedText" src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img8.png" width="106">
+          </li>
+          <li id="selectedli_3" data-item="3" onClick="selectedTab(3)">
+            <img class="selectedText" src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img14.png" width="190">
+            <img class="noSelectedText" src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img9.png" width="190">
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="eleven_btn">
+      <a href="javascript:;" onClick="submitted();">
+        <img class="selectedText" src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img18.png">
+      </a>
+    </div>
+  </div>
+  <div class="createImage">
+    <div class="remind">
+      <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img11.png" width="146">
+    </div>
+    <div class="imageItem">
+      <img src="" width="100%">
+    </div>
+    <div class="imagebtn">
+      <a href="javascript:;" id="again" onClick="again();">
+        <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/eleven_img12.png" width="100%">
+      </a>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var fn={};
+    function selectedTab(num){
+      $("#selectedli_"+num).addClass("selected");
+      $("#selectedli_"+num).siblings().removeClass("selected");
+    }
+    $("#selectedli_1").trigger("click");
+    function submitted(){
+      var selectedItem=$(".selected").data("item");
+      var name=$(".eleven_name input").val();
+      var url = location.href;
+      if(name.length<1){
+        alert("请输入您的名字");
+        return false;
+      }else if(name.length>4){
+        alert("名字最多为4个字");
+        return false;
+      }else{
+        $.ajax({
+          type: "post",
+          url: url,
+          dataType: 'json',
+          data:{'username':name,'type':selectedItem},
+          success:function(data){
+            if(data.status==1){
+              $('body').css('background', '#fdcf4d url(../addons/eleven_expression/template/static/images/2.jpg)');
+              $('body').css('background-size', 'cover');
+              $(".imageItem img").attr("src",data.result.path);
+              $("#again").attr("data-pic",data.result.pic);
+              $(".page1").fadeOut();
+              $(".createImage").fadeIn();
+            }
+          }
+        });
+      }
+    }
+    function again(){
+      var pic = $('#again').attr('data-pic');
+      $(".createImage").fadeOut();
+      $(".page1").fadeIn();
+      $.ajax({
+        type: "post",
+        url: location.href,
+        dataType: 'json',
+        data:{'pic':pic, 'pp':'again_time'},
+        success:function(data){
+          // location.reload();
+          $(".createImage").fadeOut();
+          $(".page1").fadeIn();
+        }
+      });
+      /*$(".createImage").fadeOut();
+      $(".page1").fadeIn();*/
+    }
+    //微信分享
+    var shareData = eval("("+'{$share_data}'+")");
+    fn['分享'] = function () {
+      jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+      jssdkconfig.debug = false;
+      jssdkconfig.jsApiList = ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','showOptionMenu'];
+      wx.config(jssdkconfig);
+      wx.ready(function () {
+        wx.showOptionMenu();
+         wx.onMenuShareAppMessage({
+         title:window.shareData.title,
+         link:window.shareData.link,
+         imgUrl:window.shareData.imgUrl,
+         desc:window.shareData.desc,
+         success:function () {
+
+         },
+         });
+         wx.onMenuShareTimeline({
+         title:window.shareData.title,
+         link:window.shareData.link,
+         imgUrl:window.shareData.imgUrl,
+         success:function () {
+
+         },
+         });
+         wx.onMenuShareQQ({
+         title:window.shareData.title,
+         link:window.shareData.link,
+         imgUrl:window.shareData.imgUrl,
+         success:function () {
+
+         },
+         });
+
+         wx.onMenuShareWeibo({
+         title:window.shareData.title,
+         link:window.shareData.link,
+         imgUrl:window.shareData.imgUrl,
+         success:function () {
+         },
+         });
+      });
+      wx.error(function(res){
+        console.log(res);
+      });
+    }
+      fn['分享']();
+  </script>
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?6179ec13eea8cf7500792b5de81fe1dd";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</body>
+</html>

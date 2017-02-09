@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[场景二维码]]></name>
+		<identifie><![CDATA[alan_qrcode]]></identifie>
+		<version><![CDATA[3.0]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[强悍的粉丝渠道来源分析工具]]></ability>
+		<description><![CDATA[强悍的粉丝渠道来源分析工具； 粉丝扫码模块后台创建的各个场景二维码进行统计粉丝二维码来源，关注数、取消关注数等。本模块可以分析出各个渠道引流关注的人数和取消关注的人数及详细的人数列表。功能简单粗暴，二维码可定制嵌入官方logo。]]></description>
+		<author><![CDATA[诗意的边缘]]></author>
+		<url><![CDATA[http://www.we7.cc/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+            <message type="qr" />
+            <message type="subscribe" />
+            <message type="unsubscribe" />
+		</subscribes>
+		<handles>
+            <message type="text" />
+            <message type="qr" />
+            <message type="subscribe" />
+            <message type="unsubscribe" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+            <entry title="二维码管理" do="qrcode" state="" direct="false" />
+            <entry title="粉丝管理" do="qrcode_fans" state="" direct="false" />
+            <entry title="粉丝分组" do="qrcode_fans_group" state="" direct="false" />
+            <entry title="数据统计" do="qrcode_stat" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+
+	</permissions>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

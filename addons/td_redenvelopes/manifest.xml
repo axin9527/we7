@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[唐代金融发红包]]></name>
+		<identifie><![CDATA[td_redenvelopes]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[唐代金融发红包]]></ability>
+		<description><![CDATA[唐代金融发红包]]></description>
+		<author><![CDATA[诗意的边缘]]></author>
+		<url><![CDATA[http://s.we7.cc/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="红包发放记录" do="index" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[
+	drop table if exists ims_td_redenvelopes_record ;
+	CREATE TABLE `we7`.`ims_td_redenvelopes_record` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`uniacid` int(11),
+	`open_id` varchar(120),
+	`nickname` varchar(120),
+	`avstar` varchar(300),
+	`code` varchar(20),
+	`money` decimal(10,2) DEFAULT 0.00 COMMENT '发送的金额',
+	`times` int(11) DEFAULT 0,
+	`status` smallint(2) DEFAULT 0 COMMENT '0 领取失败 1 领取成功',
+	`message` text,
+	`createtime` int(11),
+	`updatetime` int(11),
+	PRIMARY KEY (`id`)
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT='唐代金融红包发放记录';
+]]></install>
+	<uninstall><![CDATA[
+	drop table if exists ims_td_redenvelopes_record ;
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

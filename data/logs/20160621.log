@@ -1,0 +1,21 @@
+2016-06-21 17:24:57 trace :
+------------
+String:
+<xml><ToUserName><![CDATA[gh_fd1721bd9318]]></ToUserName>
+<FromUserName><![CDATA[oFeUHuOu9JU21lUijySIP-b30CrA]]></FromUserName>
+<CreateTime>1466501219</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[拆红包]]></Content>
+<MsgId>6298574775553788339</MsgId>
+</xml>
+
+2016-06-21 17:24:57 params :
+------------
+Array:
+rule : -2 ;
+module :  ;
+message : Array ;
+
+2016-06-21 17:24:57 response :
+------------
+

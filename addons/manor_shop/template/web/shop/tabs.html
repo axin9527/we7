@@ -1,0 +1,13 @@
+<ul class="nav nav-tabs">
+    {ifp 'shop.goods.view'}<li {if $_GPC['p'] == 'goods' || empty($_GPC['p'])} class="active" {/if}><a href="{php echo $this->createWebUrl('shop/goods')}">商品管理</a></li>{/if}
+    {ifp 'shop.activity.view'}<li {if $_GPC['p'] == 'activity' } class="active" {/if}><a href="{php echo $this->createWebUrl('shop/activity')}">活动管理</a></li>{/if}
+     {ifp 'shop.navigation.view'}<li {if $_GPC['p'] == 'navigation' } class="active" {/if}><a href="{php echo $this->createWebUrl('shop/navigation')}">首页导航管理</a></li>{/if}
+     {ifp 'shop.live_video.view'}<li {if $_GPC['p'] == 'live_video' } class="active" {/if}><a href="{php echo $this->createWebUrl('shop/live_video')}">直播视频管理</a></li>{/if}
+    {ifp 'shop.category.view'}<li {if $_GPC['p'] == 'category'} class="active" {/if}><a href="{php echo $this->createWebUrl('shop/category')}">商品分类管理</a></li>{/if}
+    {ifp 'shop.dispatch.view'}<li {if $_GPC['p'] == 'dispatch'} class="active" {/if}><a href="{php echo $this->createWebUrl('shop/dispatch')}">配送方式</a></li>{/if}
+    {ifp 'shop.adv.view'}<li {if $_GPC['p'] == 'adv'} class="active" {/if}><a href="{php echo $this->createWebUrl('shop/adv')}">幻灯片管理</a></li>{/if}
+    {ifp 'shop.notice.view'}<li {if $_GPC['p'] == 'notice'} class="active" {/if}><a href="{php echo $this->createWebUrl('shop/notice')}">公告管理</a></li>{/if}
+    {ifp 'shop.comment.view'}<li {if $_GPC['p'] == 'comment'} class="active" {/if}><a href="{php echo $this->createWebUrl('shop/comment')}">评价管理</a></li>{/if}
+    {ifp 'shop.dispatch.view'}<li {if $_GPC['p'] == 'refundaddress'} class="active" {/if}><a href="{php echo $this->createWebUrl('shop/refundaddress')}">退货地址</a></li>{/if}
+    {ifp 'shop.feedback.view'}<li {if $_GPC['p'] == 'feedback'} class="active" {/if}><a href="{php echo $this->createWebUrl('shop/feedback')}">反馈管理</a></li>{/if}
+</ul>

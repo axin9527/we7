@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="hahnzhu" />
+  <meta name="format-detection" content="telephone=no" />
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>2017,说出你的愿望！-排行榜</title>
+    <style>
+    body{font-size: 14px;font-family: "Microsoft YaHei";color: #020202;}
+      body,div,p,h1,h2,h3,h4,h5,ul,li,ol,span,form,input,strong{margin: 0;padding: 0;}
+      /*.rankContainer{min-height: 750px;}*/
+      .rankHead{
+        width: 100%;
+        height: 44px;
+        background: #020202;
+        color: #f5d22e;
+        text-align: center;
+        font-size: 16px;
+        line-height: 44px;
+        position: relative;
+      }
+      .rankHead .guide{
+        position: absolute;
+        width: 22px;
+        height: 18px;
+        top: 12px;
+        left: 12px;
+        background: url("../addons/manor_shop/template/mobile/tangsheng/static/images/dream/goback.png") no-repeat;
+        background-size: 100%;
+      }
+      .rankHead .guide img{
+        width: 100%;
+      }
+      .dreamSelf{
+        border-bottom: 1px solid #5d5d5d;
+      }
+      .dreamSelf img{
+        display: block;
+        width: 86px;
+        height: 86px;
+        margin: 15px auto 8px;
+        border-radius: 50%;
+      }
+      .dreamSelf p{
+        text-align: center;
+        color: #020202;
+        font-size: 14px;
+        line-height: 24px;
+      }
+      .ranking{
+        padding-bottom: 20px;
+      }
+      .ranking-list{
+        padding: 10px 20px;
+        border-bottom: 1px solid #c6c6c6;
+        position: relative;
+      }
+      .list-left,.list-center,.list-right{
+        display: table-cell;
+        vertical-align: middle;
+      }
+      .list-center .imgWrap{
+        width: 70px;
+        height: 44px;
+        position: relative;
+      }
+      .list-center .winner{
+        position: absolute;
+        width: 15px;
+        height: 20px;
+        top: -5px;
+        right: -5px;
+      }
+      .list-left{
+        font-size: 36px;
+        color: #020202;
+      }
+      .list-center img{
+        width: 44px;
+        margin: 0 13px;
+        border-radius: 50%;
+      }
+      .list-right h4{
+        line-height: 26px;
+        font-weight: normal;
+      }
+      .list-right h4 span{
+        font-size: 18px;
+        position: absolute;
+        right: 20px;
+      }
+      .list-right p{
+        font-size: 12px;
+        line-height: 22px;
+      }
+      #index_loading {
+        text-align: center;
+        padding: 8px;
+        color: #666;
+        font-size: 12px;
+      }
+
+      #goback{
+        height:40px;
+        padding:10px 0px;
+        color:#fff;
+        font-size:18px;
+        font-weight: 600;
+        position: fixed;
+        bottom: 0px;
+        left:0px;
+        background-color: rgba(0, 0, 0, 0.65);
+        width:100%;
+        line-height: 40px;
+        text-align: center;
+
+      }
+      #goback a{text-decoration:none;display: block;}
+      #goback a:link,#goback a:visited,#goback a:hover,#goback a:active{color:#fff;}
+      #wylp{
+        background-color: #F15145;
+        display: none;
+        width:70%;
+        margin-left: 15%;
+        line-height: 40px;
+        border-radius: 5px;
+      }
+      #cyhd{
+        background-color: #088CF5;
+        display: none;
+        width:70%;
+        margin-left: 15%;
+        line-height: 40px;
+        border-radius: 5px;
+      }
+      .blue{
+        text-align: center;
+        color: #6699CC;
+        font-size: 16px;
+        padding: 20px 0;
+        font-family:'微软雅黑';
+        font-weight: bold
+        border-bottom: none;
+      }
+
+    </style>
+</head>
+<body>
+  <div class="rankContainer">
+    <div class="rankHead">
+      <div class="guide" onclick="history.back();">
+      </div>
+      排行榜前50名
+    </div>
+    <div class="dreamSelf">
+    </div>
+    <div class="ranking">
+    </div>
+    <div id="goback" >
+       <div id="wylp"><a href="{php echo app_url('share/share')}">我要拉票</a></div>
+       <div id="cyhd"><a href="{php echo app_url('apply')}">参与活动</a></div>
+    </div>
+  </div>
+  <script src="../addons/alan_ticket/app/resource/js/jquery-1.11.1.min.js"></script>
+  <script>
+    var page = 1;
+    var loading = false;
+    var pager = true;
+    var scrolling = false;
+    var sort = 1;
+
+    function loadMore(){
+      $.ajax({
+        type: "get",
+        url: "{php echo app_url('ranking/index/casual')}",
+        dataType: 'json',
+        data:{'page':page},
+        success:function(data){
+          if(data.status==1){
+            var html="";
+            if(data.result.my_wish.my_wish){
+              $(".dreamSelf").html('<img src="'+data.result.my_wish.my_headimg+'" />'+'<p>'+data.result.my_wish.my_wish+'</p>');
+              $('#wylp').show();
+            }else{
+              $('.dreamSelf').remove();
+              //alert('tyttr345ty.....');
+              $('#cyhd').show();
+            }
+            var list=data.result.rank;
+            if($('.ranking-list').length<=10){
+              var txt='<p class="ranking-list blue">11-50名，后面的朋友要努力拉票了呦</p>'
+              $(txt).insertAfter($('.ranking-list').eq(9))
+            }
+              pager=true;
+              if($('#index_loading')){
+                $('#index_loading').remove();
+              }
+              for(var i=0;i<list.length;i++){
+                html+='<div class="ranking-list">'
+                html+='<div class="list-left">'+sort+'</div>'
+                html+='<div class="list-center">'
+                html+='<div class="imgWrap">'
+                if(data.result.page==1){
+                  if(i==0){
+                    html+='<img class="winner" src="../addons/manor_shop/template/mobile/tangsheng/static/images/dream/one.png" />'
+                  }
+                  if(i==1){
+                    html+='<img class="winner" src="../addons/manor_shop/template/mobile/tangsheng/static/images/dream/two.png" />'
+                  }
+                  if(i==2){
+                    html+='<img class="winner" src="../addons/manor_shop/template/mobile/tangsheng/static/images/dream/three.png" />'
+                  }
+                }
+                html+='<img src="'+list[i].headimg+'" />'
+                html+='</div>'
+                html+='</div>'
+                html+='<div class="list-right">'
+                html+='<h4>'+list[i].nickname+'<span>'+list[i].vote_number+'票</span></h4>';
+                if(list[i].wish) {
+                  html+='<p>我的愿望：'+list[i].wish+'</p>'
+                } else {
+                  html+='<p>我的愿望：</p>'
+                }
+                html+='</div>'
+                html+='</div>'
+                sort ++;
+              }
+              $(".ranking").append(html);
+              if (list.length < data.result.number && scrolling) {
+                  $('.ranking').append('<div id="index_loading">已经加载全部</div>');
+                  loading = true;
+                  $(window).scroll = null;
+                  return;
+              }
+          }
+        }
+      });
+    }
+    $(window).scroll(function(){
+      if(loading){
+        return;
+      }
+      var totalheight = parseFloat($(window).height()) + parseFloat($(window).scrollTop());
+      if ($(document).height() <= totalheight) {
+          if (pager == true) {
+              pager = false;
+              scrolling=true;
+              $('.ranking').append('<div id="index_loading">正在加载更多...</div>');
+              page++;
+              loadMore();
+          }
+      }
+    })
+    loadMore();
+
+    var fn = {};
+    fn['share'] = function () {
+      window.shareData = JSON.parse('{$shopshare}');
+      jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+      jssdkconfig.debug = false;
+      jssdkconfig.jsApiList = ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','hideMenuItems','showOptionMenu'];
+      wx.config(jssdkconfig);
+      wx.ready(function () {
+        wx.showOptionMenu();
+        wx.hideMenuItems({
+          menuList: [
+            'menuItem:share:qq', //分享到QQ
+            'menuItem:share:weiboApp', // 分享到Weibo
+            'menuItem:share:QZone', // 分享到Weibo
+            'menuItem:share:facebook',
+            'menuItem:favorite',
+            'menuItem:setFont',
+            'menuItem:exposeArticle',
+            'menuItem:dayMode',
+            'menuItem:nightMode',
+            'menuItem:openWithQQBrowser',
+            'menuItem:openWithSafari',
+            'menuItem:share:email',
+            'menuItem:originPage',
+            'menuItem:copyUrl',
+          ],
+          success: function (res) {
+            //alert('已隐藏“阅读模式”，“分享到朋友圈”，“复制链接”等按钮');
+          },
+          fail: function (res) {
+            // alert(JSON.stringify(res));
+          }
+        });
+
+        wx.onMenuShareAppMessage({
+          title:window.shareData.title,
+          link:window.shareData.link,
+          imgUrl:window.shareData.imgUrl,
+          desc:window.shareData.desc,
+          success:function () {
+
+          },
+        });
+        wx.onMenuShareTimeline({
+          title:window.shareData.title,
+          link:window.shareData.link,
+          imgUrl:window.shareData.imgUrl,
+          success:function () {
+
+          },
+        });
+      });
+      wx.error(function(res){
+        console.log(res);
+      });
+    };
+    fn['share']();
+
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?db5e40a8c44d0fa8673aa729e43efd10";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</body>
+</html>

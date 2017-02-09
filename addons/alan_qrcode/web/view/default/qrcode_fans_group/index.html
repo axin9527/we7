@@ -1,0 +1,110 @@
+{template 'common/header'}
+{php 	load()->func('tpl');}
+
+<ul class="nav nav-tabs">
+    <li {if $operation=="display"}class="active"{/if} ><a  href="{php echo $this->createWebUrl('qrcode_fans_group')}">粉丝组</a></li>
+    <li {if $operation=="edit"} class="active"{/if}><a href="{php echo $this->createWebUrl('qrcode_fans_group',array('op'=>'edit'))}">{if $_GPC['id']}编辑{else}添加{/if}粉丝组</a></li>
+</ul>
+
+{if $operation == 'display'}
+
+
+<div class="main">
+    <div class="row-fluid" style="padding-bottom: 13px;">
+        <div class="span8 control-group">
+            <a class="btn btn-default"  href="{php echo $this->createWebUrl('qrcode_fans_group',array('op'=>'sync'))}">
+                <i class="icon-download-alt"></i>同步粉丝组</a>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div style="padding:15px;">
+                <table class="table table-hover">
+                    <thead class="navbar-inner">
+                    <tr>
+                        <th style="width:40px;">编号</th>
+                        <th style="width:40px;">名称</th>
+                        <th style="width:60px;">关注数</th>
+                        <th style="width:90px;">创建时间</th>
+                        <th style="width:40px; text-align:right;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {if !empty($list)}
+                    {loop $list $item}
+                    <tr>
+                        <td>{$item['id']}</td>
+                        <td>{$item['name']}</td>
+                        <td>{$item['count']}</td>
+                        <td>{php echo date('Y-m-d H:i:s', $item['create_time'])}</td>
+                        <td style="text-align:right;">
+                            {if !in_array($item['mc_group_id'], array(0,1,2,3)) || !$item['name']}
+                            <a href="{php echo $this->createWebUrl('qrcode_fans_group', array('op' => 'edit', 'id' => $item['id']))}">编辑</a>
+                            <a class="del-group" href="javascript:;" href_url="{php echo $this->createWebUrl('qrcode_fans_group', array('op' => 'del','id'=>$item['id'], 'mc_group_id' => $item['mc_group_id']))}">删除</a>
+                            {else}
+                            <span style="color: red">系统菜单,不可编辑</span>
+                            {/if}
+                        </td>
+                    </tr>
+                    {/loop}
+                    {else}
+                    <tr><td colspan="5" style="text-align: center;color:#ccc;font-size: 12px;">暂无数据</td></tr>
+                    {/if}
+                    </tbody>
+                </table>
+                {$pager}
+            </div>
+        </div>
+
+        {elseif $operation == 'edit'}
+
+        <div class="main">
+            <div class="panel panel-default">
+                <form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return formcheck(this)">
+                    <div class="panel-body table-responsive">
+                        <input type="hidden" class="form-control" name="id" value="{$item['id']}" />
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">名称</label>
+                            <div class="col-sm-9 col-xs-12">
+                                <input type="text" name="name" class="form-control" value="{$item['name']}" placeholder="请输入粉丝组名称">
+                            </div>
+                        </div>
+                        <input type="hidden" name="group_id" class="form-control" value="{$item['id']}" readonly >
+                        <input type="hidden" name="mc_group_id" class="form-control" value="{$item['mc_group_id']}" readonly >
+                        <div class="form-group">
+                            <label class="col-xs-12 col-sm-3 col-md-2 control-label">描述</label>
+                            <div class="col-sm-9 col-xs-12">
+                                <input type="text" name="group_desc" class="form-control" value="{$item['group_desc']}" placeholder="请输入粉丝组描述">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        {/if}
+        <script>
+            $('.del-group').click(function(){
+                if(!confirm('删除分组后，所有该分组内的用户自动进入默认分组，确定删除该分组吗')) {
+                    return false;
+                }
+                var id = parseInt($(this).attr('data-id'));
+                var url = $(this).attr('href_url');
+                $.get(url,{}, function(data){
+                    var data = $.parseJSON(data);
+                    if(data.errno < 0) {
+                        util.message(data.message, '', 'error');
+                        return false;
+                    } else {
+                        location.reload();
+                    }
+                });
+            });
+        </script>
+
+
+        {template 'common/footer'}
+

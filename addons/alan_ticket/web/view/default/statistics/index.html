@@ -1,0 +1,85 @@
+{php include ticket_template('common/header');}
+<style>
+    .order-overview .order-info .info-group{width:220px; text-align:center; float:left;}
+    .order-overview .order-info .info-group+.info-group{border-left:1px dotted #ccc; }
+    .order-overview .h4{font-size:22px; display:block;}
+    .order-overview .order-widget .info-group{width:220px; text-align:center; float:left; }
+    .order-overview .order-widget .info-group+.info-group{border-left:1px solid #ddd;}
+    .order-overview .coordinate{margin-top:20px;}
+</style>
+<div class="order-overview">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="javascript:;" class="navbar-brand">今日实时  <font color="black" size="2">(更新时间{php echo date('Y-m-d H:i:s',TIMESTAMP);})</font></a>
+        </div>
+    </div>
+    <div class="order-widget">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+                <div class="info clearfix">
+                    <div class="info-group" >
+                        <p class="h4">
+                            <a href="#">{php echo $data['pv']?$data['pv']:0}</a>
+                        </p>
+                        <p class="info-description">总浏览PV</p>
+                    </div>
+                    <div class="info-group" >
+                        <p class="h4">
+                            <a href="#">{php echo $data['uv']?$data['uv']:0}</a>
+                        </p>
+                        <p class="info-description">总浏览UV</p>
+                    </div>
+                </div>
+                <ul class="nav nav-tabs" style="border-color: #ddd;"></ul>
+                <div class="clearfix" id="clear" style="padding-top: 20px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="order-widget">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+                <div class="info clearfix">
+                    <div class="info-group" >
+                        <p class="h4">
+                            <a href="{php echo url('order/order/all', array('yesterday' => 'yesterday'));}">{php echo $ypv ? $ypv : 0}</a>
+                        </p>
+                        <p class="info-description">昨日浏览PV</p>
+                    </div>
+                    <div class="info-group" >
+                        <p class="h4">
+                            <a href="{php echo url('order/order/all', array('yesterday_paytime' => 'yesterday_paytime'));}">{php echo $yuv?$yuv:0}</a>
+                        </p>
+                        <p class="info-description">昨日浏览UV</p>
+                    </div>
+                </div>
+                <ul class="nav nav-tabs" style="border-color: #ddd;"></ul>
+                <div class="clearfix" id="clear" style="padding-top: 20px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    require(['../../../../../alan_ticket/web/resource/components/sweetalert/sweetalert.min'], function (swal) {
+        setTimeout(function () {
+            swal({
+                        title: "请前往百度统计进行查看统计?",
+                        text: "请前往百度统计进行查看统计",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确定",
+                        closeOnConfirm: false
+                    },
+                    function(){
+                        location.href = 'http://tongji.baidu.com';
+                    });
+        }, 1000);
+    });
+</script>
+{php include ticket_template('common/footer');}

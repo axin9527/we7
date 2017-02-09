@@ -1,0 +1,231 @@
+{php include ticket_template('common/header');}
+<style>
+    .main{margin-top: 20px}
+</style>
+ <!-- <div class="main">
+    <form action="" method="post">
+        <div class="panel panel-info">
+            <div class="panel-heading">真排行榜</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead class="navbar-inner">
+                    <tr>
+                        <th>编号</th>
+                        <th>昵称</th>
+                        <th>愿望</th>
+                        <th>票数</th>
+                        <th>是否假人</th>
+                        <th>是否屏蔽</th>
+                        <th >操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {loop $result1 $value}
+                    <tr>
+                        <td>{$value['id']}</td>
+                        <td><img style="width: 40px;border-radius: 20px" src="{$value['headimg']}">  {$value['nickname']}</td>
+                        <td>{$value['wish']}</td>
+                        <td>{$value['vote_number']}</td>
+                        <td>
+                            {if $value['ismock'] == 1}
+                            是
+                            {else}
+                            否
+                            {/if}
+                        </td>
+                        <td>
+                            {if $value['isshield'] == 1}
+                            是
+                            {else}
+                            否
+                            {/if}
+                        </td>
+                        <td>
+                            &lt;!&ndash; <a class="btn btn-default btn-sm add_ticket">修改票</a>&ndash;&gt;
+                            &lt;!&ndash; <a data-uid="{$value['user_id']}" data-wish="{$value['wish']}" class="btn btn-info btn-sm edit_ticket">编辑梦想</a>&ndash;&gt;
+                            {if $value['isshield'] == 1}
+                            <a data-id="{$value['id']}" data-shield="{$value['isshield']}" class="btn btn-success btn-sm shield_ticket">解除屏蔽</a>
+                            {else}
+                            <a data-id="{$value['id']}" data-shield="{$value['isshield']}" class="btn btn-danger btn-sm shield_ticket">屏蔽</a>
+                            {/if}
+
+                        </td>
+                    </tr>
+                    {/loop}
+                    </tbody>
+                </table>
+                {$pager}
+            </div>
+        </div>
+    </form>
+</div>-->
+<div class="main">
+    <form action="" method="post">
+        <div class="panel panel-success">
+            <div class="panel-heading">排行榜</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead class="navbar-inner">
+                    <tr>
+                        <th>排名</th>
+                        <th>昵称</th>
+                        <th>愿望</th>
+                        <th>票数</th>
+                        <th>是否假人</th>
+                        <th >操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {loop $list $key $value}
+                    <tr>
+                        <td>{php echo $key+1}</td>
+                        <td><img style="width: 40px;border-radius: 20px" src="{$value['headimg']}">  {$value['nickname']}</td>
+                        <td>{$value['wish']}</td>
+                        <td>{$value['vote_number']}</td>
+                        <td>
+                            {if $value['is_mock'] == 1}
+                            是
+                            {else}
+                            否
+                            {/if}
+                        </td>
+                        <td>
+                            {if $value['ismock'] != 1}
+                            {if $value['isshield'] == 1}
+                            <a data-id="{$value['user_id']}" data-shield="{$value['isshield']}" class="btn btn-success btn-sm shield_ticket">解除屏蔽</a>
+                            {else}
+                            <a data-id="{$value['user_id']}" data-shield="{$value['isshield']}" class="btn btn-danger btn-sm shield_ticket">屏蔽</a>
+                            {/if}
+                            {/if}
+                            <a data-uid="{$value['user_id']}" class="btn btn-default btn-sm add_ticket">加票</a>
+                            <a data-uid="{$value['user_id']}" data-wish="{$value['wish']}" class="btn btn-info btn-sm edit_ticket">编辑梦想</a>
+                        </td>
+                    </tr>
+                    {/loop}
+                    </tbody>
+                </table>
+                {$pager}
+            </div>
+        </div>
+    </form>
+</div>
+</form>
+<script>
+    $(function () {
+        window.optionchanged = false;
+        $('#myTab a').click(function (e) {
+            e.preventDefault();//阻止a链接的跳转行为
+            $(this).tab('show');//显示当前选中的链接及关联的content
+        })
+    });
+     require(['../../../../../alan_ticket/web/resource/components/sweetalert/sweetalert.min'], function (swal) {
+         $('.shield_ticket').on('click', function () {
+             var id = $(this).data('id');
+             var isshield = $(this).data('shield');
+             swal({
+                         title: "确定这样操作吗？",
+                         text: "屏蔽后将不在前台显示该用户的梦想\n取消屏蔽将显示该用户梦想",
+                         type: "info",
+                         showCancelButton: true,
+                         closeOnConfirm: false,
+                         showLoaderOnConfirm: true,
+                     },
+                     function(){
+                         setTimeout(function(){
+                             $.ajax({
+                                 url:"{php echo web_url('ranking/index', array('op'=>'shield_ticket'))}",
+                                 type:'post',
+                                 data:{"id":id,"isshield":isshield},
+                                 success:function (res) {
+                                     var ret = eval("("+res+")");
+                                     if(ret.status == -1) {
+                                         swal("错误!", ret.result, "error");
+                                     } else {
+                                         swal("成功!", ret.result, "success");
+                                         setTimeout(function () {
+                                             location.reload();
+                                         }, 300);
+                                     }
+
+                                 }
+                             });
+                         }, 300);
+                     });
+         });
+        $('.add_ticket').on('click', function () {
+            var uid = $(this).data('uid');
+            swal({
+                    title: "请输入票数",
+                    text: "如果想加票，直接输入数字，不允许减票:",
+                    type: "input",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    inputPlaceholder: "请输入增加的票数，例如5"
+                },
+                function(inputValue){
+                    if (inputValue === false) return false;
+
+                    if (inputValue === "" || inputValue<=0) {
+                        swal.showInputError("您还没有输入任何东西");
+                        return false
+                    }
+                    $.ajax({
+                        url:"{php echo web_url('ranking/index', array('op'=>'op_ticket'))}",
+                        type:'post',
+                        data:{num:inputValue,user_id:uid},
+                        success:function (res) {
+                            if(res.status == -1) {
+                                swal("错误!", res.result, "error");
+                            } else {
+                                swal("成功!", res.result, "success");
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000);
+                            }
+
+                        }
+                    })
+                });
+            });
+         $('.edit_ticket').on('click', function () {
+            var uid = $(this).data('uid');
+             var dram = $(this).data('wish');
+            swal({
+                    title: "请输入梦想",
+                    text: "编辑该用户的梦想\n原来梦想是："+dram,
+                    type: "input",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    animation: "slide-from-top",
+                    inputPlaceholder: dram
+                },
+                function(inputValue){
+                    if (inputValue === false) return false;
+
+                    if (inputValue === "" || inputValue<=0) {
+                        swal.showInputError("您还没有输入任何东西");
+                        return false
+                    }
+                    $.ajax({
+                        url:"{php echo web_url('ranking/index', array('op'=>'edit_ticket'))}",
+                        type:'post',
+                        data:{dram:inputValue,user_id:uid},
+                        success:function (res) {
+                            var ret = eval("("+res+")");
+                            if(ret.status == -1) {
+                                swal("错误!", ret.result, "error");
+                            } else {
+                                swal("成功!", ret.result, "success");
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1000);
+                            }
+
+                        }
+                    })
+                });
+            });
+    });
+</script>
+{php include ticket_template('common/footer');}

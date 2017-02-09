@@ -1,0 +1,96 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li class="active"><a href="{php echo $this->createWebUrl('times')}">管理二维码批次</a></li>
+    <li><a href="{php echo $this->createWebUrl('times',array('op'=>'create'))}">新建二维码批次</a></li>
+    <li><a href="{php echo $this->createWebUrl('record')}">二维码余额使用记录</a></li>
+
+</ul>
+<div class="panel panel-info">
+    <div class="panel-heading">筛选</div>
+    <div class="panel-body">
+        <form action="./index.php" method="get" class="form-horizontal" id="form" role="form" id="form1">
+            <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="alan_balance" />
+            <input type="hidden" name="do" value="times" />
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-3 col-md-2 col-lg-2 control-label">批次名称</label>
+                <div class="col-sm-6 col-lg-8 col-xs-12">
+                    <input type="text" name="keyword" value="{$_GPC['keyword']}" class="form-control" placeholder="请输入名称">
+                </div>
+                <div class="pull-right col-xs-12 col-sm-3 col-lg-2">
+                    <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="table-responsive panel-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>批次名称</th>
+                <th style="width: 80px">价格</th>
+                <th style="width: 80px">二维<br>码数</th>
+                <th style="width: 80px">有效<br>数量</th>
+                <th style="width: 80px">过期<br>数量</th>
+                <th style="width: 80px">已使用<br>数量</th>
+                <th>生成时间</th>
+                <th>过期时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {if !empty($list)}
+            {loop $list $row}
+            <tr>
+                <td><a href="{php echo $this->createWebUrl('record', array('time_id'=>$row['id']))}" title="{$row['name']}">{php echo cutstr($row['name'], 8)}</a></td>
+                <td>{$row['price']}</td>
+                <td>{$row['total']}</td>
+                <td>{$row['valid_num']}</td>
+                <td>{$row['expired_num']}</td>
+                <td>{$row['failure_num']}</td>
+                <td style="font-size:12px; color:#666;">
+                    {php echo date('Y-m-d <br /> h:i:s', $row[effective_time]);}
+                </td>
+                <td style="font-size:12px; color:#666;">
+                    {php echo date('Y-m-d <br /> h:i:s', $row[create_time]);}
+                </td>
+
+                <td>
+                    <a href="{php echo $this->createWebUrl('times', array('op'=>'create','id'=> $row['id']))}"class="btn btn-default"
+                       data-toggle="tooltip" data-placement="top" title="编辑"><i class="fa fa-pencil"></i></a>
+                    <a href="{php echo $this->createWebUrl('times', array('op'=>'download','id'=> $row['id']))}" class="btn btn-default"
+                       data-toggle="tooltip" title="下载该批次所有二维码" onclick="return confirm('您确定要下载该批次的二维码吗？')">
+                        <i class="fa fa-cloud-download"></i>
+                    </a>
+                    <a href="{php echo $this->createWebUrl('record', array('time_id'=> $row['id']))}" class="btn btn-default"
+                       data-toggle="tooltip" title="查看二维码余额赠送记录">
+                        <i class="fa fa-history"></i>
+                    </a>
+                    <a href="{php echo $this->createWebUrl('times', array('op'=>'del','id'=> $row['id']))}" class="btn btn-default"
+                       data-toggle="tooltip" title="强制删除" onclick="return confirm('您确定要删除该二维码以及其统计数据吗？')">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </td>
+            </tr>
+            {/loop}
+            {else}
+            <tr><td colspan="8" style="text-align: center;color:#ccc;font-size: 12px;">暂无数据</td></tr>
+            {/if}
+            </tbody>
+        </table>
+        {$pager}
+    </div>
+</div>
+<script type="text/javascript">
+    require(['bootstrap', 'util'],function($, u){
+        $('.btn').hover(function(){
+            $(this).tooltip('show');
+        },function(){
+            $(this).tooltip('hide');
+        });
+    });
+</script>
+{template 'common/footer'}

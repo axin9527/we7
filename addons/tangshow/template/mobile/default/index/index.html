@@ -1,0 +1,41 @@
+{template 'common/header'}
+<link rel="stylesheet" type="text/css" href="../addons/tangshow/template/mobile/default/static/css/index.css">
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="../addons/tangshow/template/mobile/default/static/images/轮播海报.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="../addons/tangshow/template/mobile/default/static/images/桃海报.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="../addons/tangshow/template/mobile/default/static/images/香瓜海报.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="../addons/tangshow/template/mobile/default/static/images/樱桃海报.jpg" alt=""></div>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+</div>
+
+<!--<div class="container">
+    <div class=""><img src="../addons/tangshow/template/mobile/default/static/images/轮播海报.jpg" class="am-img-responsive" alt=""></div>
+    <div class=""><img src="../addons/tangshow/template/mobile/default/static/images/香瓜.jpg" class="am-img-responsive" alt=""></div>
+</div>-->
+<div class="title">
+    <span class="fa fa-fire"></span> 火热预告
+</div>
+<div class="container">
+    <div class="li_img" onclick="window.location = './index.php?i=2&c=entry&do=index&m=tangshow&p=detail'"><img class="am-img-responsive" src="../addons/tangshow/template/mobile/default/static/images/桃海报.jpg" alt=""></div>
+    <div class="desc"><img src="../addons/tangshow/template/mobile/default/static/images/桃子55.png" class="am-img-responsive" alt=""></div>
+    <div class="fore_title">No1.平谷大桃-最优质的产区,数十年古树</div>
+    <div class="li_img"><img src="../addons/tangshow/template/mobile/default/static/images/香瓜海报.jpg" class="am-img-responsive" alt=""></div>
+    <div class="desc"><img src="../addons/tangshow/template/mobile/default/static/images/甜瓜2.jpg" class="am-img-responsive" alt=""></div>
+    <div class="fore_title">No2.河南绿宝香瓜-稀有产区(仅100亩)</div>
+    <div class="li_img"><img src="../addons/tangshow/template/mobile/default/static/images/樱桃海报.jpg" class="am-img-responsive" alt=""></div>
+    <div class="desc"><img src="../addons/tangshow/template/mobile/default/static/images/樱桃1.jpg" class="am-img-responsive" alt=""></div>
+    <div class="fore_title">No3.烟台美早大樱桃-纯正血统全程直播采摘</div>
+</div>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        spaceBetween: 30,
+        autoplay:1500
+    });
+</script>
+</body>
+{template 'common/footer'}

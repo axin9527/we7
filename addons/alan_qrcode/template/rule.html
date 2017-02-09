@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+    <div class="panel-heading">选择要关联的项目</div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">场景名称</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="title" class="form-control" placeholder="" name="title" value="{$item['name']}" />
+            </div>
+        </div>
+        {if empty($id)}
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">粉丝分组</label>
+            <div class="col-sm-9 col-xs-12">
+                {if !empty($fansgroup)}
+                <select name="group_id" class="form-control" name="group_id">
+                    {loop $fansgroup $key $value}
+                    <option value="{$value[id]}" {if $item['group_id'] == $value[group_id]} selected="selected" {/if}>{$value['name']}</option>
+                    {/loop}
+                </select>
+                {else}
+                <a href="" style="line-height: 35px">暂无分组,点击去添加分组</a>
+                {/if}
+            </div>
+        </div>
+        {/if}
+    </div>
+</div>
+<script>
+    require(['jquery', 'util'], function($, u){
+
+    });
+</script>

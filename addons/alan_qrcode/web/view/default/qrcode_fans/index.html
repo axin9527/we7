@@ -1,0 +1,149 @@
+{template 'common/header'}
+{php 	load()->func('tpl');}
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" id="form" role="form" id="form1">
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="m" value="alan_qrcode" />
+                <input type="hidden" name="do" value="qrcode_fans" />
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">二维码</label>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <select name="qrcode_id" class="form-control">
+                            <option value="" selected="selected">不搜索</option>
+                            {loop $qrcode $k $v}
+                            <option {if $_GPC['qrcode_id'] == $v['id']}selected="selected"{/if} value="{$v['id']}">{$v['name']}</option>
+                            {/loop}
+                        </select>
+                    </div>
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">粉丝组</label>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <select name="group_id" class="form-control">
+                            <option value="" selected="selected">不搜索</option>
+                            {loop $fansgroup $k $v}
+                            <option {if $_GPC['group_id'] == $v['id']}selected="selected"{/if} value="{$v['id']}">{$v['name']}</option>
+                            {/loop}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">粉丝</label>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}" placeholder="请输入粉丝名称">
+                    </div>
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">是否关注</label>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                        <select name="follow" class="form-control">
+                            <option value="" selected="selected">不搜索</option>
+                            <option value="1" {if $_GPC['follow'] == 1}selected="selected"{/if}>关注</option>
+                            <option value="2" {if $_GPC['follow'] == 2}selected="selected"{/if}>取消关注</option>
+                        </select>
+                    </div>
+                    <div class="pull-left col-xs-12 col-sm-3 col-lg-2">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-header" style="padding: 10px">
+            数量：{$total}
+        </div>
+        <div class="panel-body">
+            <div style="padding:15px;">
+                <table class="table table-hover">
+                    <thead class="navbar-inner">
+                    <tr>
+                        <th style="width:50px;">粉丝</th>
+                        <th style="width:40px;">性别</th>
+                        <th style="width:60px;">粉丝组</th>
+                        <th style="width:90px;">来源</th>
+                        <th style="width:50px;">是否关注</th>
+                        <th style="width:60px;">关注时间</th>
+                        <th style="width:60px;">取关时间</th>
+                         <!-- <th style="width:40px; text-align:right;">操作</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {if !empty($list)}
+                    {loop $list $item}
+                    <tr>
+                        <td><img style="width: 25px;border-radius: 25px" src="{$item['headimgurl']}" alt=""> {$item['nickname']}</td>
+                        {if $item['sex']==1}
+                        <td>男</td>
+                        {else if $item['sex'] == 2}
+                        <td>女</td>
+                        {else}
+                        <td>未知</td>
+                        {/if}
+                        <td>{$item['group_name']}</td>
+                        <td>
+                            {if $item['qrcode_id']}
+                            <a href="{php echo $this->createWebUrl('qrcode', array('op'=>'view_code', 'id'=>$item['qrcode_id']))}" target="_blank">{$item['qr_name']}</a>
+                            {else}
+                            未知
+                            {/if}
+                        </td>
+                        <td>
+                            {if $item['follow'] == 1}
+                            <span class="label label-success">已关注</span>
+                            {else}
+                            <span class="label label-default">取消关注</span>
+                            {/if}
+                        </td>
+                        <td>
+                            {if $item['subscribe_time']>0}
+                            {php echo date('Y-m-d H:i:s', $item['subscribe_time'])}
+                            {/if}
+                        </td>
+                        {if $item['cancel_sub_time'] > 0}
+                        <td>{php echo date('Y-m-d H:i:s', $item['cancel_sub_time'])}</td>
+                        {else}
+                        <td></td>
+                        {/if}
+                        <!-- <td style="text-align:right;"></td>-->
+                    </tr>
+                    {/loop}
+                    {else}
+                    <tr><td colspan="7" style="text-align: center;color:#ccc;font-size: 12px;">暂无数据</td></tr>
+                    {/if}
+                    </tbody>
+                </table>
+                {$pager}
+            </div>
+        </div>
+        <script>
+            $('.del-group').click(function(){
+                if(!confirm('删除分组后，所有该分组内的用户自动进入默认分组，确定删除该分组吗')) {
+                    return false;
+                }
+                var id = parseInt($(this).attr('data-id'));
+                var url = $(this).attr('href_url');
+                $.get(url,{}, function(data){
+                    var data = $.parseJSON(data);
+                    if(data.errno < 0) {
+                        util.message(data.message, '', 'error');
+                        return false;
+                    } else {
+                        location.reload();
+                    }
+                });
+            });
+        </script>
+
+        <div class="panel panel-footer">
+            <a href="javascript:;" onclick="go_export()" class="btn btn-primary">导出</a>
+        </div>
+        <script>
+            function go_export() {
+                var url = location.href+'&act=export';
+                location.href = url;
+            }
+        </script>
+        {template 'common/footer'}
+

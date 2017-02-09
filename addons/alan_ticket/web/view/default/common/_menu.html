@@ -1,0 +1,28 @@
+<style type='text/css'>
+    .topmenu { position: relative; width:100%;float:left;background:#efefef;margin-bottom:20px;}
+    .topmenu ul li a { color:#000}
+    .topmenu .dropdown-menu li a { color:#666}
+    .topmenu ul li { content:'|'}
+    .splitter { text-align: center;background:#ccc;color:#039702;padding-top:10px; padding-bottom:10px;font-size:12px;}
+    .splitter{background:#fff;}
+    @media (min-width: 768px){.height60{height: 65px}}
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        line-height: 20px;
+    }
+    @media (min-width: 768px){.navbar-nav>li>a {
+        padding-top: 23px;
+        padding-bottom: 22px;
+        z-index: 999;
+    }}
+</style>
+<ul class="nav nav-tabs">
+    <li>
+        <a href="{php echo url('home/welcome/ext',array('m'=>'alan_ticket'))}"><i class='fa fa-reply-all'></i> 返回模块</a>
+    </li>
+    <li {if $controller == 'fans'}class="active"{/if}><a href="{php echo web_url('fans/index/index')}">粉丝管理</a></li>
+    <li {if $controller == 'ticket'}class="active"{/if}><a href="{php echo web_url('ticket/index/index')}">投票管理</a></li>
+    <li {if $controller == 'ranking'}class="active"{/if}><a href="{php echo web_url('ranking/index/index')}">排行榜</a></li>
+    <li {if $controller == 'statistics'}class="active"{/if}><a href="{php echo web_url('statistics/index/index')}">数据统计</a></li>
+</ul>

@@ -1,0 +1,132 @@
+{template 'common/header'}
+<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-2.1.4.min.js"></script>
+<style type="text/css">
+    #container {
+        height: 400px;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            title: {
+                text: '粉丝组',
+                x: -20
+            },
+            subtitle: {
+                text: '粉丝组',
+                x: -20
+            },
+            xAxis: {
+                categories: [{php echo "'".implode("','",$dayarr)."'";}]
+    },
+        yAxis: {
+            title: {
+                text: '粉丝量'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '个'
+        },
+        legend: {
+            layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+        },
+        series: []
+
+    }
+
+        options.series = new Array();
+        var i=0;
+        {loop $group_arr $key  $item}
+        options.series[i] = new Object();
+        options.series[i].name ='{php echo $fansgroup[$key]['name']}';
+        options.series[i].data = new Array({php echo implode(",",array_values($item))});
+        i++;
+        {/loop}
+        chart = $('#container').highcharts(options);
+    });
+</script>
+
+<ul class="nav nav-tabs">
+    <li><a href="{php echo $this->createWebUrl('qrcode')}">管理二维码</a></li>
+    <li class="active"><a href="">扫码统计</a></li>
+    <li><a href="{php echo $this->createWebUrl('qrcode_stat', array('op'=>'top'))}">二维码排行</a></li>
+</ul>
+<div class="panel panel-info">
+    <div class="panel-heading">筛选</div>
+    <div class="panel-body">
+        <form action="./index.php" method="get" class="form-horizontal" role="form">
+            <input type="hidden" name="c" value="site" />
+            <input type="hidden" name="a" value="entry" />
+            <input type="hidden" name="m" value="alan_qrcode" />
+            <input type="hidden" name="do" value="qrcode_stat" />
+            <div class="form-group">
+                 <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">粉丝组</label>
+                <div class="col-sm-4 col-lg-4 col-xs-12">
+                    <select name="group_id" class="form-control" id="group_id">
+                        <option value="" selected="selected">不限</option>
+                        {loop $group $key $type}
+                        <option value="{$type['id']}" {if isset($_GPC['group_id']) and $_GPC['group_id'] == $type['id']} selected="selected" {/if}>{$type['name']}</option>
+                        {/loop}
+                    </select>
+                </div>
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">二维码</label>
+                <div class="col-sm-4 col-lg-4 col-xs-12">
+                    <select name="qrcode_id" class="form-control" id="qrcode_id">
+                        <option value="" selected="selected">不限</option>
+                        {loop $qrcode $key $type}
+                        <option value="{$type['id']}" {if isset($_GPC['qrcode_id']) and $_GPC['qrcode_id'] == $type['id']} selected="selected" {/if}>{$type['name']}</option>
+                        {/loop}
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">按时间</label>
+                <div class="col-sm-2">
+                    <select name='searchtime' class='form-control'>
+                        <option value='' {if empty($_GPC['searchtime'])}selected{/if}>不搜索</option>
+                        <option value='1' {if $_GPC['searchtime']==1}selected{/if} >搜索</option>
+                    </select>
+                </div>
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">日期范围</label>
+                <div class="col-sm-3 col-lg-3 col-xs-12">
+                    {php echo tpl_form_field_daterange('time', array('starttime'=>date('Y-m-d', $starttime),'endtime'=>date('Y-m-d', $endtime)));}
+                </div>
+                <div class="pull-left col-xs-12 col-sm-3 col-lg-2">
+                    <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">详细数据&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="text-muted" style="color:red;">扫描数：{php echo $scan_count?$scan_count:0},
+		   关注人数:{php echo $sub_num ? $sub_num : 0},取消关注人数:{php echo $cancel_num ? $cancel_num : 0}</span>
+    </div>
+
+    <div class="table-responsive panel-body">
+        <div id="container"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    require(['bootstrap'],function($){
+        $('.btn').hover(function(){
+            $(this).tooltip('show');
+        },function(){
+            $(this).tooltip('hide');
+        });
+    });
+</script>
+<script language='javascript' src='../addons/alan_qrcode/template/js/highcharts.js'></script>
+<script language='javascript' src='../addons/alan_qrcode/template/js/exporting.js'></script>
+{template 'common/footer'}

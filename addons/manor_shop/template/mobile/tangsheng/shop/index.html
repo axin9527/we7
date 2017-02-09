@@ -1,0 +1,345 @@
+﻿{template 'common/header'}
+<title>{$set['name']}</title>
+<script language="javascript" src="../addons/manor_shop/template/mobile/tangsheng/static/js/zquery.fly.min.js"></script>
+<style>
+    a{text-decoration: none;}
+    p,img,div,a,ul{ margin: 0;padding: 0;}
+    body{
+        padding: 0;
+        margin: 0;
+        padding-bottom: 60px;
+        /*overflow-x: hidden !important;*/
+    }
+    section{  padding: 0 10px;margin-bottom: 10px;}
+    header{
+        position: relative;
+    }
+    .search{
+        width: 100%;
+        position: absolute;
+        top: 20px;
+        display: flex;
+        justify-content: space-around;
+    }
+    .search a{
+        color: rgba(255,255,255,0.7);
+        font-size: 13px;
+        line-height: 23px;
+    }
+    .search img{
+        align-self: center;
+    }
+    .search input{
+        height: 23px;
+        width: 70%;
+        background-color: rgba(255,255,255,0.6);
+        border-radius: 5px;
+        outline: none;
+        border: none;
+    }
+    .circle-group{
+        display: flex;
+        justify-content: space-around;
+        margin-top: 12px;
+    }
+    .circle{
+        display: block;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .bg1{background-size: 100% 100%;}
+    .bg2{background: url('../addons/manor_shop/template/mobile/tangsheng/static/images/home/bg2.png');background-size: 100% 100%;}
+    .bg3{background: url('../addons/manor_shop/template/mobile/tangsheng/static/images/home/bg3.png');background-size: 100% 100%;}
+    .bg4{background: url('../addons/manor_shop/template/mobile/tangsheng/static/images/home/bg4.png');background-size: 100% 100%;}
+
+    .circle-img{width: 100%;align-self: center;}
+    .circle p{
+        text-align: center;
+        color: #fff;
+        font-weight: bold;
+        font-size: 10px;
+        margin-bottom: 6px;
+    }
+    .title{background: url('../addons/manor_shop/template/mobile/tangsheng/static/images/home/title.png');
+        text-align: center;
+        line-height: 40px;
+        background-size: 100% 100%;
+        font-size: 13px;
+    }
+    .cxbox{ display: flex;justify-content: space-between;}
+    .cxitem{width: 31%;position: relative;}
+    .cxitem a>img{width: 100%;}
+    .cxitem p{font-size: 12px;line-height: 20px;}
+    .money{color: #e22738;}
+    .addicon{width: 17px;vertical-align: middle;float: right;margin-right: 5px;}
+    .flag{
+        background: url('../addons/manor_shop/template/mobile/tangsheng/static/images/home/flag.png');width: 18px;
+        height: 52px;background-size: 100% 100%;
+        position: absolute;top: 0;right: 0;}
+    .flag {line-height: 100%;font-size: 12px;text-align: center;color: #fff;white-space: normal;}
+    .banner{width: 100%}
+    .banner img{width: 100%;}
+    .zt1-box ul{overflow-x: scroll;overflow-y: hidden;white-space: nowrap;}
+    .zt1-box li{list-style: none;display: inline-block;width: 33%}
+    .zt1-box .cxitem{width: 100%;}
+    .main-item{position: relative;}
+    .main-left{width: 33%;float: left;margin: 10px 0;display: inline-block;}
+    .main-left img{width: 100%;}
+    .main-right{float: right;width: 60%;padding-top: 10px;}
+    .main-right p{text-align: left;line-height: 20px;}
+    .head{font-size: 15px;font-weight: bold;}
+    .second{font-size: 12px;color:#0b0606;}
+    .brand{width: 50px;height: 20px;border: 1px solid #00a15d;color: #00a15d;font-size: 12px;padding: 0 5px;}
+    .yj,.xj{color: #00a15d}
+    .yj{font-size: 12px;}
+    .xj{font-size: 14px;font-weight: bold;}
+    .xianjia{font-size:18px; }
+    .gwc{width: 32px;position: absolute;bottom: 20px;right: 20px;}
+    .clear{clear: both;}
+    .banner {overflow:hidden;position:relative;height:auto;}
+    .banner  .main_image{width:100% !important;position:relative;top:0;left:0;}
+    .banner .main_image ul{}
+    .banner .main_image li{float:left;}
+    .banner .main_image li img{display:block;width:100%; }
+    .banner .main_image li a{display:block;width:100%;}
+
+    div.flicking_con{position:absolute;bottom:10px;z-index:1;width:100%;height:12px;}
+    div.flicking_con .inner { width:100%;height:9px;text-align:center;}
+    div.flicking_con a{position:relative; width:10px;height:9px;background:url('../addons/manor_shop/template/mobile/default/static/images/dot.png') 0 0 no-repeat;display:inline-block;text-indent:-1000px}
+    div.flicking_con a.on{background-position:0 -9px}
+    .top {overflow: hidden; position:relative;}
+    .top .bgimg {height:auto; position:relative;}
+    .top .bgimg img { width:100%; position: relative;display: block;}
+    .top .list {position:absolute;right:10px;top:10px;height:35px; width:auto; line-height:50px; font-size:16px; text-align:right; color:#efefef; margin-right:10px;}
+    .top .topbar {height:220px; width:100%; position:absolute; bottom:-30px; left:0px; z-index:2;}
+    .top .topbar .logo {height:80px; width:80px; padding:4px; border:1px solid #fff; border-radius:45px; margin:auto;}
+    .top .topbar .logo img {height:70px; width:70px; padding:4px; border:1px solid #fff; border-radius:70px; margin:auto;}
+    .top .topbar .shop_name {height:30px; width:auto; background:rgba(0,0,0,0.1); padding:0px 15px; margin:10px auto; font-size:16px; color:#fff; line-height:30px; text-align:center; display:table; border-radius:15px;}
+    .top .topbar .menu {height:45px; width:100%; background:rgba(0,0,0,0.3);}
+    .top .topbar .menu .nav {height:40px; width:25%; padding-top:5px; float:left; text-align:center; font-size:12px; color:#fff;}
+    .top .topbar .menu .navon {height:37px; border-bottom:3px solid #dd2322;}
+    .top .topbar .menu .nav i {font-size:18px;}
+    .top .tips {font-size: 12px;padding: 9px;padding-top: 11px;background: #f7efce;color: #666;text-align: left;width: 100%;}
+    .top .tips .close{font-size: 16px;position: absolute;right: 8px;top: 9px;}
+</style>
+<body>
+<div id='list_contanier'></div>
+<div id='container'></div>
+<script id='tpl_index' type='text/html'>
+<header>
+    <!-- 轮播图位置 -->
+    <div class="top">
+        <%if advs.length>1%>
+        <div class="flicking_con"><div class="inner">
+            <%each advs as value index %>
+            <a class="<%if index==0%>on<%/if%>" href="#@"><%index%></a>
+            <%/each%>
+        </div>
+        </div>
+        <%/if%>
+        <div class="main_image" id='banner'>
+            <ul>
+                <%each advs as adv %>
+                <li <%if adv.link%>onclick="location.href='<%adv.link%>'"<%/if%>> <img style="width: 100%" src="<%adv.thumb%>"></li>
+                <%/each%>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 搜索框 -->
+    <div class="search">
+        <a href="{php echo $this->createMobileUrl('shop/city')}" class="city_location">
+            <span id="gps_city"></span>
+            <img src='../addons/manor_shop/template/mobile/tangsheng/static/images/home/arrow.png' width="8px" height="8px">
+        </a>
+        <input type="search" id='keywords' value="{$hot_search[0]}">
+        <img src="../addons/manor_shop/template/mobile/tangsheng/static/images/home/search.png" width="15px" height="19px" onclick="search_goods(this)">
+    </div>
+</header>
+
+<!-- 四个圆 -->
+<%if navigation.length > 0%>
+<section>
+    <div class="circle-group">
+        <%each navigation as nav_val nav_key%>
+        <a href="<%if !nav_val.url%>javascript:alert('暂未开放,敬请期待');<%else%><%nav_val.url%><%/if%>" class='circle bg1'>
+            <img src="<%nav_val.thumb%>" class="circle-img">
+        </a>
+        <%/each%>
+    </div>
+</section>
+<%/if%>
+
+<!-- 今日促销 -->
+<%if activity.length>0%>
+<%each activity as value index %>
+<!-- 倒计时主题1 -->
+<section>
+    <p class="title">
+        <%value.act_group%>
+    </p>
+    <%if value.advimg%>
+    <div class="banner">
+        <%if value.advurl%>
+        <a href="<%value.advurl%>">  <img src="<%value.advimg%>"></a>
+        <%else%>
+        <a href="{php echo $this->createMobileUrl('shop/activity')}&id=<%value.id%>&op=detail">  <img src="<%value.advimg%>"></a>
+        <%/if%>
+    </div>
+    <%/if%>
+    <%if value.act_goods && value.is_activity%>
+    <%if value.goods_sort_type == 1 || value.goods_sort_type == 2%>
+    <div class="zt1-box">
+        <ul>
+            <%each value.act_goods as act key %>
+            <li>
+                <div class="cxitem">
+                    <a href="{php echo $this->createMobileUrl('shop/detail')}&id=<%act.id%>">
+                        <%if act.index_img%>
+                        <img src="<%act.index_img%>" >
+                        <%else%>
+                        <img src="<%act.goods_img%>" >
+                        <%/if%>
+                    </a>
+                    <p><%act.title%></p>
+                    <p class="money">
+                        <span>现价</span>
+                        <span>￥<%act.price%></span>
+                        <%if act.index_img%>
+                        <img  onclick="index_add_cart(this)" data-id="<%act.id%>" data-src="<%act.index_img%>" src="../addons/manor_shop/template/mobile/tangsheng/static/images/home/addicon.png" class="addicon">
+                        <%else%>
+                        <img  onclick="index_add_cart(this)" data-id="<%act.id%>" data-src="<%act.goods_img%>" src="../addons/manor_shop/template/mobile/tangsheng/static/images/home/addicon.png" class="addicon">
+                        <%/if%>
+                    </p>
+                    <div class="flag">
+                        <%value.act_group%>
+                    </div>
+                </div>
+            </li>
+            <%/each%>
+        </ul>
+    </div>
+    <%/if%>
+    <%if value.goods_sort_type == 3%>
+        <div class="main">
+            <%each value.act_goods as good key%>
+            <div class="main-item">
+                <a href="{php echo $this->createMobileUrl('shop/detail')}&id=<%good.id%>" class="main-left">
+                    <%if good.index_img%>
+                    <img src="<%good.index_img%>" >
+                    <%else%>
+                    <img src="<%good.goods_img%>" >
+                    <%/if%>
+                </a>
+                <div class="main-right">
+                    <p onclick="location.href='{php echo $this->createMobileUrl('shop/detail')}&id=<%good.id%>'" class="head"><%good.title%></p>
+                    <p class="second"><%good.sub_title%></p>
+                    <p class='brand'>限时五折</p>
+                    <p class='yj'>原价：￥<span class='yuanjia'><%good.old_price%></span></p>
+                    <p class='xj'>现价：￥<span class='xianjia'><%good.price%></span></p>
+                </div>
+                <img onclick="index_add_cart(this)" data-id="<%good.id%>" data-src="<%good.thumb%>" src="../addons/manor_shop/template/mobile/tangsheng/static/images/home/gouwuche.png" class="gwc">
+                <div class="clear"></div>
+            </div>
+            <%/each%>
+        </div>
+    <%/if%>
+    <%/if%>
+</section>
+<%/each%>
+<%/if%>
+</script>
+<!-- tabbar -->
+
+<script type="text/javascript">
+    var search_goods = '';
+    require(['core', 'tpl'], function (core, tpl) {
+        core.json('shop/index', {}, function (json) {
+            var result = json.result;
+            $('#container').html(tpl('tpl_index', result));
+            $('#gps_city').html(localStorage.getItem('current_city')?localStorage.getItem('current_city'):'北京');
+            if (result.advs.length > 0) {
+                //   $('.banner').height($('.main_image').find('img').height());
+                require(['jquery','jquery.touchslider','swipe'], function ($) {
+                    new Swipe($('#banner')[0], {
+                        speed:300,
+                        auto:4000,
+                        callback: function(){
+                            $(".flicking_con  .inner  a").removeClass("on").eq(this.index).addClass("on");
+                        }
+                    });
+                })
+            }
+        });
+        get_search_history();
+         search_goods = function(obj) {
+            var keywords = $('#keywords').val();
+            if(keywords){
+                write_search_history(keywords);
+            }
+            var url = core.getUrl('shop/list',{keywords:keywords});
+            location.href=  url;
+        }
+        function write_search_history(val) {
+            var old = localStorage.getItem('search_history');
+            if(!old) {
+                var old = [];
+            } else {
+                var old = JSON.parse(old);
+            }
+            if(old.indexOf(val) >= 0) {
+                return;
+            }
+            old.push(val);
+            localStorage.setItem('search_history', JSON.stringify(old));
+        }
+        function get_search_history() {
+            var old = localStorage.getItem('search_history');
+            var _html = "";
+            if(!old){
+                return;
+            }
+            var old = JSON.parse(old);
+            for(var i=0;i<old.length;i++) {
+                _html += '<span class="clear_hi">' + old[i] + '</span>';
+            }
+            $('#search_history').html(_html);
+        }
+        function clear_search_history() {
+            localStorage.removeItem('search_history');
+        }
+    });
+    function index_add_cart(obj) {
+        var i = 1;
+        var j = 1;
+        var top = $('.top').outerHeight();
+        var class1 = $('.class1').outerHeight();
+        var div_height = $('.goods').outerHeight();
+        var good_height = $('.good').outerHeight();
+        $('.good').each(function (k,v) {
+            if($(v).data('goodsid') == $(obj).parent().parent().data('goodsid')) {
+                return false;
+            } else {
+                i++;
+            }
+        });
+        var  start = {
+            left: event.pageX,  //开始位置（必填）#fly元素会被设置成position: fixed
+            top: event.clientY-40,  //开始位置（必填）
+        };
+        var end = {
+            left: 180, //结束位置（必填）
+            top: 1000,  //结束位置（必填）
+            width: 30, //结束时高度
+            height: 30, //结束时高度
+        }
+        add_cart(obj, $(obj).data('src'), start, end);
+    }
+</script>
+</body>
+</html>
+{php $show_copyright=true;$show_footer=true;$footer_current ='first'}
+{template 'common/footer'}
